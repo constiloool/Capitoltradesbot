@@ -35,17 +35,17 @@ jobs:
 
       - name: Run bot
         env:
-          CAPITOL_TRADES_URL: ${{ vars.CAPITOL_TRADES_URL }}
-          ENABLE_TRADING: ${{ vars.ENABLE_TRADING }}
-          DRY_RUN: ${{ vars.DRY_RUN }}
-          TRADING_MODE: ${{ vars.TRADING_MODE }}
+          CAPITOL_TRADES_URL: ${{ vars.CAPITOL_TRADES_URL || 'https://www.capitoltrades.com/trades' }}
+          ENABLE_TRADING: ${{ vars.ENABLE_TRADING || 'false' }}
+          DRY_RUN: ${{ vars.DRY_RUN || 'true' }}
+          TRADING_MODE: ${{ vars.TRADING_MODE || 'paper' }}
           CONFIRM_LIVE_TRADING: ${{ secrets.CONFIRM_LIVE_TRADING }}
           ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
           ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
-          ALPACA_PAPER: ${{ vars.ALPACA_PAPER }}
-          DEFAULT_NOTIONAL_USD: ${{ vars.DEFAULT_NOTIONAL_USD }}
-          MAX_TRADES_PER_RUN: ${{ vars.MAX_TRADES_PER_RUN }}
-          MAX_SYMBOL_EXPOSURE_USD: ${{ vars.MAX_SYMBOL_EXPOSURE_USD }}
+          ALPACA_PAPER: ${{ vars.ALPACA_PAPER || 'true' }}
+          DEFAULT_NOTIONAL_USD: ${{ vars.DEFAULT_NOTIONAL_USD || '10' }}
+          MAX_TRADES_PER_RUN: ${{ vars.MAX_TRADES_PER_RUN || '3' }}
+          MAX_SYMBOL_EXPOSURE_USD: ${{ vars.MAX_SYMBOL_EXPOSURE_USD || '50' }}
           ALLOWED_TICKERS: ${{ vars.ALLOWED_TICKERS }}
           BLOCKED_TICKERS: ${{ vars.BLOCKED_TICKERS }}
           ALLOW_AFTER_HOURS_QUEUE: ${{ vars.ALLOW_AFTER_HOURS_QUEUE }}

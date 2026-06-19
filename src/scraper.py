@@ -10,10 +10,12 @@ from playwright.async_api import async_playwright
 
 
 DEFAULT_SELECTORS = {"trade_rows": "table tbody tr", "links": "a"}
+DEFAULT_SOURCE_URL = "https://www.capitoltrades.com/trades"
 
 
 def load_scraper_config() -> dict[str, Any]:
-    config = {"source_url": os.getenv("CAPITOL_TRADES_URL", "https://www.capitoltrades.com/trades")}
+    source_url = os.environ.get("CAPITOL_TRADES_URL", "").strip() or DEFAULT_SOURCE_URL
+    config = {"source_url": source_url}
     config["selectors"] = DEFAULT_SELECTORS.copy()
     path = Path("config.json")
     if path.exists():

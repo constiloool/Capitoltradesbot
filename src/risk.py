@@ -9,8 +9,13 @@ from typing import Any
 TRUE_VALUES = {"1", "true", "yes", "on"}
 
 
+def env_value(name: str, default: str) -> str:
+    value = os.environ.get(name)
+    return value.strip() if value and value.strip() else default
+
+
 def env_bool(name: str, default: bool = False) -> bool:
-    return os.getenv(name, str(default)).strip().lower() in TRUE_VALUES
+    return env_value(name, str(default)).lower() in TRUE_VALUES
 
 
 def ticker_set(name: str) -> set[str]:
@@ -32,7 +37,7 @@ class RiskConfig:
 
     @classmethod
     def from_env(cls, cli_dry_run: bool = False) -> "RiskConfig":
-        mode = os.getenv("TRADING_MODE", "paper").lower()
+        mode = env_value("TRADING_MODE", "paper").lower()
         if mode not in {"paper", "live"}:
             raise ValueError("TRADING_MODE must be paper or live")
         if mode == "live" and os.getenv("CONFIRM_LIVE_TRADING") != "yes_i_understand_the_risk":
@@ -43,9 +48,9 @@ class RiskConfig:
             enable_trading=env_bool("ENABLE_TRADING"),
             dry_run=cli_dry_run or env_bool("DRY_RUN", True),
             trading_mode=mode,
-            default_notional=float(os.getenv("DEFAULT_NOTIONAL_USD", "10")),
-            max_trades=int(os.getenv("MAX_TRADES_PER_RUN", "3")),
-            max_symbol_exposure=float(os.getenv("MAX_SYMBOL_EXPOSURE_USD", "50")),
+            default_notional=float(env_value("DEFAULT_NOTIONAL_USD", "10")),
+            max_trades=int(env_value("MAX_TRADES_PER_RUN", "3")),
+            max_symbol_exposure=float(env_value("MAX_SYMBOL_EXPOSURE_USD", "50")),
             allowed_tickers=ticker_set("ALLOWED_TICKERS"),
             blocked_tickers=ticker_set("BLOCKED_TICKERS"),
             allow_after_hours_queue=env_bool("ALLOW_AFTER_HOURS_QUEUE"),
