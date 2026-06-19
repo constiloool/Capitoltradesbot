@@ -1,0 +1,1 @@
+"""Capitol Trades copytrader package."""

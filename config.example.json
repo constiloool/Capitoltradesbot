@@ -1,0 +1,8 @@
+{
+  "source_url": "https://www.capitoltrades.com/trades",
+  "selectors": {
+    "trade_rows": "table tbody tr",
+    "links": "a"
+  },
+  "notes": "Copy this file to config.json to override selectors without editing source code."
+}
