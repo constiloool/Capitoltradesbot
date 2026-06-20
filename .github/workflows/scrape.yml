@@ -1,0 +1,79 @@
+name: Scrape CapitolTrades
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/15 * * * *"
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: capitol-trades-scrape
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CAPITOL_TRADES_URL: https://www.capitoltrades.com/trades
+      DATABASE_PATH: ./data/capitoltrades.sqlite
+      PLAYWRIGHT_FALLBACK: "true"
+      DEBUG_SAVE_HTML: "false"
+      ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
+      ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
+      ALPACA_BASE_URL: ${{ secrets.ALPACA_BASE_URL || 'https://paper-api.alpaca.markets' }}
+      TRADING_ENABLED: ${{ secrets.TRADING_ENABLED || 'false' }}
+      PAPER_ORDER_QTY: ${{ secrets.PAPER_ORDER_QTY || '1' }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Restore SQLite state
+        id: sqlite-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: data/capitoltrades.sqlite
+          key: capitoltrades-sqlite-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            capitoltrades-sqlite-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+
+      - name: Initialize database
+        run: npm run db:init
+
+      - name: Run scraper
+        run: npm run scrape
+
+      - name: Save SQLite state
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data/capitoltrades.sqlite
+          key: capitoltrades-sqlite-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Upload database artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: capitoltrades-db-${{ github.run_number }}
+          path: data/capitoltrades.sqlite
+          if-no-files-found: warn
+          retention-days: 30
