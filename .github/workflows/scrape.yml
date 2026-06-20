@@ -3,7 +3,7 @@ name: Scrape CapitolTrades
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "*/15 15-21 * * 1-5"
 
 permissions:
   contents: read
