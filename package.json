@@ -12,6 +12,7 @@
     "start": "node dist/src/index.js",
     "dev": "tsx watch src/index.ts",
     "scrape": "tsx src/index.ts",
+    "alpaca:check": "tsx src/alpaca/checkConnection.ts",
     "db:init": "tsx src/storage/initDb.ts",
     "test": "node --import tsx --test tests/**/*.test.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"

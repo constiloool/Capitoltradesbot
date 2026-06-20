@@ -54,6 +54,7 @@ Weitere Befehle:
 npm run typecheck
 npm test
 npm run build
+npm run alpaca:check
 npm start
 npm run dev
 ```
@@ -153,6 +154,10 @@ Folgende Secrets anlegen:
 
 Fehlende Secrets stoppen den Scraper nicht. Alpaca bleibt dann deaktiviert und
 der Bot loggt nur hypothetische Paper-Orders.
+
+Der GitHub-Workflow führt vor jedem Scrape einen read-only Kontotest gegen
+`GET /v2/account` aus. Dabei wird keine Order gesendet und es werden weder
+Schlüssel noch Kontonummern geloggt.
 
 ## GitHub Actions aktivieren und manuell starten
 

@@ -59,6 +59,9 @@ jobs:
       - name: Initialize database
         run: npm run db:init
 
+      - name: Verify Alpaca paper connection
+        run: npm run alpaca:check
+
       - name: Run scraper
         run: npm run scrape
 
