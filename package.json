@@ -1,0 +1,29 @@
+{
+  "name": "capitol-trades-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Small, safe MVP for collecting and deduplicating CapitolTrades disclosures.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/src/index.js",
+    "dev": "tsx watch src/index.ts",
+    "scrape": "tsx src/index.ts",
+    "db:init": "tsx src/storage/initDb.ts",
+    "test": "node --import tsx --test tests/**/*.test.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "cheerio": "^1.1.0",
+    "dotenv": "^16.6.1",
+    "playwright": "^1.53.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.3",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
