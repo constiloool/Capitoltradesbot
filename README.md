@@ -24,8 +24,9 @@ filtert `FilingType=P` und lädt nur neue PTR-PDFs.
 
 Senate eFD verlangt vor der Suche die gesetzliche Nutzungsbestätigung. Der
 Adapter führt diesen offiziellen Session-Ablauf aus. eFD kann Rechenzentren
-oder Regionen mit HTTP 403 ablehnen. Das wird protokolliert; der House-Ingest
-läuft trotzdem weiter. Schutzmechanismen werden nicht umgangen.
+oder Regionen mit HTTP 403 ablehnen oder temporär mit 5xx antworten. Das wird
+protokolliert; der House-Ingest läuft trotzdem weiter. Schutzmechanismen werden
+nicht umgangen.
 
 ## Standard-Sicherheitsmodus
 
