@@ -11,6 +11,23 @@ import type {
   PositionExitReason,
 } from "../types/trading.js";
 import { logger } from "../utils/logger.js";
+import type { ExecutionResult } from "../execution/alpacaExecutor.js";
+
+export type PositionMonitorDependencies = {
+  getCurrentPrice(ticker: string): Promise<number>;
+  executeSellOrder(input: {
+    ticker: string;
+    quantity: number;
+    clientOrderId: string;
+    reason: PositionExitReason;
+    forceSimulation?: boolean;
+  }): Promise<ExecutionResult>;
+};
+
+const defaultDependencies: PositionMonitorDependencies = {
+  getCurrentPrice: getLatestPrice,
+  executeSellOrder: executeSell,
+};
 
 export function evaluatePositionExit(
   position: BotPosition,
@@ -28,17 +45,20 @@ export function evaluatePositionExit(
   return undefined;
 }
 
-export async function monitorOpenPositions(marketOpen: boolean): Promise<void> {
+export async function monitorOpenPositions(
+  marketOpen: boolean,
+  dependencies: PositionMonitorDependencies = defaultDependencies,
+): Promise<void> {
   if (!marketOpen) {
     logger.info("MONITOR", "Regular US market is closed; exits deferred");
     return;
   }
   for (const position of listOpenPositions()) {
     try {
-      const currentPrice = await getLatestPrice(position.ticker);
+      const currentPrice = await dependencies.getCurrentPrice(position.ticker);
       const reason = evaluatePositionExit(position, currentPrice);
       if (!reason) continue;
-      const execution = await executeSell({
+      const execution = await dependencies.executeSellOrder({
         ticker: position.ticker,
         quantity: position.quantity,
         reason,

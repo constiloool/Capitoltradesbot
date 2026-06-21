@@ -65,6 +65,19 @@ test("missing transaction date is skipped", () => {
   assert.match(result.reason, /date is missing/);
 });
 
+test("missing or blank ticker is skipped with explicit reason", () => {
+  for (const ticker of [undefined, ""]) {
+    const result = evaluateTradeRules(
+      trade({ ticker }),
+      market(),
+      1,
+      now,
+    );
+    assert.equal(result.decision, "SKIP");
+    assert.equal(result.reason, "Skipped because ticker is missing");
+  }
+});
+
 test("sale is skipped", () => {
   const result = evaluateTradeRules(
     trade({ transactionType: "sale" }),

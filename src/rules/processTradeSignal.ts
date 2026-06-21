@@ -6,8 +6,14 @@ import {
   getPaperAccount,
   getPositions,
   getReferencePrice,
+  type AlpacaAccount,
+  type AlpacaAsset,
+  type AlpacaPosition,
 } from "../alpaca/alpacaClient.js";
-import { executeBuy } from "../execution/alpacaExecutor.js";
+import {
+  executeBuy,
+  type ExecutionResult,
+} from "../execution/alpacaExecutor.js";
 import {
   evaluateSignalEligibility,
   evaluateTradeRules,
@@ -33,6 +39,34 @@ export type ProcessTradeResult = {
   decision: TradeDecisionType;
   reason: string;
   alpacaOrderId?: string;
+};
+
+export type TradeSignalDependencies = {
+  isAlpacaConfigured(): boolean;
+  getAccount(): Promise<AlpacaAccount>;
+  getBrokerPositions(): Promise<AlpacaPosition[]>;
+  getBrokerAsset(symbol: string): Promise<AlpacaAsset>;
+  getCurrentPrice(symbol: string): Promise<number>;
+  getHistoricalReferencePrice(
+    symbol: string,
+    transactionDate: string,
+  ): Promise<number | undefined>;
+  executeBuyOrder(input: {
+    ticker: string;
+    quantity?: number;
+    notional?: number;
+    clientOrderId: string;
+  }): Promise<ExecutionResult>;
+};
+
+const defaultDependencies: TradeSignalDependencies = {
+  isAlpacaConfigured: alpacaConfigured,
+  getAccount: getPaperAccount,
+  getBrokerPositions: getPositions,
+  getBrokerAsset: getAsset,
+  getCurrentPrice: getLatestPrice,
+  getHistoricalReferencePrice: getReferencePrice,
+  executeBuyOrder: executeBuy,
 };
 
 function decisionLog(
@@ -68,6 +102,7 @@ function decisionLog(
 export async function processTradeSignal(
   trade: DisclosureTrade,
   options: { marketOpen: boolean; allowPendingCreation?: boolean },
+  dependencies: TradeSignalDependencies = defaultDependencies,
 ): Promise<ProcessTradeResult> {
   const politicianScore = getPoliticianScore(trade.politicianName);
   const preliminary = evaluateSignalEligibility(trade, politicianScore);
@@ -96,7 +131,7 @@ export async function processTradeSignal(
     return { decision: evaluation.decision, reason: evaluation.reason };
   }
 
-  if (!alpacaConfigured()) {
+  if (!dependencies.isAlpacaConfigured()) {
     const evaluation: RuleEvaluation = {
       decision: "SKIP",
       reason: "Skipped because Alpaca credentials are missing",
@@ -119,11 +154,14 @@ export async function processTradeSignal(
   try {
     [account, positions, asset, currentPrice, referencePrice] =
       await Promise.all([
-        getPaperAccount(),
-        getPositions(),
-        getAsset(trade.ticker!),
-        getLatestPrice(trade.ticker!),
-        getReferencePrice(trade.ticker!, trade.transactionDate),
+        dependencies.getAccount(),
+        dependencies.getBrokerPositions(),
+        dependencies.getBrokerAsset(trade.ticker!),
+        dependencies.getCurrentPrice(trade.ticker!),
+        dependencies.getHistoricalReferencePrice(
+          trade.ticker!,
+          trade.transactionDate,
+        ),
       ]);
   } catch (error) {
     const evaluation: RuleEvaluation = {
@@ -199,7 +237,7 @@ export async function processTradeSignal(
     : evaluation.quantity!;
   let execution;
   try {
-    execution = await executeBuy({
+    execution = await dependencies.executeBuyOrder({
       ticker: trade.ticker!,
       quantity: evaluation.useNotional ? undefined : evaluation.quantity,
       notional: evaluation.useNotional

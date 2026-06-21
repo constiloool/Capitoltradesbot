@@ -41,3 +41,47 @@ export function logTradeDecision(decision: TradeDecisionLog): void {
     reason: decision.reason,
   });
 }
+
+export function getDecisionSummary(since: string): {
+  buyCandidates: number;
+  skippedAge: number;
+  skippedAction: number;
+  skippedMissingTicker: number;
+  skippedRunup: number;
+  simulatedBuys: number;
+} {
+  const rows = getDatabase()
+    .prepare(
+      `SELECT decision, reason, safe_mode, COUNT(*) AS count
+       FROM trade_decisions WHERE created_at >= ?
+       GROUP BY decision, reason, safe_mode`,
+    )
+    .all(since) as Array<{
+    decision: string;
+    reason: string;
+    safe_mode: number;
+    count: number;
+  }>;
+  const count = (predicate: (row: (typeof rows)[number]) => boolean) =>
+    rows.filter(predicate).reduce((sum, row) => sum + row.count, 0);
+  return {
+    buyCandidates: count((row) =>
+      ["BUY", "PENDING"].includes(row.decision),
+    ),
+    skippedAge: count((row) =>
+      row.reason.includes("older than MAX_TRADE_AGE_DAYS"),
+    ),
+    skippedAction: count(
+      (row) => row.reason === "Transaction action is not BUY/PURCHASE",
+    ),
+    skippedMissingTicker: count(
+      (row) => row.reason === "Skipped because ticker is missing",
+    ),
+    skippedRunup: count((row) =>
+      row.reason.includes("ran up more than MAX_RUNUP_PCT"),
+    ),
+    simulatedBuys: count(
+      (row) => row.decision === "BUY" && row.safe_mode === 1,
+    ),
+  };
+}

@@ -94,7 +94,7 @@ export function evaluateSignalEligibility(
       notes,
     );
   }
-  if (!trade.ticker) {
+  if (!trade.ticker?.trim()) {
     return skipped(
       "Skipped because ticker is missing",
       politicianScore,

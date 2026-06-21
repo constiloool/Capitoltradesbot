@@ -353,6 +353,15 @@ anderem mit:
 
 Dadurch können spätere Auswertungen direkt aus SQLite erfolgen.
 
+Am Ende jedes Laufs erscheint zusätzlich eine kompakte `[SUMMARY]`-Zeile mit:
+
+- geprüften Filings und neu geparsten Trades
+- BUY-Kandidaten
+- Skips wegen Alter, Aktion, fehlendem Ticker oder Run-up
+- simulierten Käufen
+- offenen Bot-Positionen
+- aktuellem `SAFE_MODE`
+
 ## Zusätzliche Strategievariablen
 
 ```dotenv

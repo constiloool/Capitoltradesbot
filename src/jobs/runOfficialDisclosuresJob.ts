@@ -23,6 +23,8 @@ import { processTradeSignal } from "../rules/processTradeSignal.js";
 import { monitorOpenPositions } from "../monitor/positionMonitor.js";
 import { processPendingOrders } from "./processPendingOrders.js";
 import { getMarketClock } from "../alpaca/alpacaClient.js";
+import { getDecisionSummary } from "../storage/decisionLogger.js";
+import { countOpenPositions } from "../storage/positionsStore.js";
 
 function adapters(): DisclosureSourceAdapter[] {
   if (config.sourceMode === "house") return [new HouseDisclosureSource()];
@@ -31,6 +33,7 @@ function adapters(): DisclosureSourceAdapter[] {
 }
 
 export async function runOfficialDisclosuresJob(): Promise<IngestionSummary> {
+  const runStartedAt = new Date().toISOString();
   const summary: IngestionSummary = {
     filingsChecked: 0,
     newFilingsFound: 0,
@@ -132,6 +135,19 @@ export async function runOfficialDisclosuresJob(): Promise<IngestionSummary> {
     duplicatesSkipped: summary.duplicatesSkipped,
     parserFailures: summary.parserFailures,
     newTradesInserted: summary.newTradesInserted,
+  });
+  const decisionSummary = getDecisionSummary(runStartedAt);
+  logger.info("SUMMARY", "Run summary", {
+    scrapedFilings: summary.filingsChecked,
+    trades: summary.tradesParsed,
+    buyCandidates: decisionSummary.buyCandidates,
+    skippedAge: decisionSummary.skippedAge,
+    skippedAction: decisionSummary.skippedAction,
+    skippedMissingTicker: decisionSummary.skippedMissingTicker,
+    skippedRunup: decisionSummary.skippedRunup,
+    simulatedBuys: decisionSummary.simulatedBuys,
+    openPositions: countOpenPositions(),
+    safeMode: config.safeMode,
   });
   return summary;
 }

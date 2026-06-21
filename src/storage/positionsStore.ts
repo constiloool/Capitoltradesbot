@@ -79,6 +79,16 @@ export function totalOpenExposure(): number {
   return row.exposure;
 }
 
+export function countOpenPositions(): number {
+  return (
+    getDatabase()
+      .prepare(
+        "SELECT COUNT(*) AS count FROM bot_positions WHERE status = 'OPEN'",
+      )
+      .get() as { count: number }
+  ).count;
+}
+
 export function createOpenPosition(input: {
   ticker: string;
   entryPrice: number;

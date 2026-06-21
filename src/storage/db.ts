@@ -9,7 +9,9 @@ export function getDatabase(): DatabaseSync {
   if (!database) {
     mkdirSync(path.dirname(config.databasePath), { recursive: true });
     database = new DatabaseSync(config.databasePath);
-    database.exec("PRAGMA journal_mode = DELETE; PRAGMA busy_timeout = 5000;");
+    database.exec(
+      "PRAGMA foreign_keys = ON; PRAGMA journal_mode = DELETE; PRAGMA busy_timeout = 5000;",
+    );
   }
   return database;
 }
