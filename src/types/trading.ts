@@ -4,6 +4,7 @@ export type TradeDecisionType =
   | "BUY"
   | "SKIP"
   | "WATCHLIST"
+  | "PENDING"
   | "EXIT_SIGNAL"
   | "SELL";
 
@@ -87,4 +88,20 @@ export type ExecutableTrade = {
   trade: DisclosureTrade;
   evaluation: RuleEvaluation;
   market: MarketContext;
+};
+
+export type PendingOrderStatus = "PENDING" | "EXECUTED" | "SKIPPED";
+
+export type PendingOrder = {
+  id: string;
+  tradeId: string;
+  ticker: string;
+  status: PendingOrderStatus;
+  reason: string;
+  attempts: number;
+  lastCheckedAt?: string;
+  executedAt?: string;
+  alpacaOrderId?: string;
+  createdAt: string;
+  updatedAt: string;
 };

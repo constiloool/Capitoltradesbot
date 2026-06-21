@@ -161,13 +161,20 @@ tradesParsed=5 duplicatesSkipped=0 parserFailures=0 newTradesInserted=5
 
 Der Workflow
 [`scrape.yml`](.github/workflows/scrape.yml) bleibt manuell über
-`workflow_dispatch` startbar und läuft alle sechs Stunden:
+`workflow_dispatch` startbar und verwendet zwei UTC-Zeitpläne:
 
 ```yaml
-cron: "17 */6 * * *"
+cron: "0 7 * * 1-5"
+cron: "*/15 13-21 * * 1-5"
 ```
 
-GitHub-Zeitpläne verwenden UTC und können sich verzögern. Der Workflow:
+Der Morgenlauf liest neue Meldungen ein. Der Nachmittagsplan läuft vor,
+während und nach der regulären US-Sitzung. GitHub-Zeitpläne verwenden UTC,
+können sich verzögern und bilden die deutsche Sommer-/Winterzeit nicht
+automatisch ab. Für die tatsächliche Ausführung ist deshalb ausschließlich
+Alpacas Market Clock maßgeblich.
+
+Der Workflow:
 
 1. installiert Node-Abhängigkeiten,
 2. stellt die SQLite-Datei aus dem Actions-Cache wieder her,
@@ -175,6 +182,31 @@ GitHub-Zeitpläne verwenden UTC und können sich verzögern. Der Workflow:
 4. prüft die Alpaca-Paper-Verbindung read-only,
 5. führt den offiziellen Ingest aus,
 6. speichert Cache und Datenbank-Artefakt.
+
+## Pending Orders und Börsenöffnung
+
+Eine gültige `BUY`-Entscheidung wird außerhalb der regulären US-Sitzung nicht
+als Market-Order an Alpaca gesendet. Stattdessen speichert der Bot sie in der
+SQLite-Tabelle `pending_orders`.
+
+Bei jedem Lauf:
+
+1. Alpaca `GET /v2/clock` bestimmt, ob die reguläre Sitzung geöffnet ist.
+2. Bei geschlossenem Markt bleiben Pending Orders unverändert erhalten.
+3. Bei offenem Markt werden sie vollständig neu geprüft:
+   - tatsächliches Transaktionsalter
+   - Politiker- und Value-Score
+   - aktueller Preis und Run-up
+   - Tradability und Fractional-Unterstützung
+   - bestehende Positionen
+   - Ticker- und Gesamt-Exposure
+4. Nur weiterhin gültige Signale werden ausgeführt oder im Safe-Mode
+   simuliert.
+5. Danach erhält die Pending Order den Status `EXECUTED` oder `SKIPPED`.
+
+Auch Stop-Loss-, Take-Profit- und Time-Exit-Verkäufe werden bei geschlossenem
+regulärem US-Markt zurückgestellt. Der Bot sendet keine normalen Market-Orders
+blind außerhalb der regulären Sitzung.
 
 ### Repository Secrets
 

@@ -28,7 +28,11 @@ export function evaluatePositionExit(
   return undefined;
 }
 
-export async function monitorOpenPositions(): Promise<void> {
+export async function monitorOpenPositions(marketOpen: boolean): Promise<void> {
+  if (!marketOpen) {
+    logger.info("MONITOR", "Regular US market is closed; exits deferred");
+    return;
+  }
   for (const position of listOpenPositions()) {
     try {
       const currentPrice = await getLatestPrice(position.ticker);

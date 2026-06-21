@@ -138,3 +138,33 @@ export function markTradeStrategyProcessed(id: string): void {
     .prepare("UPDATE trades SET strategy_processed_at = ? WHERE id = ?")
     .run(new Date().toISOString(), id);
 }
+
+export function getDisclosureTrade(id: string): DisclosureTrade | undefined {
+  const row = getDatabase()
+    .prepare(
+      `SELECT trades.*, filings.source_filing_id
+       FROM trades JOIN filings ON filings.id = trades.filing_id
+       WHERE trades.id = ?`,
+    )
+    .get(id) as TradeRow | undefined;
+  if (!row) return undefined;
+  return {
+    id: row.id,
+    filingId: row.filing_id,
+    source: row.source,
+    sourceFilingId: row.source_filing_id,
+    politicianName: row.politician_name,
+    chamber: row.chamber,
+    transactionDate: row.transaction_date,
+    filingDate: row.filing_date,
+    ticker: row.ticker,
+    assetName: row.asset_name,
+    transactionType: row.transaction_type,
+    amountRange: row.amount_range,
+    owner: row.owner,
+    rawText: row.raw_text,
+    sourceUrl: row.source_url,
+    dedupeKey: row.dedupe_key,
+    createdAt: row.created_at,
+  };
+}

@@ -31,6 +31,13 @@ export type AlpacaPosition = {
   avg_entry_price: string;
 };
 
+export type AlpacaClock = {
+  timestamp: string;
+  is_open: boolean;
+  next_open: string;
+  next_close: string;
+};
+
 export function alpacaConfigured(): boolean {
   return Boolean(config.alpacaApiKey && config.alpacaSecretKey);
 }
@@ -80,6 +87,16 @@ export async function getPositions(): Promise<AlpacaPosition[]> {
     throw new Error(`Alpaca positions request failed (HTTP ${response.status})`);
   }
   return response.json() as Promise<AlpacaPosition[]>;
+}
+
+export async function getMarketClock(): Promise<AlpacaClock> {
+  const response = await fetch(paperApiUrl("/v2/clock"), {
+    headers: authHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Alpaca market clock failed (HTTP ${response.status})`);
+  }
+  return response.json() as Promise<AlpacaClock>;
 }
 
 async function marketData(path: string): Promise<Response> {

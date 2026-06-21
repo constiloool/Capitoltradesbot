@@ -3,7 +3,10 @@ name: Ingest Official Congressional Disclosures
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/15 15-21 * * 1-5"
+    # Morning disclosure fetch around the German cash-market open (UTC).
+    - cron: "0 7 * * 1-5"
+    # Frequent checks before, during and shortly after the regular US session.
+    - cron: "*/15 13-21 * * 1-5"
 
 permissions:
   contents: read

@@ -14,6 +14,7 @@ import {
 } from "./tradeRules.js";
 import { logTradeDecision } from "../storage/decisionLogger.js";
 import { getPoliticianScore } from "../storage/politicianScoresStore.js";
+import { createPendingOrder } from "../storage/pendingOrdersStore.js";
 import {
   addSignalToPosition,
   createOpenPosition,
@@ -25,7 +26,14 @@ import type {
   MarketContext,
   RuleEvaluation,
   TradeDecisionLog,
+  TradeDecisionType,
 } from "../types/trading.js";
+
+export type ProcessTradeResult = {
+  decision: TradeDecisionType;
+  reason: string;
+  alpacaOrderId?: string;
+};
 
 function decisionLog(
   trade: DisclosureTrade,
@@ -57,12 +65,15 @@ function decisionLog(
   };
 }
 
-export async function processTradeSignal(trade: DisclosureTrade): Promise<void> {
+export async function processTradeSignal(
+  trade: DisclosureTrade,
+  options: { marketOpen: boolean; allowPendingCreation?: boolean },
+): Promise<ProcessTradeResult> {
   const politicianScore = getPoliticianScore(trade.politicianName);
   const preliminary = evaluateSignalEligibility(trade, politicianScore);
   if (preliminary) {
     logTradeDecision(decisionLog(trade, preliminary));
-    return;
+    return { decision: preliminary.decision, reason: preliminary.reason };
   }
 
   const existingBotPosition = findOpenPosition(trade.ticker!);
@@ -82,7 +93,7 @@ export async function processTradeSignal(trade: DisclosureTrade): Promise<void> 
       trade.transactionDate,
     );
     logTradeDecision(decisionLog(trade, evaluation, market));
-    return;
+    return { decision: evaluation.decision, reason: evaluation.reason };
   }
 
   if (!alpacaConfigured()) {
@@ -97,7 +108,7 @@ export async function processTradeSignal(trade: DisclosureTrade): Promise<void> 
       notes: [],
     };
     logTradeDecision(decisionLog(trade, evaluation));
-    return;
+    return { decision: evaluation.decision, reason: evaluation.reason };
   }
 
   let account;
@@ -128,11 +139,23 @@ export async function processTradeSignal(trade: DisclosureTrade): Promise<void> 
       notes: [],
     };
     logTradeDecision(decisionLog(trade, evaluation));
-    return;
+    return { decision: evaluation.decision, reason: evaluation.reason };
   }
   const accountEquity = Number(account.equity);
   if (!Number.isFinite(accountEquity) || accountEquity <= 0) {
-    throw new Error("Alpaca account equity is unavailable");
+    const reason = "Alpaca account equity is unavailable";
+    const evaluation: RuleEvaluation = {
+      decision: "SKIP",
+      reason,
+      politicianScore,
+      valueScore: 1,
+      calculatedPositionSize: 0,
+      finalPositionSize: 0,
+      useNotional: false,
+      notes: [],
+    };
+    logTradeDecision(decisionLog(trade, evaluation));
+    return { decision: "SKIP", reason };
   }
   const brokerPosition = positions.find(
     (position) => position.symbol === trade.ticker,
@@ -153,7 +176,22 @@ export async function processTradeSignal(trade: DisclosureTrade): Promise<void> 
   const evaluation = evaluateTradeRules(trade, market, politicianScore);
   if (evaluation.decision !== "BUY") {
     logTradeDecision(decisionLog(trade, evaluation, market));
-    return;
+    return { decision: evaluation.decision, reason: evaluation.reason };
+  }
+
+  if (!options.marketOpen) {
+    const reason =
+      "Market is closed; signal stored as pending for next regular session";
+    if (options.allowPendingCreation !== false) {
+      createPendingOrder(trade.id, trade.ticker!, reason);
+    }
+    const pendingEvaluation: RuleEvaluation = {
+      ...evaluation,
+      decision: "PENDING",
+      reason,
+    };
+    logTradeDecision(decisionLog(trade, pendingEvaluation, market));
+    return { decision: "PENDING", reason };
   }
 
   const quantity = evaluation.useNotional
@@ -178,7 +216,7 @@ export async function processTradeSignal(trade: DisclosureTrade): Promise<void> 
       }`,
     };
     logTradeDecision(decisionLog(trade, failed, market));
-    return;
+    return { decision: "SKIP", reason: failed.reason };
   }
   createOpenPosition({
     ticker: trade.ticker!,
@@ -196,4 +234,9 @@ export async function processTradeSignal(trade: DisclosureTrade): Promise<void> 
   logTradeDecision(
     decisionLog(trade, evaluation, market, execution.orderId),
   );
+  return {
+    decision: "BUY",
+    reason: evaluation.reason,
+    alpacaOrderId: execution.orderId,
+  };
 }

@@ -133,6 +133,21 @@ export function initializeDatabase(): void {
       ON trade_decisions(trade_id);
     CREATE INDEX IF NOT EXISTS idx_trade_decisions_created_at
       ON trade_decisions(created_at);
+    CREATE TABLE IF NOT EXISTS pending_orders (
+      id TEXT PRIMARY KEY,
+      trade_id TEXT NOT NULL UNIQUE REFERENCES trades(id),
+      ticker TEXT NOT NULL,
+      status TEXT NOT NULL CHECK(status IN ('PENDING', 'EXECUTED', 'SKIPPED')),
+      reason TEXT NOT NULL,
+      attempts INTEGER NOT NULL DEFAULT 0,
+      last_checked_at TEXT,
+      executed_at TEXT,
+      alpaca_order_id TEXT,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS idx_pending_orders_status
+      ON pending_orders(status);
   `);
   const positionColumns = db
     .prepare("PRAGMA table_info(bot_positions)")
