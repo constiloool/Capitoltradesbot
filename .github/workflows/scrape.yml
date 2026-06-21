@@ -3,7 +3,7 @@ name: Ingest Official Congressional Disclosures
 on:
   workflow_dispatch:
   schedule:
-    - cron: "17 */6 * * *"
+    - cron: "*/15 15-21 * * 1-5"
 
 permissions:
   contents: read
@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 15
     env:
       SOURCE_MODE: official_disclosures
-      SAFE_MODE: ${{ secrets.SAFE_MODE || 'true' }}
+      SAFE_MODE: ${{ secrets.SAFE_MODE || 'false' }}
       STORE_RAW_PDFS: "false"
       PDF_RETENTION_DAYS: "7"
       RAW_PDF_DIR: ./data/raw-pdfs
