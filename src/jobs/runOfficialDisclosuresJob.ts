@@ -25,6 +25,7 @@ import { processPendingOrders } from "./processPendingOrders.js";
 import { getMarketClock } from "../alpaca/alpacaClient.js";
 import { getDecisionSummary } from "../storage/decisionLogger.js";
 import { countOpenPositions } from "../storage/positionsStore.js";
+import { loadStrategyAccountSnapshot } from "../alpaca/accountSnapshot.js";
 
 function adapters(): DisclosureSourceAdapter[] {
   if (config.sourceMode === "house") return [new HouseDisclosureSource()];
@@ -46,6 +47,7 @@ export async function runOfficialDisclosuresJob(): Promise<IngestionSummary> {
 
   const removed = await cleanupRetainedDocuments();
   if (removed) logger.info("PDF", "Removed expired retained documents", { removed });
+  const accountSnapshot = await loadStrategyAccountSnapshot();
   let marketOpen = false;
   try {
     marketOpen = (await getMarketClock()).is_open;
@@ -53,7 +55,7 @@ export async function runOfficialDisclosuresJob(): Promise<IngestionSummary> {
     logger.error("MARKET", "Market clock unavailable; execution disabled", error);
   }
   await monitorOpenPositions(marketOpen);
-  const pendingResult = await processPendingOrders(marketOpen);
+  const pendingResult = await processPendingOrders(marketOpen, accountSnapshot);
   logger.info("MARKET", "Regular-session execution gate checked", {
     marketOpen: pendingResult.marketOpen,
     pendingChecked: pendingResult.checked,
@@ -116,6 +118,7 @@ export async function runOfficialDisclosuresJob(): Promise<IngestionSummary> {
       await processTradeSignal(trade, {
         marketOpen: pendingResult.marketOpen,
         allowPendingCreation: true,
+        accountSnapshot,
       });
       markTradeStrategyProcessed(trade.id);
     } catch (error) {

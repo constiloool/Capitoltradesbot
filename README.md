@@ -362,6 +362,25 @@ Am Ende jedes Laufs erscheint zusätzlich eine kompakte `[SUMMARY]`-Zeile mit:
 - offenen Bot-Positionen
 - aktuellem `SAFE_MODE`
 
+Zu Beginn jedes Strategy-Runs wird das Alpaca-Konto genau einmal geladen.
+Geloggte Felder:
+
+- `accountEquity` (`equity`, ersatzweise `portfolio_value`)
+- `buyingPower`
+- `cash`
+- `mode` (`paper` oder `live`)
+- `safeMode`
+
+Ein erfolgreicher Abruf erzeugt zusätzlich:
+
+```text
+Alpaca account equity loaded: <Wert>
+```
+
+Fehlende oder ungültige Zugangsdaten stoppen den Ingest nicht. Der Bot loggt
+`Could not load Alpaca account equity`, verarbeitet frühe SKIP-Regeln weiter
+und verweigert BUY-Kandidaten, solange kein verlässliches Equity vorliegt.
+
 ## Zusätzliche Strategievariablen
 
 ```dotenv

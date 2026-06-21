@@ -62,10 +62,17 @@ test("complete fresh BUY path persists simulated position and rich decision", as
 
   const result = await processTradeSignal(
     trade,
-    { marketOpen: true },
+    {
+      marketOpen: true,
+      accountSnapshot: {
+        accountEquity: 100_000,
+        buyingPower: 200_000,
+        cash: 100_000,
+        mode: "paper",
+      },
+    },
     {
       isAlpacaConfigured: () => true,
-      getAccount: async () => ({ equity: "100000" }),
       getBrokerPositions: async () => [],
       getBrokerAsset: async () => ({
         symbol: "AAPL",

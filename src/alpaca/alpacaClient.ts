@@ -14,6 +14,9 @@ export type AlpacaAccount = {
   status?: string;
   account_blocked?: boolean;
   equity?: string;
+  portfolio_value?: string;
+  buying_power?: string;
+  cash?: string;
 };
 
 export type AlpacaAsset = {

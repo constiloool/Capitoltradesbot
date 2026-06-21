@@ -6,9 +6,11 @@ import {
   updatePendingOrder,
 } from "../storage/pendingOrdersStore.js";
 import { logger } from "../utils/logger.js";
+import type { StrategyAccountSnapshot } from "../types/trading.js";
 
 export async function processPendingOrders(
   marketOpen?: boolean,
+  accountSnapshot?: StrategyAccountSnapshot,
 ): Promise<{ marketOpen: boolean; checked: number; executed: number }> {
   const pending = listPendingOrders();
   if (!pending.length) {
@@ -51,6 +53,7 @@ export async function processPendingOrders(
       const result = await processTradeSignal(trade, {
         marketOpen: true,
         allowPendingCreation: false,
+        accountSnapshot,
       });
       const status = result.decision === "BUY" ? "EXECUTED" : "SKIPPED";
       updatePendingOrder(

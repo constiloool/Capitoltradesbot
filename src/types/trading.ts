@@ -105,3 +105,10 @@ export type PendingOrder = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type StrategyAccountSnapshot = {
+  accountEquity: number;
+  buyingPower: number;
+  cash: number;
+  mode: "paper" | "live";
+};

@@ -3,10 +3,8 @@ import {
   alpacaConfigured,
   getAsset,
   getLatestPrice,
-  getPaperAccount,
   getPositions,
   getReferencePrice,
-  type AlpacaAccount,
   type AlpacaAsset,
   type AlpacaPosition,
 } from "../alpaca/alpacaClient.js";
@@ -31,6 +29,7 @@ import type { DisclosureTrade } from "../types/disclosure.js";
 import type {
   MarketContext,
   RuleEvaluation,
+  StrategyAccountSnapshot,
   TradeDecisionLog,
   TradeDecisionType,
 } from "../types/trading.js";
@@ -43,7 +42,6 @@ export type ProcessTradeResult = {
 
 export type TradeSignalDependencies = {
   isAlpacaConfigured(): boolean;
-  getAccount(): Promise<AlpacaAccount>;
   getBrokerPositions(): Promise<AlpacaPosition[]>;
   getBrokerAsset(symbol: string): Promise<AlpacaAsset>;
   getCurrentPrice(symbol: string): Promise<number>;
@@ -61,7 +59,6 @@ export type TradeSignalDependencies = {
 
 const defaultDependencies: TradeSignalDependencies = {
   isAlpacaConfigured: alpacaConfigured,
-  getAccount: getPaperAccount,
   getBrokerPositions: getPositions,
   getBrokerAsset: getAsset,
   getCurrentPrice: getLatestPrice,
@@ -101,7 +98,11 @@ function decisionLog(
 
 export async function processTradeSignal(
   trade: DisclosureTrade,
-  options: { marketOpen: boolean; allowPendingCreation?: boolean },
+  options: {
+    marketOpen: boolean;
+    allowPendingCreation?: boolean;
+    accountSnapshot?: StrategyAccountSnapshot;
+  },
   dependencies: TradeSignalDependencies = defaultDependencies,
 ): Promise<ProcessTradeResult> {
   const politicianScore = getPoliticianScore(trade.politicianName);
@@ -145,16 +146,29 @@ export async function processTradeSignal(
     logTradeDecision(decisionLog(trade, evaluation));
     return { decision: evaluation.decision, reason: evaluation.reason };
   }
+  if (!options.accountSnapshot) {
+    const reason = "Could not load Alpaca account equity";
+    const evaluation: RuleEvaluation = {
+      decision: "SKIP",
+      reason,
+      politicianScore,
+      valueScore: 1,
+      calculatedPositionSize: 0,
+      finalPositionSize: 0,
+      useNotional: false,
+      notes: [],
+    };
+    logTradeDecision(decisionLog(trade, evaluation));
+    return { decision: "SKIP", reason };
+  }
 
-  let account;
   let positions;
   let asset;
   let currentPrice;
   let referencePrice;
   try {
-    [account, positions, asset, currentPrice, referencePrice] =
+    [positions, asset, currentPrice, referencePrice] =
       await Promise.all([
-        dependencies.getAccount(),
         dependencies.getBrokerPositions(),
         dependencies.getBrokerAsset(trade.ticker!),
         dependencies.getCurrentPrice(trade.ticker!),
@@ -176,12 +190,24 @@ export async function processTradeSignal(
       useNotional: false,
       notes: [],
     };
-    logTradeDecision(decisionLog(trade, evaluation));
+    logTradeDecision(
+      decisionLog(trade, evaluation, {
+        accountEquity: options.accountSnapshot.accountEquity,
+        totalExposure: totalOpenExposure(),
+        currentTickerExposure: 0,
+        brokerMinimumOrderValue: config.brokerMinimumOrderValue,
+        tickerAlreadyHeld: false,
+      }),
+    );
     return { decision: evaluation.decision, reason: evaluation.reason };
   }
-  const accountEquity = Number(account.equity);
-  if (!Number.isFinite(accountEquity) || accountEquity <= 0) {
-    const reason = "Alpaca account equity is unavailable";
+  const accountEquity = options.accountSnapshot.accountEquity;
+  if (
+    accountEquity === undefined ||
+    !Number.isFinite(accountEquity) ||
+    accountEquity <= 0
+  ) {
+    const reason = "Could not load Alpaca account equity";
     const evaluation: RuleEvaluation = {
       decision: "SKIP",
       reason,
