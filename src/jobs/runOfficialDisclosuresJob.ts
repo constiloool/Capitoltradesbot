@@ -1,4 +1,3 @@
-import { placeOrderForTrade } from "../alpaca/orderService.js";
 import {
   cleanupRetainedDocuments,
   downloadDocument,
@@ -13,9 +12,15 @@ import {
   insertPendingFiling,
   updateFilingStatus,
 } from "../storage/filingRepository.js";
-import { insertDisclosureTrades } from "../storage/disclosureTradeRepository.js";
+import {
+  insertDisclosureTrades,
+  listUnprocessedTrades,
+  markTradeStrategyProcessed,
+} from "../storage/disclosureTradeRepository.js";
 import type { IngestionSummary } from "../types/disclosure.js";
 import { logger } from "../utils/logger.js";
+import { processTradeSignal } from "../rules/processTradeSignal.js";
+import { monitorOpenPositions } from "../monitor/positionMonitor.js";
 
 function adapters(): DisclosureSourceAdapter[] {
   if (config.sourceMode === "house") return [new HouseDisclosureSource()];
@@ -36,6 +41,7 @@ export async function runOfficialDisclosuresJob(): Promise<IngestionSummary> {
 
   const removed = await cleanupRetainedDocuments();
   if (removed) logger.info("PDF", "Removed expired retained documents", { removed });
+  await monitorOpenPositions();
 
   for (const adapter of adapters()) {
     let result;
@@ -73,17 +79,6 @@ export async function runOfficialDisclosuresJob(): Promise<IngestionSummary> {
           rawPdfPath: downloaded.storedPath,
         });
 
-        for (const trade of stored.inserted) {
-          try {
-            await placeOrderForTrade(trade);
-          } catch (error) {
-            logger.error(
-              "ALPACA",
-              `Order handling failed for ${trade.ticker ?? trade.id}`,
-              error,
-            );
-          }
-        }
       } catch (error) {
         summary.parserFailures += 1;
         const message = error instanceof Error ? error.message : String(error);
@@ -96,6 +91,19 @@ export async function runOfficialDisclosuresJob(): Promise<IngestionSummary> {
       } finally {
         await downloaded?.cleanup();
       }
+    }
+  }
+
+  for (const trade of listUnprocessedTrades()) {
+    try {
+      await processTradeSignal(trade);
+      markTradeStrategyProcessed(trade.id);
+    } catch (error) {
+      logger.error(
+        "STRATEGY",
+        `Trade decision failed for ${trade.ticker ?? trade.id}`,
+        error,
+      );
     }
   }
 

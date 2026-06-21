@@ -82,3 +82,59 @@ export function countDisclosureTrades(): number {
     }
   ).count;
 }
+
+type TradeRow = {
+  id: string;
+  filing_id: string;
+  source: "house" | "senate";
+  source_filing_id: string;
+  politician_name: string;
+  chamber: "House" | "Senate";
+  transaction_date: string;
+  filing_date: string;
+  ticker?: string;
+  asset_name: string;
+  transaction_type: "purchase" | "sale" | "exchange" | "other";
+  amount_range: string;
+  owner?: string;
+  raw_text?: string;
+  source_url: string;
+  dedupe_key: string;
+  created_at: string;
+};
+
+export function listUnprocessedTrades(limit = 5_000): DisclosureTrade[] {
+  const rows = getDatabase()
+    .prepare(
+      `SELECT trades.*, filings.source_filing_id
+       FROM trades JOIN filings ON filings.id = trades.filing_id
+       WHERE trades.strategy_processed_at IS NULL
+       ORDER BY trades.created_at ASC LIMIT ?`,
+    )
+    .all(limit) as TradeRow[];
+  return rows.map((row) => ({
+    id: row.id,
+    filingId: row.filing_id,
+    source: row.source,
+    sourceFilingId: row.source_filing_id,
+    politicianName: row.politician_name,
+    chamber: row.chamber,
+    transactionDate: row.transaction_date,
+    filingDate: row.filing_date,
+    ticker: row.ticker,
+    assetName: row.asset_name,
+    transactionType: row.transaction_type,
+    amountRange: row.amount_range,
+    owner: row.owner,
+    rawText: row.raw_text,
+    sourceUrl: row.source_url,
+    dedupeKey: row.dedupe_key,
+    createdAt: row.created_at,
+  }));
+}
+
+export function markTradeStrategyProcessed(id: string): void {
+  getDatabase()
+    .prepare("UPDATE trades SET strategy_processed_at = ? WHERE id = ?")
+    .run(new Date().toISOString(), id);
+}

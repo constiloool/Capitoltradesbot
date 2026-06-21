@@ -65,13 +65,95 @@ export function initializeDatabase(): void {
       raw_text TEXT,
       source_url TEXT NOT NULL,
       dedupe_key TEXT NOT NULL UNIQUE,
-      created_at TEXT NOT NULL
+      created_at TEXT NOT NULL,
+      strategy_processed_at TEXT
     );
     CREATE INDEX IF NOT EXISTS idx_filings_status ON filings(parse_status);
     CREATE INDEX IF NOT EXISTS idx_filings_date ON filings(filing_date);
     CREATE INDEX IF NOT EXISTS idx_trades_created_at ON trades(created_at);
     CREATE INDEX IF NOT EXISTS idx_trades_ticker ON trades(ticker);
+    CREATE TABLE IF NOT EXISTS bot_positions (
+      id TEXT PRIMARY KEY,
+      ticker TEXT NOT NULL,
+      entry_date TEXT NOT NULL,
+      entry_price REAL NOT NULL,
+      quantity REAL NOT NULL,
+      notional_value REAL NOT NULL,
+      politician_name TEXT NOT NULL,
+      politician_names TEXT NOT NULL,
+      source_trade_id TEXT NOT NULL,
+      disclosure_id TEXT NOT NULL,
+      transaction_date TEXT NOT NULL,
+      filing_date TEXT NOT NULL,
+      signal_count INTEGER NOT NULL,
+      last_signal_date TEXT NOT NULL,
+      cluster_signal INTEGER NOT NULL DEFAULT 0,
+      status TEXT NOT NULL CHECK(status IN ('OPEN', 'CLOSED')),
+      execution_mode TEXT NOT NULL DEFAULT 'SIMULATED'
+        CHECK(execution_mode IN ('SIMULATED', 'PAPER')),
+      exit_reason TEXT,
+      alpaca_order_id TEXT,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL
+    );
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_bot_positions_open_ticker
+      ON bot_positions(ticker) WHERE status = 'OPEN';
+    CREATE TABLE IF NOT EXISTS bot_position_signals (
+      position_id TEXT NOT NULL REFERENCES bot_positions(id),
+      trade_id TEXT NOT NULL REFERENCES trades(id),
+      politician_name TEXT NOT NULL,
+      signal_date TEXT NOT NULL,
+      created_at TEXT NOT NULL,
+      PRIMARY KEY(position_id, trade_id)
+    );
+    CREATE TABLE IF NOT EXISTS trade_decisions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      trade_id TEXT NOT NULL,
+      ticker TEXT,
+      politician_name TEXT NOT NULL,
+      transaction_date TEXT NOT NULL,
+      filing_date TEXT NOT NULL,
+      action TEXT NOT NULL,
+      value_range TEXT NOT NULL,
+      politician_score REAL NOT NULL,
+      value_score REAL NOT NULL,
+      current_price REAL,
+      reference_price REAL,
+      runup_pct REAL,
+      account_equity REAL,
+      calculated_position_size REAL,
+      final_position_size REAL,
+      decision TEXT NOT NULL,
+      reason TEXT NOT NULL,
+      alpaca_order_id TEXT,
+      safe_mode INTEGER NOT NULL,
+      created_at TEXT NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS idx_trade_decisions_trade_id
+      ON trade_decisions(trade_id);
+    CREATE INDEX IF NOT EXISTS idx_trade_decisions_created_at
+      ON trade_decisions(created_at);
   `);
+  const positionColumns = db
+    .prepare("PRAGMA table_info(bot_positions)")
+    .all() as Array<{ name: string }>;
+  if (
+    positionColumns.length > 0 &&
+    !positionColumns.some((column) => column.name === "execution_mode")
+  ) {
+    db.exec(
+      "ALTER TABLE bot_positions ADD COLUMN execution_mode TEXT NOT NULL DEFAULT 'SIMULATED'",
+    );
+  }
+  const tradeColumns = db
+    .prepare("PRAGMA table_info(trades)")
+    .all() as Array<{ name: string }>;
+  if (
+    tradeColumns.length > 0 &&
+    !tradeColumns.some((column) => column.name === "strategy_processed_at")
+  ) {
+    db.exec("ALTER TABLE trades ADD COLUMN strategy_processed_at TEXT");
+  }
 }
 
 export function closeDatabase(): void {

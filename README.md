@@ -230,3 +230,112 @@ Abgedeckt sind:
 
 Der aktuelle Stand ist bewusst ein sicherer Dateningest mit vorbereiteter
 Paper-Trading-Anbindung, kein autonomer Live-Trading-Bot.
+
+## Rule-Engine und Risk Management
+
+Jedes neue normalisierte Signal wird durch
+`src/rules/tradeRules.ts` verarbeitet. Die Pipeline trennt:
+
+- Scraper/Parser: liefert nur normalisierte Disclosure-Trades
+- Rule-Engine: entscheidet `BUY`, `SKIP` oder `WATCHLIST`
+- Risk-Modul: berechnet die Positionsgröße und Exposure-Limits
+- Execution: sendet ausschließlich erlaubte Alpaca-Orders
+- Position-Monitor: erzeugt `SELL`-Entscheidungen
+
+Aktuelle Kaufregeln:
+
+- ausschließlich `purchase`
+- echtes `transaction_date` höchstens sieben Kalendertage alt
+- Alpaca-Asset aktiv und handelbar
+- Preis mindestens 5 USD
+- maximal 10 % Kursanstieg seit Transaktionsdatum
+- kein bereits gehaltener Ticker
+- Politiker-Score größer null
+
+Positionsgröße:
+
+```text
+Equity × BASE_POSITION_PCT × politician_score × value_score
+```
+
+Limits:
+
+- 1 % Basisgröße
+- maximal 3 % pro Ticker
+- maximal 30 % Bot-Gesamtexposure
+- Fractionals werden als Notional-Order verwendet
+- andernfalls wird auf ganze Aktien abgerundet
+
+Value-Scores:
+
+- `$1,001 - $15,000`: `0.5`
+- `$15,001 - $50,000`: `1.0`
+- `$50,001 - $100,000`: `1.25`
+- über `$100,000`: `1.5`
+
+## Politiker-Scores
+
+Scores werden manuell in
+[`data/politician_scores.json`](data/politician_scores.json) gepflegt:
+
+```json
+{
+  "default_score": 1,
+  "politicians": {
+    "Unknown": 1
+  }
+}
+```
+
+Score `0` sperrt den Politiker. Unbekannte Namen verwenden `default_score`.
+
+## Positionen, Cluster und Exits
+
+Offene Bot-Positionen liegen dauerhaft in der SQLite-Tabelle
+`bot_positions`. Weitere Signale desselben Tickers öffnen keine zweite
+Position. Stattdessen werden `signal_count`, `politician_names` und
+`last_signal_date` aktualisiert. Drei verschiedene Politiker innerhalb von
+sieben Tagen markieren die Position als `cluster_signal`.
+
+Der Monitor läuft zu Beginn jedes Ingest-Laufs und verkauft vollständig bei:
+
+- `TAKE_PROFIT`: mindestens +30 %
+- `STOP_LOSS`: höchstens -12 %
+- `TIME_EXIT`: mindestens 45 Kalendertage
+
+Im Safe-Mode werden Kauf und Verkauf simuliert und trotzdem als Bot-Position
+gespeichert, damit die Regeln beobachtet werden können.
+
+## Entscheidungsprotokoll
+
+Jede geprüfte neue Meldung wird in `trade_decisions` gespeichert, unter
+anderem mit:
+
+- Politiker, Ticker, Transaktions- und Filing-Datum
+- Politiker- und Value-Score
+- aktuellem und historischem Referenzpreis
+- Run-up, Equity und Positionsgrößen
+- Entscheidung und exaktem Grund
+- Alpaca-Order-ID
+- Safe-Mode-Status
+
+Dadurch können spätere Auswertungen direkt aus SQLite erfolgen.
+
+## Zusätzliche Strategievariablen
+
+```dotenv
+MAX_TRADE_AGE_DAYS=7
+BASE_POSITION_PCT=0.01
+MAX_POSITION_PER_TICKER_PCT=0.03
+MAX_TOTAL_EXPOSURE_PCT=0.30
+MIN_SHARE_PRICE=5
+TAKE_PROFIT_PCT=0.30
+STOP_LOSS_PCT=0.12
+MAX_HOLDING_DAYS=45
+MAX_RUNUP_PCT=0.10
+SKIP_IF_PRICE_HISTORY_MISSING=true
+ALLOW_LIVE_TRADING=false
+```
+
+`ALLOW_LIVE_TRADING=false` verweigert nicht-Paper-Alpaca-URLs auch dann, wenn
+`SAFE_MODE=false` gesetzt wird.
