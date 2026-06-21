@@ -13,6 +13,24 @@ function numberEnv(name: string, fallback: number): number {
 }
 
 export const config = {
+  sourceMode:
+    (process.env.SOURCE_MODE?.trim() as
+      | "official_disclosures"
+      | "house"
+      | "senate"
+      | "capitol_trades") || "official_disclosures",
+  safeMode: booleanEnv("SAFE_MODE", true),
+  storeRawPdfs: booleanEnv("STORE_RAW_PDFS", false),
+  pdfRetentionDays: Math.max(0, numberEnv("PDF_RETENTION_DAYS", 7)),
+  rawPdfDir: path.resolve(process.env.RAW_PDF_DIR?.trim() || "./data/raw-pdfs"),
+  downloadTimeoutMs: Math.max(
+    5_000,
+    numberEnv("DOWNLOAD_TIMEOUT_MS", 30_000),
+  ),
+  maxFilingsPerRun: Math.max(1, numberEnv("MAX_FILINGS_PER_RUN", 50)),
+  userAgent:
+    process.env.USER_AGENT?.trim() ||
+    "CapitolTradesBot/2.0 (+https://github.com/constiloool/Capitoltradesbot)",
   capitolTradesUrl:
     process.env.CAPITOL_TRADES_URL?.trim() ||
     "https://www.capitoltrades.com/trades",

@@ -1,0 +1,2 @@
+This document is intentionally malformed.
+It contains no transaction table, dates, assets, or amount ranges.

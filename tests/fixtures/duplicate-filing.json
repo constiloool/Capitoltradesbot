@@ -1,0 +1,11 @@
+{
+  "id": "house:duplicate-fixture",
+  "source": "house",
+  "sourceFilingId": "duplicate-fixture",
+  "politicianName": "Jane Example",
+  "chamber": "House",
+  "filingType": "Periodic Transaction Report",
+  "filingDate": "2026-05-21",
+  "documentUrl": "https://disclosures-clerk.house.gov/example.pdf",
+  "documentKind": "pdf"
+}

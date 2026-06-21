@@ -1,12 +1,12 @@
 import { config } from "../config.js";
-import type { CapitolTrade } from "../types/trade.js";
+import type { DisclosureTrade } from "../types/disclosure.js";
 import { logger } from "../utils/logger.js";
 import { evaluateTrade } from "../strategy/basicStrategy.js";
 import { alpacaConfigured, submitPaperOrder, type AlpacaOrder } from "./alpacaClient.js";
 
 // This software is not financial advice. Real execution must only be enabled
 // after deliberate paper testing, risk controls, monitoring and legal review.
-export async function placeOrderForTrade(trade: CapitolTrade): Promise<void> {
+export async function placeOrderForTrade(trade: DisclosureTrade): Promise<void> {
   const decision = evaluateTrade(trade);
   if (decision.action === "ignore") {
     logger.info("ALPACA", "Trade ignored", { ticker: trade.ticker, reason: decision.reason });
@@ -29,12 +29,12 @@ export async function placeOrderForTrade(trade: CapitolTrade): Promise<void> {
     client_order_id: `ctb-${trade.id.slice(0, 28)}`,
   };
 
-  if (!config.tradingEnabled || !alpacaConfigured()) {
+  if (config.safeMode || !alpacaConfigured()) {
     logger.info("ALPACA", "Would place paper order", {
       ticker: order.symbol,
       side: order.side,
       qty: order.qty,
-      reason: !config.tradingEnabled ? "TRADING_ENABLED=false" : "API keys missing",
+      reason: config.safeMode ? "SAFE_MODE=true" : "API keys missing",
     });
     return;
   }

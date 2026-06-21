@@ -1,16 +1,16 @@
-name: Scrape CapitolTrades
+name: Ingest Official Congressional Disclosures
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/15 15-21 * * 1-5"
+    - cron: "17 */6 * * *"
 
 permissions:
   contents: read
   actions: write
 
 concurrency:
-  group: capitol-trades-scrape
+  group: congressional-disclosures-ingest
   cancel-in-progress: false
 
 jobs:
@@ -18,14 +18,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      CAPITOL_TRADES_URL: https://www.capitoltrades.com/trades
+      SOURCE_MODE: official_disclosures
+      SAFE_MODE: ${{ secrets.SAFE_MODE || 'true' }}
+      STORE_RAW_PDFS: "false"
+      PDF_RETENTION_DAYS: "7"
+      RAW_PDF_DIR: ./data/raw-pdfs
+      DOWNLOAD_TIMEOUT_MS: "30000"
+      MAX_FILINGS_PER_RUN: "50"
       DATABASE_PATH: ./data/capitoltrades.sqlite
-      PLAYWRIGHT_FALLBACK: "true"
-      DEBUG_SAVE_HTML: "false"
       ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
       ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
       ALPACA_BASE_URL: ${{ secrets.ALPACA_BASE_URL || 'https://paper-api.alpaca.markets' }}
-      TRADING_ENABLED: ${{ secrets.TRADING_ENABLED || 'false' }}
       PAPER_ORDER_QTY: ${{ secrets.PAPER_ORDER_QTY || '1' }}
 
     steps:
@@ -50,9 +53,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
-
       - name: Build
         run: npm run build
 
@@ -62,8 +62,8 @@ jobs:
       - name: Verify Alpaca paper connection
         run: npm run alpaca:check
 
-      - name: Run scraper
-        run: npm run scrape
+      - name: Ingest official disclosures
+        run: npm run ingest
 
       - name: Save SQLite state
         if: always()

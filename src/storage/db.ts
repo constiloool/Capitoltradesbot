@@ -15,32 +15,61 @@ export function getDatabase(): DatabaseSync {
 }
 
 export function initializeDatabase(): void {
-  getDatabase().exec(`
+  const db = getDatabase();
+  const existingTradeColumns = db
+    .prepare("PRAGMA table_info(trades)")
+    .all() as Array<{ name: string }>;
+  if (
+    existingTradeColumns.length > 0 &&
+    !existingTradeColumns.some((column) => column.name === "filing_id")
+  ) {
+    db.exec(`
+      ALTER TABLE trades RENAME TO legacy_capitol_trades;
+      DROP INDEX IF EXISTS idx_trades_scraped_at;
+      DROP INDEX IF EXISTS idx_trades_ticker;
+    `);
+  }
+
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS filings (
+      id TEXT PRIMARY KEY,
+      source TEXT NOT NULL CHECK(source IN ('house', 'senate')),
+      source_filing_id TEXT NOT NULL,
+      politician_name TEXT NOT NULL,
+      chamber TEXT NOT NULL,
+      filing_type TEXT NOT NULL,
+      filing_date TEXT NOT NULL,
+      document_url TEXT NOT NULL,
+      document_kind TEXT NOT NULL,
+      document_hash TEXT,
+      raw_pdf_path TEXT,
+      parse_status TEXT NOT NULL CHECK(parse_status IN ('pending', 'parsed', 'failed')),
+      parse_error TEXT,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL,
+      UNIQUE(source, source_filing_id)
+    );
     CREATE TABLE IF NOT EXISTS trades (
       id TEXT PRIMARY KEY,
+      filing_id TEXT NOT NULL REFERENCES filings(id),
+      source TEXT NOT NULL,
       politician_name TEXT NOT NULL,
-      politician_party TEXT,
-      politician_chamber TEXT,
-      politician_state TEXT,
-      issuer_name TEXT NOT NULL,
+      chamber TEXT NOT NULL,
+      transaction_date TEXT NOT NULL,
+      filing_date TEXT NOT NULL,
       ticker TEXT,
-      raw_ticker TEXT,
-      published_at_raw TEXT NOT NULL,
-      traded_at_raw TEXT NOT NULL,
-      filed_after_raw TEXT,
-      owner TEXT,
+      asset_name TEXT NOT NULL,
       transaction_type TEXT NOT NULL,
-      size_raw TEXT,
-      size_min REAL,
-      size_max REAL,
-      price_raw TEXT,
-      price REAL,
-      detail_url TEXT,
+      amount_range TEXT NOT NULL,
+      owner TEXT,
+      raw_text TEXT,
       source_url TEXT NOT NULL,
-      scraped_at TEXT NOT NULL,
-      raw_json TEXT
+      dedupe_key TEXT NOT NULL UNIQUE,
+      created_at TEXT NOT NULL
     );
-    CREATE INDEX IF NOT EXISTS idx_trades_scraped_at ON trades(scraped_at);
+    CREATE INDEX IF NOT EXISTS idx_filings_status ON filings(parse_status);
+    CREATE INDEX IF NOT EXISTS idx_filings_date ON filings(filing_date);
+    CREATE INDEX IF NOT EXISTS idx_trades_created_at ON trades(created_at);
     CREATE INDEX IF NOT EXISTS idx_trades_ticker ON trades(ticker);
   `);
 }

@@ -2,7 +2,7 @@
   "name": "capitol-trades-bot",
   "version": "1.0.0",
   "private": true,
-  "description": "Small, safe MVP for collecting and deduplicating CapitolTrades disclosures.",
+  "description": "Safe ingestion of official U.S. House and Senate trading disclosures.",
   "type": "module",
   "engines": {
     "node": ">=22"
@@ -11,6 +11,7 @@
     "build": "tsc -p tsconfig.json",
     "start": "node dist/src/index.js",
     "dev": "tsx watch src/index.ts",
+    "ingest": "tsx src/index.ts",
     "scrape": "tsx src/index.ts",
     "alpaca:check": "tsx src/alpaca/checkConnection.ts",
     "db:init": "tsx src/storage/initDb.ts",
@@ -18,12 +19,17 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "adm-zip": "^0.5.17",
     "cheerio": "^1.1.0",
     "dotenv": "^16.6.1",
+    "fast-xml-parser": "^5.9.3",
+    "pdf-parse": "^1.1.1",
     "playwright": "^1.53.2"
   },
   "devDependencies": {
+    "@types/adm-zip": "^0.5.8",
     "@types/node": "^24.0.3",
+    "@types/pdf-parse": "^1.1.5",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   }

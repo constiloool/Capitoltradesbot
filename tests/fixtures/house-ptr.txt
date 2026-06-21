@@ -1,0 +1,13 @@
+PERIODIC TRANSACTION REPORT
+Name: Hon. Jane Example
+Status: Member
+State/District: CA12
+
+ID Owner Asset Transaction Type Date Notification Date Amount
+SP Apple Inc. Common Stock (AAPL) [ST]
+P 05/12/2026 05/20/2026 $15,001 - $50,000
+Filing Status: New
+
+DC NVIDIA Corporation Common Stock (NVDA) [ST]
+S (partial) 05/14/2026 05/20/2026 $1,001 - $15,000
+Filing Status: New

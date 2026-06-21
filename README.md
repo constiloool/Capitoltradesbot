@@ -1,50 +1,65 @@
 # CapitolTradesBot
 
-Ein bewusst kleines Node.js-/TypeScript-MVP, das die erste Seite von
-[CapitolTrades](https://www.capitoltrades.com/trades) einliest, Trades
-normalisiert, per stabiler SHA-256-ID dedupliziert und in SQLite speichert.
-Neue Trades können anschließend durch eine defensive Strategie bewertet
-werden. Alpaca ist vorbereitet, bleibt standardmäßig aber vollständig im
-Safe-Mode.
+Ein kleines Node.js-/TypeScript-MVP, das offizielle Periodic Transaction
+Reports (PTRs) des U.S. House und U.S. Senate einliest, Dokumente defensiv
+parst, Trades normalisiert, dedupliziert und in SQLite speichert.
 
-> Congressional Disclosures werden oft verspätet veröffentlicht. Dieses
-> Projekt ist kein Echtzeitsignal und keine Finanzberatung.
+Der Bot scrapt **CapitolTrades nicht mehr standardmäßig**. Der alte Adapter
+bleibt ausschließlich als expliziter, veralteter Referenzmodus erhalten. Es
+gibt keinen CAPTCHA-, Cloudflare-, Rate-Limit- oder Anti-Bot-Bypass.
 
-## Sicherheitsmodell
+> Congressional Disclosures werden häufig Tage oder Wochen nach einer
+> Transaktion veröffentlicht. Sie sind keine Echtzeitdaten und dieses Projekt
+> ist keine Finanzberatung.
 
-- `TRADING_ENABLED=false` ist der Standard.
-- Ohne beide Alpaca-Keys wird niemals eine Order gesendet.
-- Der MVP akzeptiert ausschließlich
-  `https://paper-api.alpaca.markets` als Alpaca-URL.
-- Käufe werden im Safe-Mode nur als `Would place paper order` geloggt.
-- Verkäufe sind im MVP immer `log-only`.
-- Exchange-/unbekannte Transaktionen und Nicht-US-Ticker werden ignoriert.
-- Die Ordergröße ist fest (`PAPER_ORDER_QTY=1`) und wird nicht aus der
-  veröffentlichten Betragsspanne abgeleitet.
+## Offizielle Quellen
 
-## Projektstruktur
+- **House:** Office of the Clerk, Financial Disclosure/PTR-Index und offizielle
+  PTR-PDFs unter `disclosures-clerk.house.gov`
+- **Senate:** Senate eFD Public Financial Disclosure Search unter
+  `efdsearch.senate.gov`
 
-```text
-src/
-  alpaca/       # Paper-Alpaca-Client und Order-Service
-  jobs/         # Ein kompletter Scrape-Lauf
-  scraper/      # Fetch, Playwright-Fallback und HTML-Parser
-  storage/      # SQLite-Verbindung und Repository
-  strategy/     # Defensive MVP-Entscheidungen
-  types/        # Trade-Modell
-  utils/        # Logging und Normalisierung
-.github/workflows/scrape.yml
+Der House Clerk stellt einen jährlichen ZIP/XML-Index bereit. Der Adapter
+filtert `FilingType=P` und lädt nur neue PTR-PDFs.
+
+Senate eFD verlangt vor der Suche die gesetzliche Nutzungsbestätigung. Der
+Adapter führt diesen offiziellen Session-Ablauf aus. eFD kann Rechenzentren
+oder Regionen mit HTTP 403 ablehnen. Das wird protokolliert; der House-Ingest
+läuft trotzdem weiter. Schutzmechanismen werden nicht umgangen.
+
+## Standard-Sicherheitsmodus
+
+```dotenv
+SOURCE_MODE=official_disclosures
+SAFE_MODE=true
+STORE_RAW_PDFS=false
 ```
 
-## Lokal installieren
+- `SAFE_MODE=true`: Es wird niemals eine Alpaca-Order gesendet.
+- Fehlende Alpaca-Schlüssel stoppen die Datenerfassung nicht.
+- Der Broker-Client akzeptiert ausschließlich die Alpaca-Paper-URL.
+- Käufe werden im Safe-Mode nur als `Would place paper order` geloggt.
+- Verkäufe bleiben im MVP immer `log-only`.
+- Tickerlose Assets werden gespeichert, aber nicht an Alpaca übergeben.
 
-Voraussetzungen: Node.js 22 oder neuer.
+`TRADING_ENABLED` ist nur noch eine veraltete Kompatibilitätsvariable und
+schaltet keine Orders frei. Für Paper-Orders müssen bewusst gleichzeitig
+`SAFE_MODE=false`, gültige Paper-Keys und die Paper-API-URL gesetzt sein.
+
+## Installation und lokaler Lauf
+
+Voraussetzung: Node.js 22 oder neuer.
 
 ```bash
 npm install
-npx playwright install chromium
 cp .env.example .env
 npm run db:init
+npm run ingest
+```
+
+Der bestehende Einstiegspunkt bleibt kompatibel:
+
+```bash
 npm run scrape
 ```
 
@@ -59,180 +74,158 @@ npm start
 npm run dev
 ```
 
-`npm run dev` startet den Job beim Start und nach lokalen Codeänderungen neu.
-Der produktive Zeitplan liegt bewusst in GitHub Actions, nicht in einer
-Endlosschleife auf dem Laptop.
-
 ## Konfiguration
 
-| Variable | Standard | Zweck |
+| Variable | Standard | Bedeutung |
 |---|---|---|
-| `CAPITOL_TRADES_URL` | CapitolTrades Trades-Seite | Datenquelle |
-| `DATABASE_PATH` | `./data/capitoltrades.sqlite` | SQLite-Datei |
-| `ALPACA_API_KEY` | leer | Alpaca-Key |
-| `ALPACA_SECRET_KEY` | leer | Alpaca-Secret |
-| `ALPACA_BASE_URL` | Paper-API | Nur Paper-Trading wird akzeptiert |
-| `TRADING_ENABLED` | `false` | Paper-Orders ausdrücklich aktivieren |
-| `PAPER_ORDER_QTY` | `1` | Feste Anzahl Aktien |
-| `DEBUG_SAVE_HTML` | `false` | HTML unter `data/` speichern |
-| `PLAYWRIGHT_FALLBACK` | `true` | Browser-Fallback erlauben |
-| `SCRAPER_TIMEOUT_MS` | `45000` | Netzwerk-/Browser-Timeout |
-| `MIN_TRADE_SIZE` | `0` | Optionale Mindestgröße |
+| `SOURCE_MODE` | `official_disclosures` | `official_disclosures`, `house`, `senate` oder veraltet `capitol_trades` |
+| `SAFE_MODE` | `true` | Unterbindet Alpaca-Orders |
+| `STORE_RAW_PDFS` | `false` | Dokumente dauerhaft speichern |
+| `PDF_RETENTION_DAYS` | `7` | Aufbewahrung gespeicherter Dokumente |
+| `RAW_PDF_DIR` | `./data/raw-pdfs` | Zielordner für gespeicherte Dokumente |
+| `DOWNLOAD_TIMEOUT_MS` | `30000` | Download-Timeout |
+| `MAX_FILINGS_PER_RUN` | `50` | Maximale Filings pro Quelle und Lauf |
+| `DATABASE_PATH` | `./data/capitoltrades.sqlite` | SQLite-Datenbank |
+| `ALPACA_API_KEY` | leer | Alpaca Paper API Key |
+| `ALPACA_SECRET_KEY` | leer | Alpaca Paper Secret |
+| `ALPACA_BASE_URL` | Paper-API | Muss Paper-API bleiben |
+| `PAPER_ORDER_QTY` | `1` | Feste Paper-Ordergröße |
 
-API-Keys gehören lokal ausschließlich in `.env`. Diese Datei ist ignoriert
-und darf nicht committed werden.
+## PDF- und Dokument-Speicherung
 
-## Scraper-Verhalten und aktueller Seiten-Schutz
+Bei `STORE_RAW_PDFS=false`:
 
-Der Scraper probiert zuerst einen sparsamen HTTP-Request und parst die Tabelle
-mit Cheerio. Wird eine clientseitige Seite oder ein Vercel-Sicherheitscheckpoint
-erkannt, startet er einmalig einen gekapselten Playwright-/Chromium-Fallback.
-Es gibt bewusst keinen CAPTCHA-, Rate-Limit- oder Anti-Bot-Bypass.
+1. Dokument wird in einen temporären Ordner geladen.
+2. SHA-256-Dokumenthash wird berechnet.
+3. Dokument wird geparst.
+4. Filing-Metadaten und normalisierte Trades werden gespeichert.
+5. Der temporäre Ordner wird auch bei Parserfehlern entfernt.
 
-Bei der technischen Prüfung am 20. Juni 2026 antwortete CapitolTrades sowohl
-auf direkte Requests als auch auf frische headless Browser-Sessions mit einem
-Vercel-Sicherheitscheckpoint. In diesem Fall loggt der Bot den Fehler, schreibt
-keine falschen Daten und beendet den Lauf sauber. Die Website kann ihren Schutz
-oder ihr Markup jederzeit ändern. Vor einem dauerhaften Betrieb sollten außerdem
-die aktuellen Nutzungsbedingungen und `robots.txt` manuell geprüft werden.
-
-Mit `DEBUG_SAVE_HTML=true` lässt sich die erhaltene Antwort zur Diagnose unter
-`data/debug-*.html` sichern.
-
-## Deduplizierung und gespeicherte Trades prüfen
-
-Die ID enthält Detail-URL, Politiker, Issuer, Ticker, Handelsdatum,
-Transaktionstyp, Größenbereich und Owner. `INSERT OR IGNORE` auf dem
-Primärschlüssel verhindert Doppelungen.
-
-Lokal kann die Anzahl so geprüft werden:
-
-```bash
-node -e "const {DatabaseSync}=require('node:sqlite'); const db=new DatabaseSync('./data/capitoltrades.sqlite'); console.log(db.prepare('SELECT COUNT(*) AS count FROM trades').get())"
-```
-
-Die Logs zeigen außerdem:
+Bei `STORE_RAW_PDFS=true` werden Dokumente unter `RAW_PDF_DIR` gespeichert:
 
 ```text
-[SCRAPER] Found X trades
-[DB] Inserted Y new trades total=Z
-[GITHUB_ACTION] Job completed found=X new=Y
+house_20034783_2026-06-18_thomas-h-kean-jr.pdf
 ```
 
-## Auf GitHub pushen
+Bei jedem Lauf werden Dateien gelöscht, die älter als
+`PDF_RETENTION_DAYS` sind.
 
-Das Repository besitzt bereits den Remote `origin`. Nach eigener Prüfung:
+## Datenbank
 
-```bash
-git add .
-git commit -m "feat: rebuild CapitolTradesBot MVP"
-git push origin main
+`filings` enthält Quelle, offizielle Filing-ID, Politiker, Kammer, Typ, Datum,
+Dokument-URL/-Hash, optionalen Dateipfad und Parserstatus.
+
+`trades` enthält Filing-Verknüpfung, Quelle, Politiker, Datum, Ticker,
+Assetname, Transaktionstyp, Betragsspanne, Owner, Rohtext, URL und Dedupe-Key.
+
+Eine vorhandene Datenbank mit dem alten CapitolTrades-Schema wird beim
+`db:init` einmalig nach `legacy_capitol_trades` verschoben. Die historischen
+Daten werden dadurch nicht gelöscht.
+
+Der stabile Dedupe-Key enthält:
+
+```text
+source + sourceFilingId + politicianName + transactionDate
++ ticker/assetName + transactionType + amountRange
 ```
 
-Falls ein neues Repository verwendet wird:
+## Fehlerverhalten und Logs
 
-```bash
-git remote add origin https://github.com/DEIN-NAME/DEIN-REPO.git
-git push -u origin main
+Ein unparseierbares Filing stoppt nicht den Lauf. Es erhält:
+
+```text
+parse_status=failed
+parse_error=<verständliche Fehlermeldung>
 ```
 
-## GitHub Repository Secrets einrichten
+Die Abschlusszeile enthält:
 
-Repository öffnen:
+- geprüfte Filings
+- neue Filings
+- geladene Dokumente
+- geparste Trades
+- übersprungene Duplikate
+- Parserfehler
+- neu gespeicherte Trades
+
+Beispiel:
+
+```text
+[INGEST] Official disclosure ingestion completed
+filingsChecked=3846 newFilings=1 documentsDownloaded=1
+tradesParsed=5 duplicatesSkipped=0 parserFailures=0 newTradesInserted=5
+```
+
+## GitHub Actions
+
+Der Workflow
+[`scrape.yml`](.github/workflows/scrape.yml) bleibt manuell über
+`workflow_dispatch` startbar und läuft alle sechs Stunden:
+
+```yaml
+cron: "17 */6 * * *"
+```
+
+GitHub-Zeitpläne verwenden UTC und können sich verzögern. Der Workflow:
+
+1. installiert Node-Abhängigkeiten,
+2. stellt die SQLite-Datei aus dem Actions-Cache wieder her,
+3. baut und initialisiert/migriert die Datenbank,
+4. prüft die Alpaca-Paper-Verbindung read-only,
+5. führt den offiziellen Ingest aus,
+6. speichert Cache und Datenbank-Artefakt.
+
+### Repository Secrets
+
+GitHub:
 
 **Settings → Secrets and variables → Actions → New repository secret**
 
-Folgende Secrets anlegen:
-
 | Secret | Empfohlener Wert |
 |---|---|
-| `ALPACA_API_KEY` | zunächst leer lassen oder Paper-Key |
-| `ALPACA_SECRET_KEY` | zunächst leer lassen oder Paper-Secret |
+| `ALPACA_API_KEY` | Alpaca Paper Key |
+| `ALPACA_SECRET_KEY` | Alpaca Paper Secret |
 | `ALPACA_BASE_URL` | `https://paper-api.alpaca.markets` |
-| `TRADING_ENABLED` | `false` |
 | `PAPER_ORDER_QTY` | `1` |
+| `SAFE_MODE` | `true` |
 
-Fehlende Secrets stoppen den Scraper nicht. Alpaca bleibt dann deaktiviert und
-der Bot loggt nur hypothetische Paper-Orders.
+Secrets werden nicht geloggt. `SAFE_MODE` sollte während Entwicklung und
+Paper-Beobachtung auf `true` bleiben.
 
-Der GitHub-Workflow führt vor jedem Scrape einen read-only Kontotest gegen
-`GET /v2/account` aus. Dabei wird keine Order gesendet und es werden weder
-Schlüssel noch Kontonummern geloggt.
+### Workflow manuell starten
 
-## GitHub Actions aktivieren und manuell starten
+1. Repository auf GitHub öffnen.
+2. **Actions** wählen.
+3. **Ingest Official Congressional Disclosures** öffnen.
+4. **Run workflow** wählen.
+5. Logs und Datenbank-Artifact prüfen.
 
-Der Workflow liegt in
-`.github/workflows/scrape.yml`. Nach dem Push:
+## Tests
 
-1. GitHub-Repository öffnen.
-2. **Actions** auswählen.
-3. **Scrape CapitolTrades** öffnen.
-4. **Run workflow** anklicken.
-5. Den Lauf und seine Logs öffnen.
+Alle Tests verwenden lokale Fixtures und keine Live-Netzwerkaufrufe:
 
-Der Workflow installiert Node und Chromium, baut TypeScript, initialisiert
-SQLite, führt den Scraper aus und lädt die Datenbank als 30 Tage verfügbares
-Artifact hoch.
-
-## Cron-Frequenz ändern
-
-In `.github/workflows/scrape.yml`:
-
-```yaml
-schedule:
-  - cron: "*/15 * * * *"
+```bash
+npm test
 ```
 
-GitHub verwendet UTC und geplante Actions sind nicht sekundengenau. Besonders
-zu vollen Stunden können Läufe verzögert oder bei sehr inaktiven Repositories
-deaktiviert werden. Für weniger Last sind `*/30 * * * *` oder `0 * * * *`
-sinnvolle Alternativen.
+Abgedeckt sind:
 
-Für strengere Zeitpläne eignen sich später Render Cron Jobs, Railway Scheduled
-Jobs, Vercel Cron oder Supabase Scheduled Functions.
+- House-PTR
+- Senate-PTR
+- unparseierbares Filing
+- doppeltes Filing und doppelter Trade
+- Normalisierung und Legacy-HTML-Parser
 
-## SQLite in GitHub Actions
+## Vor einer Aufhebung von SAFE_MODE
 
-Jeder Lauf:
-
-1. stellt den jüngsten SQLite-Actions-Cache wieder her,
-2. schreibt neue Trades,
-3. speichert einen neuen unveränderlichen Cache,
-4. lädt zusätzlich ein Datenbank-Artefakt zur Kontrolle hoch.
-
-Das ist für ein MVP praktikabel, aber keine garantierte dauerhafte Datenbank:
-GitHub darf Caches löschen, Artifacts laufen nach 30 Tagen ab und parallele
-Schreibzugriffe sind ungeeignet. Der Workflow verhindert parallele Läufe über
-`concurrency`.
-
-Für echten Cloudbetrieb sollte die Storage-Schicht auf Supabase/Postgres
-umgestellt werden. `tradeRepository.ts` kapselt die Speicherung bereits, sodass
-Scraper und Strategie dabei unverändert bleiben können.
-
-## Vor echten Orders unbedingt ergänzen
-
-- längerer Paper-Test mit Monitoring und Alerts
-- Marktzeiten-, Buying-Power- und Positionsprüfung
-- Limits pro Tag, Symbol und Gesamtportfolio
-- idempotente Broker-Order-Historie und Reconciliation
-- Umgang mit Splits, Optionen, ETFs und ungültigen Symbolen
-- kontrollierte Sell-/Short-Strategie
-- Fehleralarme und manueller Kill-Switch
+- längerer Beobachtungszeitraum ohne Orders
+- Altersgrenze für verspätete Meldungen
+- Positions-, Buying-Power- und Marktzeitenprüfung
+- Tages-/Symbol-/Portfoliolimits
+- Broker-Reconciliation und idempotente Orderhistorie
+- Alerts und manueller Kill-Switch
+- kontrollierte Behandlung von Optionen, Fonds und tickerlosen Assets
 - rechtliche, steuerliche und regulatorische Prüfung
-- ausdrückliche Entscheidung, ob verspätete Disclosures überhaupt handelbar
-  sein sollen
 
-Der aktuelle Code verweigert absichtlich Live-Alpaca-URLs. Eine spätere
-Live-Freischaltung sollte als eigene, geprüfte Änderung mit zusätzlichen
-Sicherheitsbarrieren erfolgen.
-
-## Erweiterungsmöglichkeiten
-
-- Pagination und inkrementelles Nachladen
-- Supabase/Postgres
-- Telegram-/Discord-Alerts
-- Filter nach Politiker, Partei, Volumen oder Ticker
-- Dashboard/API
-- Backtesting
-- mehrere Strategiemodule
-- kontrollierte Paper-Order-Reconciliation
+Der aktuelle Stand ist bewusst ein sicherer Dateningest mit vorbereiteter
+Paper-Trading-Anbindung, kein autonomer Live-Trading-Bot.

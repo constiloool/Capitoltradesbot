@@ -6,6 +6,7 @@ dist/
 data/*.sqlite
 data/*.sqlite-*
 data/debug-*.html
+data/raw-pdfs/
 playwright-report/
 test-results/
 *.log
