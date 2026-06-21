@@ -107,30 +107,45 @@ export async function getReferencePrice(
 ): Promise<number | undefined> {
   const transaction = new Date(`${transactionDate}T00:00:00Z`);
   if (Number.isNaN(transaction.getTime())) return undefined;
-  const start = new Date(transaction.getTime() - 8 * 86_400_000);
   const end = new Date(transaction.getTime() + 4 * 86_400_000);
-  const params = new URLSearchParams({
+  const nearTransactionParams = new URLSearchParams({
     timeframe: "1Day",
-    start: start.toISOString(),
+    start: transaction.toISOString(),
     end: end.toISOString(),
+    adjustment: "all",
+    feed: "iex",
+    limit: "10",
+  });
+  const nearResponse = await marketData(
+    `/v2/stocks/${encodeURIComponent(symbol)}/bars?${nearTransactionParams}`,
+  );
+  if (nearResponse.ok) {
+    const nearPayload = (await nearResponse.json()) as {
+      bars?: Array<{ t: string; c: number }>;
+    };
+    const nearPrice = nearPayload.bars?.[0]?.c;
+    if (nearPrice) return nearPrice;
+  }
+
+  const recentEnd = new Date();
+  const recentStart = new Date(recentEnd.getTime() - 20 * 86_400_000);
+  const fallbackParams = new URLSearchParams({
+    timeframe: "1Day",
+    start: recentStart.toISOString(),
+    end: recentEnd.toISOString(),
     adjustment: "all",
     feed: "iex",
     limit: "20",
   });
-  const response = await marketData(
-    `/v2/stocks/${encodeURIComponent(symbol)}/bars?${params}`,
+  const fallbackResponse = await marketData(
+    `/v2/stocks/${encodeURIComponent(symbol)}/bars?${fallbackParams}`,
   );
-  if (!response.ok) return undefined;
-  const payload = (await response.json()) as {
+  if (!fallbackResponse.ok) return undefined;
+  const fallbackPayload = (await fallbackResponse.json()) as {
     bars?: Array<{ t: string; c: number }>;
   };
-  const bars = payload.bars ?? [];
-  const target = transaction.getTime();
-  const afterOrSame = bars.find(
-    (bar) => new Date(bar.t).getTime() >= target,
-  );
-  const fallback = bars.at(-1);
-  return afterOrSame?.c ?? fallback?.c;
+  const bars = fallbackPayload.bars ?? [];
+  return bars.length >= 5 ? bars.at(-5)?.c : undefined;
 }
 
 export async function submitPaperOrder(
