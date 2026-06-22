@@ -32,6 +32,17 @@ export type AlpacaPosition = {
   market_value: string;
   current_price: string;
   avg_entry_price: string;
+  unrealized_pl?: string;
+  unrealized_plpc?: string;
+};
+
+export type AlpacaPortfolioHistory = {
+  timestamp?: number[];
+  equity?: number[];
+  profit_loss?: number[];
+  profit_loss_pct?: number[];
+  base_value?: number;
+  timeframe?: string;
 };
 
 export type AlpacaClock = {
@@ -90,6 +101,24 @@ export async function getPositions(): Promise<AlpacaPosition[]> {
     throw new Error(`Alpaca positions request failed (HTTP ${response.status})`);
   }
   return response.json() as Promise<AlpacaPosition[]>;
+}
+
+export async function getPortfolioHistory(): Promise<AlpacaPortfolioHistory> {
+  const params = new URLSearchParams({
+    period: "1M",
+    timeframe: "1D",
+    intraday_reporting: "market_hours",
+  });
+  const response = await fetch(
+    paperApiUrl(`/v2/account/portfolio/history?${params}`),
+    { headers: authHeaders() },
+  );
+  if (!response.ok) {
+    throw new Error(
+      `Alpaca portfolio history request failed (HTTP ${response.status})`,
+    );
+  }
+  return response.json() as Promise<AlpacaPortfolioHistory>;
 }
 
 export async function getMarketClock(): Promise<AlpacaClock> {

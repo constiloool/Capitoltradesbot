@@ -9,7 +9,7 @@ on:
     - cron: "7-59/15 13-21 * * 1-5"
 
 permissions:
-  contents: read
+  contents: write
   actions: write
 
 concurrency:
@@ -78,6 +78,9 @@ jobs:
       - name: Ingest official disclosures
         run: npm run ingest
 
+      - name: Export read-only dashboard data
+        run: npm run dashboard:export
+
       - name: Save SQLite state
         if: always()
         uses: actions/cache/save@v4
@@ -93,3 +96,18 @@ jobs:
           path: data/capitoltrades.sqlite
           if-no-files-found: warn
           retention-days: 30
+
+      - name: Publish dashboard data branch
+        if: success()
+        run: |
+          export_dir="$(mktemp -d)"
+          cp dashboard-data/*.json "$export_dir/"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan dashboard-data-publish
+          git rm -rf .
+          mkdir -p dashboard-data
+          cp "$export_dir"/*.json dashboard-data/
+          git add dashboard-data
+          git commit -m "Update dashboard data"
+          git push --force origin HEAD:dashboard-data
