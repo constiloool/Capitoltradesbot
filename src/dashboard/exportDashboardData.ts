@@ -14,6 +14,7 @@ type DecisionRow = {
   transaction_date: string;
   politician_name: string;
   ticker: string | null;
+  asset_name: string | null;
   action: string;
   reason: string;
   final_position_size: number | null;
@@ -60,6 +61,27 @@ function signalAge(transactionDate: string, createdAt: string): string {
   return `${days} day${days === 1 ? "" : "s"}`;
 }
 
+function displaySkipReason(decision: DecisionRow): string {
+  if (!decision.reason.includes("older than MAX_TRADE_AGE_DAYS")) {
+    return decision.reason;
+  }
+
+  const transaction = new Date(
+    `${decision.transaction_date}T00:00:00Z`,
+  ).getTime();
+  const decisionTime = new Date(decision.created_at).getTime();
+  if (!Number.isFinite(transaction) || !Number.isFinite(decisionTime)) {
+    return `Trade exceeds the ${config.maxTradeAgeDays}-day freshness limit`;
+  }
+
+  const ageDays = Math.max(
+    0,
+    Math.floor((decisionTime - transaction) / 86_400_000),
+  );
+  const daysOverLimit = Math.max(0, ageDays - config.maxTradeAgeDays);
+  return `Trade is ${ageDays} days old — ${daysOverLimit} day${daysOverLimit === 1 ? "" : "s"} over the ${config.maxTradeAgeDays}-day limit`;
+}
+
 export async function exportDashboardData(
   outputDirectory = process.env.DASHBOARD_DATA_DIR?.trim() || "./dashboard-data",
 ): Promise<void> {
@@ -95,11 +117,13 @@ export async function exportDashboardData(
   ).count;
   const skippedRows = db
     .prepare(
-      `SELECT transaction_date, politician_name, ticker, action, reason,
-              final_position_size, decision, alpaca_order_id, created_at
-       FROM trade_decisions
-       WHERE decision = 'SKIP'
-       ORDER BY id DESC
+      `SELECT td.transaction_date, td.politician_name, td.ticker,
+              t.asset_name, td.action, td.reason, td.final_position_size,
+              td.decision, td.alpaca_order_id, td.created_at
+       FROM trade_decisions td
+       LEFT JOIN trades t ON t.id = td.trade_id
+       WHERE td.decision = 'SKIP'
+       ORDER BY td.id DESC
        LIMIT 25`,
     )
     .all() as unknown as DecisionRow[];
@@ -125,9 +149,12 @@ export async function exportDashboardData(
   const skippedTrades = skippedRows.map((decision) => ({
     date: decision.created_at.slice(0, 10),
     politician: decision.politician_name,
-    ticker: decision.ticker ?? "—",
+    ticker:
+      decision.ticker?.trim() ||
+      decision.asset_name?.trim() ||
+      "Ticker missing",
     action: decision.action,
-    reason: decision.reason,
+    reason: displaySkipReason(decision),
     status: "Skipped",
   }));
 
