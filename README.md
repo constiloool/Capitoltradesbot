@@ -164,15 +164,17 @@ Der Workflow
 `workflow_dispatch` startbar und verwendet zwei UTC-Zeitpläne:
 
 ```yaml
-cron: "0 7 * * 1-5"
-cron: "*/15 13-21 * * 1-5"
+cron: "7 7 * * 1-5"
+cron: "7-59/15 13-21 * * 1-5"
 ```
 
 Der Morgenlauf liest neue Meldungen ein. Der Nachmittagsplan läuft vor,
 während und nach der regulären US-Sitzung. GitHub-Zeitpläne verwenden UTC,
 können sich verzögern und bilden die deutsche Sommer-/Winterzeit nicht
 automatisch ab. Für die tatsächliche Ausführung ist deshalb ausschließlich
-Alpacas Market Clock maßgeblich.
+Alpacas Market Clock maßgeblich. Die Läufe sind bewusst auf Minute `07`, `22`,
+`37` und `52` versetzt, weil GitHub geplante Jobs zur vollen Stunde unter
+hoher Last verzögern oder verwerfen kann.
 
 Der Workflow:
 

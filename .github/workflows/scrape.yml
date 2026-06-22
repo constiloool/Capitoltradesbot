@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
   schedule:
     # Morning disclosure fetch around the German cash-market open (UTC).
-    - cron: "0 7 * * 1-5"
+    - cron: "7 7 * * 1-5"
     # Frequent checks before, during and shortly after the regular US session.
-    - cron: "*/15 13-21 * * 1-5"
+    - cron: "7-59/15 13-21 * * 1-5"
 
 permissions:
   contents: read
