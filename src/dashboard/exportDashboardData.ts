@@ -123,6 +123,11 @@ export async function exportDashboardData(
        FROM trade_decisions td
        LEFT JOIN trades t ON t.id = td.trade_id
        WHERE td.decision = 'SKIP'
+         AND td.id = (
+           SELECT MAX(latest.id)
+           FROM trade_decisions latest
+           WHERE latest.trade_id = td.trade_id
+         )
        ORDER BY td.id DESC
        LIMIT 25`,
     )
