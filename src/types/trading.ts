@@ -1,4 +1,5 @@
 import type { DisclosureTrade } from "./disclosure.js";
+import type { TradeDateSource } from "../rules/copyTradeRule.js";
 
 export type TradeDecisionType =
   | "BUY"
@@ -26,6 +27,9 @@ export type RuleEvaluation = {
   politicianScore: number;
   valueScore: number;
   runupPct?: number;
+  effectiveTradeDate?: string;
+  tradeDateSource?: TradeDateSource;
+  tradeAgeDays?: number;
   calculatedPositionSize: number;
   finalPositionSize: number;
   quantity?: number;
@@ -39,6 +43,9 @@ export type TradeDecisionLog = {
   politicianName: string;
   transactionDate: string;
   filingDate: string;
+  effectiveTradeDate?: string;
+  tradeDateSource?: TradeDateSource;
+  tradeAgeDays?: number;
   action: string;
   valueRange: string;
   politicianScore: number;

@@ -47,7 +47,7 @@ export const config = {
   tradingEnabled: booleanEnv("TRADING_ENABLED", false),
   allowLiveTrading: booleanEnv("ALLOW_LIVE_TRADING", false),
   paperOrderQty: Math.max(1, numberEnv("PAPER_ORDER_QTY", 1)),
-  maxTradeAgeDays: Math.max(0, numberEnv("MAX_TRADE_AGE_DAYS", 7)),
+  maxTradeAgeDays: Math.max(0, numberEnv("MAX_TRADE_AGE_DAYS", 31)),
   basePositionPct: Math.max(0, numberEnv("BASE_POSITION_PCT", 0.01)),
   maxPositionPerTickerPct: Math.max(
     0,
