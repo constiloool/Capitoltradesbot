@@ -34,6 +34,14 @@ type PositionRow = {
   created_at: string;
 };
 
+type PendingDecisionRow = {
+  ticker: string;
+  politician_name: string;
+  transaction_date: string;
+  final_position_size: number | null;
+  created_at: string;
+};
+
 function writeJson(directory: string, filename: string, value: unknown): void {
   writeFileSync(
     path.join(directory, filename),
@@ -115,6 +123,21 @@ export async function exportDashboardData(
       )
       .get() as { count: number }
   ).count;
+  const pendingRows = db
+    .prepare(
+      `SELECT td.ticker, td.politician_name, td.transaction_date,
+              td.final_position_size, td.created_at
+       FROM trade_decisions td
+       WHERE td.decision = 'PENDING'
+         AND td.id = (
+           SELECT MAX(latest.id)
+           FROM trade_decisions latest
+           WHERE latest.trade_id = td.trade_id
+         )
+       ORDER BY td.id DESC
+       LIMIT 25`,
+    )
+    .all() as unknown as PendingDecisionRow[];
   const skippedRows = db
     .prepare(
       `SELECT td.transaction_date, td.politician_name, td.ticker,
@@ -151,6 +174,15 @@ export async function exportDashboardData(
     allocation: formatMoney(position.notional_value),
     status: position.status === "OPEN" ? "Copied" : "Closed",
   }));
+  const pendingTrades = pendingRows.map((decision) => ({
+    date: decision.created_at.slice(0, 10),
+    politician: decision.politician_name,
+    ticker: decision.ticker,
+    action: "BUY",
+    signalAge: signalAge(decision.transaction_date, decision.created_at),
+    allocation: formatMoney(decision.final_position_size ?? 0),
+    status: "Pending market open",
+  }));
   const skippedTrades = skippedRows.map((decision) => ({
     date: decision.created_at.slice(0, 10),
     politician: decision.politician_name,
@@ -170,7 +202,11 @@ export async function exportDashboardData(
   const generatedAt = new Date().toISOString();
 
   writeJson(outputDirectory, "portfolio-history.json", portfolioHistory);
-  writeJson(outputDirectory, "copied-trades.json", copiedTrades);
+  writeJson(
+    outputDirectory,
+    "copied-trades.json",
+    [...pendingTrades, ...copiedTrades].slice(0, 25),
+  );
   writeJson(outputDirectory, "skipped-trades.json", skippedTrades);
   writeJson(outputDirectory, "bot-status.json", {
     botStatus: account.status === "ACTIVE" ? "Running" : (account.status ?? "Unknown"),
