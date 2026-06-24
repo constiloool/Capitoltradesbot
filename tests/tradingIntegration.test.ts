@@ -106,6 +106,7 @@ test("complete fresh BUY path persists simulated position and rich decision", as
   const decision = getDatabase()
     .prepare(
       `SELECT decision, current_price, reference_price, runup_pct,
+       effective_trade_date, trade_date_source, trade_age_days,
        account_equity, calculated_position_size, final_position_size,
        alpaca_order_id, safe_mode FROM trade_decisions`,
     )
@@ -114,6 +115,9 @@ test("complete fresh BUY path persists simulated position and rich decision", as
   assert.equal(decision.current_price, 100);
   assert.equal(decision.reference_price, 98);
   assert.ok(Number(decision.runup_pct) > 0);
+  assert.equal(decision.effective_trade_date, today);
+  assert.equal(decision.trade_date_source, "transaction_date");
+  assert.equal(decision.trade_age_days, 0);
   assert.equal(decision.account_equity, 100_000);
   assert.equal(decision.calculated_position_size, 1_000);
   assert.equal(decision.final_position_size, 1_000);

@@ -43,26 +43,61 @@ function market(overrides: Partial<MarketContext> = {}): MarketContext {
   };
 }
 
-test("transaction older than 7 days is skipped", () => {
+test("trade that is 10 days old remains eligible", () => {
   const result = evaluateTradeRules(
-    trade({ transactionDate: "2026-06-10" }),
+    trade({ transactionDate: "2026-06-11" }),
     market(),
     1,
     now,
   );
-  assert.equal(result.decision, "SKIP");
-  assert.match(result.reason, /older than/);
+  assert.equal(result.decision, "BUY");
+  assert.equal(result.tradeAgeDays, 10);
 });
 
-test("missing transaction date is skipped", () => {
+test("trade that is 31 days old remains eligible", () => {
   const result = evaluateTradeRules(
-    trade({ transactionDate: "" }),
+    trade({ transactionDate: "2026-05-21" }),
+    market(),
+    1,
+    now,
+  );
+  assert.equal(result.decision, "BUY");
+  assert.equal(result.tradeAgeDays, 31);
+});
+
+test("trade that is 32 days old is skipped", () => {
+  const result = evaluateTradeRules(
+    trade({ transactionDate: "2026-05-20" }),
     market(),
     1,
     now,
   );
   assert.equal(result.decision, "SKIP");
-  assert.match(result.reason, /date is missing/);
+  assert.match(result.reason, /older than 31 days/);
+});
+
+test("filing date is marked and used when transaction date is missing", () => {
+  const result = evaluateTradeRules(
+    trade({ transactionDate: "", filingDate: "2026-06-20" }),
+    market(),
+    1,
+    now,
+  );
+  assert.equal(result.decision, "BUY");
+  assert.equal(result.effectiveTradeDate, "2026-06-20");
+  assert.equal(result.tradeDateSource, "filing_date_fallback");
+  assert.equal(result.tradeAgeDays, 1);
+});
+
+test("missing transaction and filing dates are skipped", () => {
+  const result = evaluateTradeRules(
+    trade({ transactionDate: "", filingDate: "" }),
+    market(),
+    1,
+    now,
+  );
+  assert.equal(result.decision, "SKIP");
+  assert.match(result.reason, /dates are missing/);
 });
 
 test("missing or blank ticker is skipped with explicit reason", () => {
@@ -127,7 +162,30 @@ test("run-up above ten percent is skipped", () => {
     now,
   );
   assert.equal(result.decision, "SKIP");
-  assert.match(result.reason, /ran up/);
+  assert.match(result.reason, /more than 10%/);
+});
+
+test("run-up of exactly ten percent is eligible", () => {
+  const result = evaluateTradeRules(
+    trade(),
+    market({ currentPrice: 110, referencePrice: 100 }),
+    1,
+    now,
+  );
+  assert.equal(result.decision, "BUY");
+  assert.ok(Math.abs((result.runupPct ?? 0) - 0.1) < 1e-12);
+});
+
+test("unchanged or fallen price remains eligible", () => {
+  for (const currentPrice of [100, 85]) {
+    const result = evaluateTradeRules(
+      trade(),
+      market({ currentPrice, referencePrice: 100 }),
+      1,
+      now,
+    );
+    assert.equal(result.decision, "BUY");
+  }
 });
 
 test("position size uses politician and disclosed value scores", () => {
@@ -162,7 +220,18 @@ test("missing price history is skipped conservatively", () => {
     now,
   );
   assert.equal(result.decision, "SKIP");
-  assert.match(result.reason, /price history/);
+  assert.match(result.reason, /historical price/);
+});
+
+test("missing current price is skipped explicitly", () => {
+  const result = evaluateTradeRules(
+    trade(),
+    market({ currentPrice: undefined }),
+    1,
+    now,
+  );
+  assert.equal(result.decision, "SKIP");
+  assert.equal(result.reason, "Skipped because current price is missing");
 });
 
 function position(overrides: Partial<BotPosition> = {}): BotPosition {

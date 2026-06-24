@@ -386,7 +386,7 @@ und verweigert BUY-Kandidaten, solange kein verlässliches Equity vorliegt.
 ## Zusätzliche Strategievariablen
 
 ```dotenv
-MAX_TRADE_AGE_DAYS=7
+MAX_TRADE_AGE_DAYS=31
 BASE_POSITION_PCT=0.01
 MAX_POSITION_PER_TICKER_PCT=0.03
 MAX_TOTAL_EXPOSURE_PCT=0.30

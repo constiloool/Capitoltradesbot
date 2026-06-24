@@ -16,6 +16,11 @@ import {
   evaluateSignalEligibility,
   evaluateTradeRules,
 } from "./tradeRules.js";
+import {
+  resolveTradeDate,
+  shouldCopyTrade,
+  tradeAgeInCalendarDays,
+} from "./copyTradeRule.js";
 import { logTradeDecision } from "../storage/decisionLogger.js";
 import { getPoliticianScore } from "../storage/politicianScoresStore.js";
 import { createPendingOrder } from "../storage/pendingOrdersStore.js";
@@ -72,12 +77,21 @@ function decisionLog(
   market?: MarketContext,
   alpacaOrderId?: string,
 ): TradeDecisionLog {
+  const resolvedDate = resolveTradeDate(trade);
   return {
     tradeId: trade.id,
     ticker: trade.ticker,
     politicianName: trade.politicianName,
     transactionDate: trade.transactionDate,
     filingDate: trade.filingDate,
+    effectiveTradeDate:
+      evaluation.effectiveTradeDate ?? resolvedDate?.tradeDate,
+    tradeDateSource: evaluation.tradeDateSource ?? resolvedDate?.source,
+    tradeAgeDays:
+      evaluation.tradeAgeDays ??
+      (resolvedDate
+        ? tradeAgeInCalendarDays(resolvedDate.tradeDate)
+        : undefined),
     action: trade.transactionType,
     valueRange: trade.amountRange,
     politicianScore: evaluation.politicianScore,
@@ -166,17 +180,19 @@ export async function processTradeSignal(
   let asset;
   let currentPrice;
   let referencePrice;
+  let copyRule;
   try {
-    [positions, asset, currentPrice, referencePrice] =
+    [positions, asset, copyRule] =
       await Promise.all([
         dependencies.getBrokerPositions(),
         dependencies.getBrokerAsset(trade.ticker!),
-        dependencies.getCurrentPrice(trade.ticker!),
-        dependencies.getHistoricalReferencePrice(
-          trade.ticker!,
-          trade.transactionDate,
-        ),
+        shouldCopyTrade(trade, {
+          getCurrentPrice: dependencies.getCurrentPrice,
+          getHistoricalClose: dependencies.getHistoricalReferencePrice,
+        }),
       ]);
+    currentPrice = copyRule.currentPrice;
+    referencePrice = copyRule.referencePrice;
   } catch (error) {
     const evaluation: RuleEvaluation = {
       decision: config.skipIfPriceHistoryMissing ? "SKIP" : "WATCHLIST",
@@ -258,8 +274,9 @@ export async function processTradeSignal(
     return { decision: "PENDING", reason };
   }
 
+  const executionPrice = currentPrice!;
   const quantity = evaluation.useNotional
-    ? evaluation.finalPositionSize / currentPrice
+    ? evaluation.finalPositionSize / executionPrice
     : evaluation.quantity!;
   let execution;
   try {
@@ -282,15 +299,17 @@ export async function processTradeSignal(
     logTradeDecision(decisionLog(trade, failed, market));
     return { decision: "SKIP", reason: failed.reason };
   }
+  const effectiveTradeDate =
+    resolveTradeDate(trade)?.tradeDate || trade.filingDate;
   createOpenPosition({
     ticker: trade.ticker!,
-    entryPrice: currentPrice,
+    entryPrice: executionPrice,
     quantity,
     notionalValue: evaluation.finalPositionSize,
     politicianName: trade.politicianName,
     sourceTradeId: trade.id,
     disclosureId: trade.filingId,
-    transactionDate: trade.transactionDate,
+    transactionDate: effectiveTradeDate,
     filingDate: trade.filingDate,
     alpacaOrderId: execution.orderId,
     executionMode: execution.simulated ? "SIMULATED" : "PAPER",

@@ -115,6 +115,9 @@ export function initializeDatabase(): void {
       politician_name TEXT NOT NULL,
       transaction_date TEXT NOT NULL,
       filing_date TEXT NOT NULL,
+      effective_trade_date TEXT,
+      trade_date_source TEXT,
+      trade_age_days INTEGER,
       action TEXT NOT NULL,
       value_range TEXT NOT NULL,
       politician_score REAL NOT NULL,
@@ -170,6 +173,29 @@ export function initializeDatabase(): void {
     !tradeColumns.some((column) => column.name === "strategy_processed_at")
   ) {
     db.exec("ALTER TABLE trades ADD COLUMN strategy_processed_at TEXT");
+  }
+  const decisionColumns = db
+    .prepare("PRAGMA table_info(trade_decisions)")
+    .all() as Array<{ name: string }>;
+  if (
+    decisionColumns.length > 0 &&
+    !decisionColumns.some((column) => column.name === "effective_trade_date")
+  ) {
+    db.exec(
+      "ALTER TABLE trade_decisions ADD COLUMN effective_trade_date TEXT",
+    );
+  }
+  if (
+    decisionColumns.length > 0 &&
+    !decisionColumns.some((column) => column.name === "trade_date_source")
+  ) {
+    db.exec("ALTER TABLE trade_decisions ADD COLUMN trade_date_source TEXT");
+  }
+  if (
+    decisionColumns.length > 0 &&
+    !decisionColumns.some((column) => column.name === "trade_age_days")
+  ) {
+    db.exec("ALTER TABLE trade_decisions ADD COLUMN trade_age_days INTEGER");
   }
 }
 

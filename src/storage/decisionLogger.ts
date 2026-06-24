@@ -7,11 +7,12 @@ export function logTradeDecision(decision: TradeDecisionLog): void {
     .prepare(
       `INSERT INTO trade_decisions (
         trade_id, ticker, politician_name, transaction_date, filing_date,
+        effective_trade_date, trade_date_source, trade_age_days,
         action, value_range, politician_score, value_score, current_price,
         reference_price, runup_pct, account_equity, calculated_position_size,
         final_position_size, decision, reason, alpaca_order_id, safe_mode,
         created_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     )
     .run(
       decision.tradeId,
@@ -19,6 +20,9 @@ export function logTradeDecision(decision: TradeDecisionLog): void {
       decision.politicianName,
       decision.transactionDate,
       decision.filingDate,
+      decision.effectiveTradeDate ?? null,
+      decision.tradeDateSource ?? null,
+      decision.tradeAgeDays ?? null,
       decision.action,
       decision.valueRange,
       decision.politicianScore,
@@ -38,6 +42,16 @@ export function logTradeDecision(decision: TradeDecisionLog): void {
   logger.info("DECISION", decision.decision, {
     ticker: decision.ticker,
     politician: decision.politicianName,
+    tradeDate: decision.effectiveTradeDate ?? decision.transactionDate,
+    dateSource: decision.tradeDateSource,
+    ageDays: decision.tradeAgeDays,
+    referencePrice: decision.referencePrice,
+    currentPrice: decision.currentPrice,
+    priceChangePct:
+      decision.runupPct === undefined
+        ? undefined
+        : Number((decision.runupPct * 100).toFixed(2)),
+    decision: decision.decision,
     reason: decision.reason,
   });
 }
@@ -69,7 +83,7 @@ export function getDecisionSummary(since: string): {
       ["BUY", "PENDING"].includes(row.decision),
     ),
     skippedAge: count((row) =>
-      row.reason.includes("older than MAX_TRADE_AGE_DAYS"),
+      row.reason.includes("older than"),
     ),
     skippedAction: count(
       (row) => row.reason === "Transaction action is not BUY/PURCHASE",
@@ -78,7 +92,7 @@ export function getDecisionSummary(since: string): {
       (row) => row.reason === "Skipped because ticker is missing",
     ),
     skippedRunup: count((row) =>
-      row.reason.includes("ran up more than MAX_RUNUP_PCT"),
+      row.reason.includes("price increased more than"),
     ),
     simulatedBuys: count(
       (row) => row.decision === "BUY" && row.safe_mode === 1,

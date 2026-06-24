@@ -156,7 +156,7 @@ export async function getReferencePrice(
 ): Promise<number | undefined> {
   const transaction = new Date(`${transactionDate}T00:00:00Z`);
   if (Number.isNaN(transaction.getTime())) return undefined;
-  const end = new Date(transaction.getTime() + 4 * 86_400_000);
+  const end = new Date(transaction.getTime() + 86_400_000);
   const nearTransactionParams = new URLSearchParams({
     timeframe: "1Day",
     start: transaction.toISOString(),
@@ -168,33 +168,12 @@ export async function getReferencePrice(
   const nearResponse = await marketData(
     `/v2/stocks/${encodeURIComponent(symbol)}/bars?${nearTransactionParams}`,
   );
-  if (nearResponse.ok) {
-    const nearPayload = (await nearResponse.json()) as {
-      bars?: Array<{ t: string; c: number }>;
-    };
-    const nearPrice = nearPayload.bars?.[0]?.c;
-    if (nearPrice) return nearPrice;
-  }
-
-  const recentEnd = new Date();
-  const recentStart = new Date(recentEnd.getTime() - 20 * 86_400_000);
-  const fallbackParams = new URLSearchParams({
-    timeframe: "1Day",
-    start: recentStart.toISOString(),
-    end: recentEnd.toISOString(),
-    adjustment: "all",
-    feed: "iex",
-    limit: "20",
-  });
-  const fallbackResponse = await marketData(
-    `/v2/stocks/${encodeURIComponent(symbol)}/bars?${fallbackParams}`,
-  );
-  if (!fallbackResponse.ok) return undefined;
-  const fallbackPayload = (await fallbackResponse.json()) as {
+  if (!nearResponse.ok) return undefined;
+  const nearPayload = (await nearResponse.json()) as {
     bars?: Array<{ t: string; c: number }>;
   };
-  const bars = fallbackPayload.bars ?? [];
-  return bars.length >= 5 ? bars.at(-5)?.c : undefined;
+  const nearPrice = nearPayload.bars?.[0]?.c;
+  return nearPrice && Number.isFinite(nearPrice) ? nearPrice : undefined;
 }
 
 export async function submitPaperOrder(
