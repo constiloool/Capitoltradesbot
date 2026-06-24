@@ -2,6 +2,12 @@ name: Ingest Official Congressional Disclosures
 
 on:
   workflow_dispatch:
+    inputs:
+      reprocess_pelosi_2026_05_29:
+        description: "Reprocess only Nancy Pelosi's UBER and INTC trades from 2026-05-29"
+        required: false
+        default: false
+        type: boolean
   schedule:
     # Morning disclosure fetch around the German cash-market open (UTC).
     - cron: "7 7 * * 1-5"
@@ -74,6 +80,17 @@ jobs:
 
       - name: Initialize database
         run: npm run db:init
+
+      - name: Requeue selected Pelosi trades
+        if: ${{ inputs.reprocess_pelosi_2026_05_29 == true }}
+        run: |
+          sqlite3 "$DATABASE_PATH" "
+            UPDATE trades
+            SET strategy_processed_at = NULL
+            WHERE politician_name = 'Nancy Pelosi'
+              AND transaction_date = '2026-05-29'
+              AND ticker IN ('UBER', 'INTC');
+          "
 
       - name: Ingest official disclosures
         run: npm run ingest
