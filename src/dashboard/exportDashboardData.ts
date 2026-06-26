@@ -11,10 +11,12 @@ import { getDatabase, initializeDatabase } from "../storage/db.js";
 import { logger } from "../utils/logger.js";
 
 type DecisionRow = {
+  id: number;
   transaction_date: string;
   politician_name: string;
   ticker: string | null;
   asset_name: string | null;
+  owner: string | null;
   action: string;
   reason: string;
   final_position_size: number | null;
@@ -31,14 +33,6 @@ type PositionRow = {
   status: string;
   execution_mode: string;
   alpaca_order_id: string | null;
-  created_at: string;
-};
-
-type PendingDecisionRow = {
-  ticker: string;
-  politician_name: string;
-  transaction_date: string;
-  final_position_size: number | null;
   created_at: string;
 };
 
@@ -104,16 +98,24 @@ export async function exportDashboardData(
   ]);
 
   const db = getDatabase();
-  const copiedRows = db
+  const acceptedRows = db
     .prepare(
-      `SELECT ticker, politician_name, transaction_date, notional_value,
-              status, execution_mode, alpaca_order_id, created_at
-       FROM bot_positions
-       WHERE execution_mode = 'PAPER' AND alpaca_order_id IS NOT NULL
-       ORDER BY created_at DESC
+      `SELECT td.id, td.transaction_date, td.politician_name, td.ticker,
+              t.asset_name, t.owner, td.action, td.reason,
+              td.final_position_size, td.decision, td.alpaca_order_id,
+              td.created_at
+       FROM trade_decisions td
+       LEFT JOIN trades t ON t.id = td.trade_id
+       WHERE td.decision IN ('BUY', 'PENDING', 'WATCHLIST')
+         AND td.id = (
+           SELECT MAX(latest.id)
+           FROM trade_decisions latest
+           WHERE latest.trade_id = td.trade_id
+         )
+       ORDER BY td.id DESC
        LIMIT 25`,
     )
-    .all() as unknown as PositionRow[];
+    .all() as unknown as DecisionRow[];
   const copiedTradeCount = (
     db
       .prepare(
@@ -123,26 +125,12 @@ export async function exportDashboardData(
       )
       .get() as { count: number }
   ).count;
-  const pendingRows = db
-    .prepare(
-      `SELECT td.ticker, td.politician_name, td.transaction_date,
-              td.final_position_size, td.created_at
-       FROM trade_decisions td
-       WHERE td.decision = 'PENDING'
-         AND td.id = (
-           SELECT MAX(latest.id)
-           FROM trade_decisions latest
-           WHERE latest.trade_id = td.trade_id
-         )
-       ORDER BY td.id DESC
-       LIMIT 25`,
-    )
-    .all() as unknown as PendingDecisionRow[];
   const skippedRows = db
     .prepare(
-      `SELECT td.transaction_date, td.politician_name, td.ticker,
-              t.asset_name, td.action, td.reason, td.final_position_size,
-              td.decision, td.alpaca_order_id, td.created_at
+      `SELECT td.id, td.transaction_date, td.politician_name, td.ticker,
+              t.asset_name, t.owner, td.action, td.reason,
+              td.final_position_size, td.decision, td.alpaca_order_id,
+              td.created_at
        FROM trade_decisions td
        LEFT JOIN trades t ON t.id = td.trade_id
        WHERE td.decision = 'SKIP'
@@ -165,31 +153,40 @@ export async function exportDashboardData(
     }))
     .filter((point) => Number.isFinite(point.equity) && point.equity > 0);
 
-  const copiedTrades = copiedRows.map((position) => ({
-    date: position.created_at.slice(0, 10),
-    politician: position.politician_name,
-    ticker: position.ticker,
-    action: "BUY",
-    signalAge: signalAge(position.transaction_date, position.created_at),
-    allocation: formatMoney(position.notional_value),
-    status: position.status === "OPEN" ? "Copied" : "Closed",
-  }));
-  const pendingTrades = pendingRows.map((decision) => ({
-    date: decision.created_at.slice(0, 10),
-    politician: decision.politician_name,
-    ticker: decision.ticker,
-    action: "BUY",
-    signalAge: signalAge(decision.transaction_date, decision.created_at),
-    allocation: formatMoney(decision.final_position_size ?? 0),
-    status: "Pending market open",
-  }));
-  const skippedTrades = skippedRows.map((decision) => ({
+  const copiedTrades = acceptedRows.map((decision) => ({
+    id: String(decision.id),
     date: decision.created_at.slice(0, 10),
     politician: decision.politician_name,
     ticker:
       decision.ticker?.trim() ||
       decision.asset_name?.trim() ||
       "Ticker missing",
+    assetName: decision.asset_name?.trim() || undefined,
+    owner: decision.owner?.trim() || undefined,
+    action: decision.action,
+    signalAge: signalAge(decision.transaction_date, decision.created_at),
+    allocation:
+      decision.decision === "WATCHLIST"
+        ? "Existing position"
+        : formatMoney(decision.final_position_size ?? 0),
+    status:
+      decision.decision === "PENDING"
+        ? "Pending market open"
+        : decision.decision === "WATCHLIST"
+          ? "Watchlist"
+          : "Copied",
+    reason: decision.decision === "WATCHLIST" ? decision.reason : undefined,
+  }));
+  const skippedTrades = skippedRows.map((decision) => ({
+    id: String(decision.id),
+    date: decision.created_at.slice(0, 10),
+    politician: decision.politician_name,
+    ticker:
+      decision.ticker?.trim() ||
+      decision.asset_name?.trim() ||
+      "Ticker missing",
+    assetName: decision.asset_name?.trim() || undefined,
+    owner: decision.owner?.trim() || undefined,
     action: decision.action,
     reason: displaySkipReason(decision),
     status: "Skipped",
@@ -205,7 +202,7 @@ export async function exportDashboardData(
   writeJson(
     outputDirectory,
     "copied-trades.json",
-    [...pendingTrades, ...copiedTrades].slice(0, 25),
+    copiedTrades,
   );
   writeJson(outputDirectory, "skipped-trades.json", skippedTrades);
   writeJson(outputDirectory, "bot-status.json", {
