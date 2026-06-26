@@ -28,9 +28,13 @@ export const config = {
     numberEnv("DOWNLOAD_TIMEOUT_MS", 30_000),
   ),
   maxFilingsPerRun: Math.max(1, numberEnv("MAX_FILINGS_PER_RUN", 50)),
+  senateCapitolTradesFallback: booleanEnv(
+    "SENATE_CAPITOL_TRADES_FALLBACK",
+    true,
+  ),
   userAgent:
     process.env.USER_AGENT?.trim() ||
-    "CapitolTradesBot/2.0 (+https://github.com/constiloool/Capitoltradesbot)",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
   capitolTradesUrl:
     process.env.CAPITOL_TRADES_URL?.trim() ||
     "https://www.capitoltrades.com/trades",

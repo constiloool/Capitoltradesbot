@@ -42,7 +42,7 @@ function parsePolitician(text: string) {
 
 function parseIssuer(text: string) {
   const clean = cleanText(text);
-  const rawTicker = clean.match(/\b[A-Z][A-Z0-9.-]{0,9}:US\b/)?.[0];
+  const rawTicker = clean.match(/\b[A-Z][A-Z0-9./-]{0,9}:US\b/)?.[0];
   return {
     name: cleanText(rawTicker ? clean.replace(rawTicker, "") : clean),
     rawTicker,
@@ -76,8 +76,8 @@ export function parseTrades(html: string, sourceUrl: string): CapitolTrade[] {
     const rawTicker =
       value(row, "ticker") ||
       issuer.rawTicker ||
-      cells.find((cell) => /\b[A-Z][A-Z0-9.-]{0,9}:US\b/.test(cell))?.match(
-        /\b[A-Z][A-Z0-9.-]{0,9}:US\b/,
+      cells.find((cell) => /\b[A-Z][A-Z0-9./-]{0,9}:US\b/.test(cell))?.match(
+        /\b[A-Z][A-Z0-9./-]{0,9}:US\b/,
       )?.[0];
     const publishedAtRaw = value(row, "published", "published date");
     const tradedAtRaw = value(row, "traded", "transaction date");

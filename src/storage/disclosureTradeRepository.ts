@@ -14,9 +14,11 @@ export function createDisclosureDedupeKey(
     trade.sourceFilingId,
     trade.politicianName,
     trade.transactionDate,
-    trade.ticker || trade.assetName,
+    trade.ticker || "",
+    trade.assetName,
     trade.transactionType,
     trade.amountRange,
+    trade.owner || "",
   ]
     .map((value) => cleanText(value).toLowerCase())
     .join("|");

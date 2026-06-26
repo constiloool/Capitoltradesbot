@@ -5,6 +5,12 @@ import {
 import { parseDisclosureDocument } from "../parsers/disclosureParser.js";
 import { HouseDisclosureSource } from "../sources/houseDisclosureSource.js";
 import { SenateDisclosureSource } from "../sources/senateDisclosureSource.js";
+import { fetchCapitolTradesSenateFallback } from "../sources/capitolTradesSenateFallback.js";
+import { fetchInsiderFinanceSenateFallback } from "../sources/insiderFinanceSenateFallback.js";
+import type {
+  DisclosureFiling,
+  DisclosureTradeDraft,
+} from "../types/disclosure.js";
 import type { DisclosureSourceAdapter } from "../sources/sourceAdapter.js";
 import { config } from "../config.js";
 import {
@@ -31,6 +37,37 @@ function adapters(): DisclosureSourceAdapter[] {
   if (config.sourceMode === "house") return [new HouseDisclosureSource()];
   if (config.sourceMode === "senate") return [new SenateDisclosureSource()];
   return [new HouseDisclosureSource(), new SenateDisclosureSource()];
+}
+
+function storeParsedFallback(
+  label: string,
+  fallback: {
+    filings: DisclosureFiling[];
+    trades: DisclosureTradeDraft[];
+    skipped: number;
+  },
+  summary: IngestionSummary,
+): void {
+  let fallbackNewFilings = 0;
+  for (const filing of fallback.filings) {
+    if (!filingExists(filing.id) && insertPendingFiling(filing)) {
+      fallbackNewFilings += 1;
+      updateFilingStatus(filing.id, "parsed");
+    }
+  }
+  const stored = insertDisclosureTrades(fallback.trades);
+  summary.newFilingsFound += fallbackNewFilings;
+  summary.tradesParsed += fallback.trades.length;
+  summary.newTradesInserted += stored.inserted.length;
+  summary.duplicatesSkipped += stored.duplicates;
+  logger.info("SOURCE", `${label} Senate fallback completed`, {
+    filings: fallback.filings.length,
+    newFilings: fallbackNewFilings,
+    trades: fallback.trades.length,
+    inserted: stored.inserted.length,
+    duplicates: stored.duplicates,
+    skipped: fallback.skipped,
+  });
 }
 
 export async function runOfficialDisclosuresJob(): Promise<IngestionSummary> {
@@ -76,6 +113,24 @@ export async function runOfficialDisclosuresJob(): Promise<IngestionSummary> {
         source: result.source,
         reason: result.error,
       });
+      if (result.source === "senate" && config.senateCapitolTradesFallback) {
+        try {
+          const fallback = await fetchCapitolTradesSenateFallback();
+          storeParsedFallback("CapitolTrades", fallback, summary);
+        } catch (error) {
+          logger.warn("SOURCE", "CapitolTrades Senate fallback failed", {
+            reason: error instanceof Error ? error.message : String(error),
+          });
+        }
+        try {
+          const fallback = await fetchInsiderFinanceSenateFallback();
+          storeParsedFallback("InsiderFinance", fallback, summary);
+        } catch (error) {
+          logger.warn("SOURCE", "InsiderFinance Senate fallback failed", {
+            reason: error instanceof Error ? error.message : String(error),
+          });
+        }
+      }
     }
 
     for (const filing of result.filings) {

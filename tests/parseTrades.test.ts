@@ -26,3 +26,12 @@ test("parses and deterministically identifies a trade", () => {
   assert.equal(first[0].sizeMin, 15_000);
   assert.equal(first[0].id, second[0].id);
 });
+
+test("parses slash class tickers from CapitolTrades issuer text", () => {
+  const html = fixture.replace("NVIDIA Corp NVDA:US", "Berkshire Hathaway Inc BRK/B:US");
+  const trades = parseTrades(html, "https://www.capitoltrades.com/trades");
+
+  assert.equal(trades.length, 1);
+  assert.equal(trades[0].rawTicker, "BRK/B:US");
+  assert.equal(trades[0].ticker, "BRK.B");
+});

@@ -6,9 +6,6 @@ import type { CapitolTrade } from "../types/trade.js";
 import { logger } from "../utils/logger.js";
 import { parseTrades } from "./parseTrades.js";
 
-const USER_AGENT =
-  "Mozilla/5.0 (compatible; CapitolTradesBot/1.0; +https://github.com/constiloool/Capitol-tradesbot)";
-
 function challenged(status: number, html: string): boolean {
   return (
     status === 429 ||
@@ -28,7 +25,7 @@ async function saveDebugHtml(html: string, method: string) {
 async function fetchHtml(): Promise<string> {
   const response = await fetch(config.capitolTradesUrl, {
     headers: {
-      "user-agent": USER_AGENT,
+      "user-agent": config.userAgent,
       accept: "text/html,application/xhtml+xml",
       "accept-language": "en-US,en;q=0.9",
     },
@@ -46,7 +43,7 @@ async function browserHtml(): Promise<string> {
   logger.info("SCRAPER", "Using Playwright fallback");
   const browser = await chromium.launch({ headless: true });
   try {
-    const page = await browser.newPage({ userAgent: USER_AGENT });
+    const page = await browser.newPage({ userAgent: config.userAgent });
     await page.goto(config.capitolTradesUrl, {
       waitUntil: "domcontentloaded",
       timeout: config.scraperTimeoutMs,

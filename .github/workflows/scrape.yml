@@ -11,8 +11,10 @@ on:
   schedule:
     # Morning disclosure fetch around the German cash-market open (UTC).
     - cron: "7 7 * * 1-5"
-    # Frequent checks before, during and shortly after the regular US session.
-    - cron: "7-59/15 13-21 * * 1-5"
+    # Regular checks before, during and shortly after the US session.
+    # Keep this below a scraper-like cadence because Senate eFD is sensitive
+    # to frequent data-center requests.
+    - cron: "7,37 13-21 * * 1-5"
 
 permissions:
   contents: write
@@ -47,6 +49,8 @@ jobs:
       RAW_PDF_DIR: ./data/raw-pdfs
       DOWNLOAD_TIMEOUT_MS: "30000"
       MAX_FILINGS_PER_RUN: "50"
+      SENATE_CAPITOL_TRADES_FALLBACK: "true"
+      USER_AGENT: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
       DATABASE_PATH: ./data/capitoltrades.sqlite
       ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
       ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
@@ -91,6 +95,10 @@ jobs:
               AND transaction_date = '2026-05-29'
               AND ticker IN ('UBER', 'INTC');
           "
+
+      - name: De-synchronize scheduled source requests
+        if: ${{ github.event_name == 'schedule' }}
+        run: sleep $((RANDOM % 90))
 
       - name: Ingest official disclosures
         run: npm run ingest

@@ -86,6 +86,8 @@ npm run dev
 | `RAW_PDF_DIR` | `./data/raw-pdfs` | Zielordner für gespeicherte Dokumente |
 | `DOWNLOAD_TIMEOUT_MS` | `30000` | Download-Timeout |
 | `MAX_FILINGS_PER_RUN` | `50` | Maximale Filings pro Quelle und Lauf |
+| `SENATE_CAPITOL_TRADES_FALLBACK` | `true` | Nutzt alternative Senate-Fallbacks, wenn Senate eFD blockt/ausfällt |
+| `USER_AGENT` | Browser-UA | User-Agent für offizielle Disclosure-Quellen |
 | `DATABASE_PATH` | `./data/capitoltrades.sqlite` | SQLite-Datenbank |
 | `ALPACA_API_KEY` | leer | Alpaca Paper API Key |
 | `ALPACA_SECRET_KEY` | leer | Alpaca Paper Secret |
@@ -165,16 +167,17 @@ Der Workflow
 
 ```yaml
 cron: "7 7 * * 1-5"
-cron: "7-59/15 13-21 * * 1-5"
+cron: "7,37 13-21 * * 1-5"
 ```
 
 Der Morgenlauf liest neue Meldungen ein. Der Nachmittagsplan läuft vor,
 während und nach der regulären US-Sitzung. GitHub-Zeitpläne verwenden UTC,
 können sich verzögern und bilden die deutsche Sommer-/Winterzeit nicht
 automatisch ab. Für die tatsächliche Ausführung ist deshalb ausschließlich
-Alpacas Market Clock maßgeblich. Die Läufe sind bewusst auf Minute `07`, `22`,
-`37` und `52` versetzt, weil GitHub geplante Jobs zur vollen Stunde unter
-hoher Last verzögern oder verwerfen kann.
+Alpacas Market Clock maßgeblich. Die Läufe sind bewusst auf Minute `07` und
+`37` versetzt und enthalten bei geplanten Läufen eine kurze zufällige Pause,
+damit offizielle Quellen wie Senate eFD nicht im exakt scraperartigen Takt
+angefragt werden.
 
 Der Workflow:
 
