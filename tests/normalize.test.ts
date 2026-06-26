@@ -9,6 +9,8 @@ import {
 
 test("normalizes US tickers", () => {
   assert.equal(normalizeTicker("NVDA:US"), "NVDA");
+  assert.equal(normalizeTicker("BRK/B:US"), "BRK.B");
+  assert.equal(normalizeTicker("brk/b"), "BRK.B");
   assert.equal(normalizeTicker("BMW:DE"), undefined);
 });
 

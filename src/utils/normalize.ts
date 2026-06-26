@@ -8,8 +8,10 @@ export function cleanText(value?: string | null): string {
 export function normalizeTicker(rawTicker?: string): string | undefined {
   const value = cleanText(rawTicker).toUpperCase();
   if (!value) return undefined;
-  const [ticker, market] = value.split(":");
+  const [rawSymbol, market, ...extraParts] = value.split(":");
+  if (extraParts.length) return undefined;
   if (market && market !== "US") return undefined;
+  const ticker = rawSymbol.replace(/\//g, ".");
   return /^[A-Z][A-Z0-9.-]{0,9}$/.test(ticker) ? ticker : undefined;
 }
 
