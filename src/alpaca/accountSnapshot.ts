@@ -47,7 +47,14 @@ export async function loadStrategyAccountSnapshot(
     });
     return snapshot;
   } catch (error) {
-    logger.error("ALPACA", "Could not load Alpaca account equity", error);
+    const message = error instanceof Error ? error.message : String(error);
+    if (message === "Alpaca credentials are missing") {
+      logger.warn("ALPACA", "Could not load Alpaca account equity", {
+        error: message,
+      });
+    } else {
+      logger.error("ALPACA", "Could not load Alpaca account equity", error);
+    }
     logger.info("STRATEGY", "Continuing without account equity", {
       mode,
       safeMode: config.safeMode,

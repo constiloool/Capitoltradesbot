@@ -2,7 +2,10 @@ import {
   cleanupRetainedDocuments,
   downloadDocument,
 } from "../documents/documentStore.js";
-import { parseDisclosureDocument } from "../parsers/disclosureParser.js";
+import {
+  isNoDisclosureTradesRecognizedError,
+  parseDisclosureDocument,
+} from "../parsers/disclosureParser.js";
 import { HouseDisclosureSource } from "../sources/houseDisclosureSource.js";
 import { SenateDisclosureSource } from "../sources/senateDisclosureSource.js";
 import { fetchCapitolTradesSenateFallback } from "../sources/capitolTradesSenateFallback.js";
@@ -28,7 +31,7 @@ import { logger } from "../utils/logger.js";
 import { processTradeSignal } from "../rules/processTradeSignal.js";
 import { monitorOpenPositions } from "../monitor/positionMonitor.js";
 import { processPendingOrders } from "./processPendingOrders.js";
-import { getMarketClock } from "../alpaca/alpacaClient.js";
+import { alpacaConfigured, getMarketClock } from "../alpaca/alpacaClient.js";
 import { getDecisionSummary } from "../storage/decisionLogger.js";
 import { countOpenPositions } from "../storage/positionsStore.js";
 import { loadStrategyAccountSnapshot } from "../alpaca/accountSnapshot.js";
@@ -86,10 +89,14 @@ export async function runOfficialDisclosuresJob(): Promise<IngestionSummary> {
   if (removed) logger.info("PDF", "Removed expired retained documents", { removed });
   const accountSnapshot = await loadStrategyAccountSnapshot();
   let marketOpen = false;
-  try {
-    marketOpen = (await getMarketClock()).is_open;
-  } catch (error) {
-    logger.error("MARKET", "Market clock unavailable; execution disabled", error);
+  if (alpacaConfigured()) {
+    try {
+      marketOpen = (await getMarketClock()).is_open;
+    } catch (error) {
+      logger.error("MARKET", "Market clock unavailable; execution disabled", error);
+    }
+  } else {
+    logger.warn("MARKET", "Alpaca credentials missing; market-clock check skipped");
   }
   await monitorOpenPositions(marketOpen);
   const pendingResult = await processPendingOrders(marketOpen, accountSnapshot);
@@ -154,14 +161,26 @@ export async function runOfficialDisclosuresJob(): Promise<IngestionSummary> {
         });
 
       } catch (error) {
-        summary.parserFailures += 1;
         const message = error instanceof Error ? error.message : String(error);
-        updateFilingStatus(filing.id, "failed", { parseError: message });
-        logger.error(
-          "PARSER",
-          `Filing ${filing.source}:${filing.sourceFilingId} failed`,
-          error,
-        );
+        if (isNoDisclosureTradesRecognizedError(error)) {
+          updateFilingStatus(filing.id, "parsed", {
+            documentHash: downloaded?.documentHash,
+            rawPdfPath: downloaded?.storedPath,
+            parseError: message,
+          });
+          logger.warn("PARSER", "Filing contained no recognized PTR transaction rows", {
+            filing: `${filing.source}:${filing.sourceFilingId}`,
+            politician: filing.politicianName,
+          });
+        } else {
+          summary.parserFailures += 1;
+          updateFilingStatus(filing.id, "failed", { parseError: message });
+          logger.error(
+            "PARSER",
+            `Filing ${filing.source}:${filing.sourceFilingId} failed`,
+            error,
+          );
+        }
       } finally {
         await downloaded?.cleanup();
       }

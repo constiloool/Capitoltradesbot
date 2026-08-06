@@ -149,18 +149,6 @@ export function evaluateTradeRules(
     tradeDateSource: copyRule.tradeDateSource,
     tradeAgeDays: copyRule.ageDays,
   };
-  if (market.tickerAlreadyHeld) {
-    return {
-      decision: "WATCHLIST",
-      reason: "Ticker already held, signal added to existing position",
-      politicianScore,
-      valueScore: value.score,
-      calculatedPositionSize: 0,
-      finalPositionSize: 0,
-      useNotional: false,
-      notes,
-    };
-  }
   if (market.tradable !== true) {
     return skipped(
       "Skipped because ticker is not tradable on Alpaca",
@@ -218,7 +206,9 @@ export function evaluateTradeRules(
   }
   return {
     decision: "BUY",
-    reason: "Fresh BUY/PURCHASE signal passed all rules",
+    reason: market.tickerAlreadyHeld
+      ? "Additional BUY/PURCHASE passed all rules"
+      : "Fresh BUY/PURCHASE signal passed all rules",
     politicianScore,
     valueScore: value.score,
     runupPct,

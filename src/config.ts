@@ -53,19 +53,16 @@ export const config = {
   paperOrderQty: Math.max(1, numberEnv("PAPER_ORDER_QTY", 1)),
   maxTradeAgeDays: Math.max(0, numberEnv("MAX_TRADE_AGE_DAYS", 31)),
   basePositionPct: Math.max(0, numberEnv("BASE_POSITION_PCT", 0.01)),
-  maxPositionPerTickerPct: Math.max(
+  maxPositionPercentPerTicker: Math.max(
     0,
-    numberEnv("MAX_POSITION_PER_TICKER_PCT", 0.03),
+    numberEnv("MAX_POSITION_PERCENT_PER_TICKER", 5),
   ),
   maxTotalExposurePct: Math.max(
     0,
     numberEnv("MAX_TOTAL_EXPOSURE_PCT", 0.3),
   ),
   minSharePrice: Math.max(0, numberEnv("MIN_SHARE_PRICE", 5)),
-  brokerMinimumOrderValue: Math.max(
-    0,
-    numberEnv("BROKER_MIN_ORDER_VALUE", 1),
-  ),
+  minOrderValueUsd: Math.max(0, numberEnv("MIN_ORDER_VALUE_USD", 25)),
   takeProfitPct: Math.max(0, numberEnv("TAKE_PROFIT_PCT", 0.3)),
   stopLossPct: Math.max(0, numberEnv("STOP_LOSS_PCT", 0.12)),
   maxHoldingDays: Math.max(1, numberEnv("MAX_HOLDING_DAYS", 45)),

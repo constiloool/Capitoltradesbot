@@ -50,7 +50,7 @@ test("loads politician scores and applies zero, multiplier and default", () => {
     referencePrice: 100,
     tradable: true,
     fractionable: true,
-    brokerMinimumOrderValue: 1,
+    minOrderValueUsd: 25,
     tickerAlreadyHeld: false,
   };
   assert.equal(

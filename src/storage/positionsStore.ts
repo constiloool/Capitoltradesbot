@@ -226,6 +226,52 @@ export function addSignalToPosition(
   };
 }
 
+export function addPurchaseToPosition(
+  position: BotPosition,
+  input: {
+    tradeId: string;
+    politicianName: string;
+    signalDate: string;
+    price: number;
+    quantity: number;
+    notionalValue: number;
+    alpacaOrderId?: string;
+  },
+): BotPosition {
+  const signaled = addSignalToPosition(
+    position,
+    input.tradeId,
+    input.politicianName,
+    input.signalDate,
+  );
+  const quantity = position.quantity + input.quantity;
+  const notionalValue = position.notionalValue + input.notionalValue;
+  const entryPrice = quantity > 0 ? notionalValue / quantity : input.price;
+  const now = new Date().toISOString();
+  getDatabase()
+    .prepare(
+      `UPDATE bot_positions SET entry_price = ?, quantity = ?,
+       notional_value = ?, alpaca_order_id = COALESCE(?, alpaca_order_id),
+       updated_at = ? WHERE id = ?`,
+    )
+    .run(
+      entryPrice,
+      quantity,
+      notionalValue,
+      input.alpacaOrderId ?? null,
+      now,
+      position.id,
+    );
+  return {
+    ...signaled,
+    entryPrice,
+    quantity,
+    notionalValue,
+    alpacaOrderId: input.alpacaOrderId ?? position.alpacaOrderId,
+    updatedAt: now,
+  };
+}
+
 export function closePosition(
   id: string,
   reason: PositionExitReason,

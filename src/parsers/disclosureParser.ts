@@ -7,6 +7,19 @@ import type {
 } from "../types/disclosure.js";
 import { cleanText, normalizeTicker } from "../utils/normalize.js";
 
+export class NoDisclosureTradesRecognizedError extends Error {
+  constructor(source: DisclosureFiling["source"]) {
+    super(`No ${source === "house" ? "House" : "Senate"} PTR transaction rows recognized`);
+    this.name = "NoDisclosureTradesRecognizedError";
+  }
+}
+
+export function isNoDisclosureTradesRecognizedError(
+  error: unknown,
+): error is NoDisclosureTradesRecognizedError {
+  return error instanceof NoDisclosureTradesRecognizedError;
+}
+
 function transactionType(value: string): DisclosureTransactionType {
   const normalized = cleanText(value).toLowerCase();
   if (/^(p|purchase|buy)/.test(normalized)) return "purchase";
@@ -104,7 +117,7 @@ export function parseHousePtrText(
       }),
     );
   }
-  if (!trades.length) throw new Error("No House PTR transaction rows recognized");
+  if (!trades.length) throw new NoDisclosureTradesRecognizedError("house");
   return trades;
 }
 
@@ -155,7 +168,7 @@ export function parseSenatePtrHtml(
         );
       });
   });
-  if (!trades.length) throw new Error("No Senate PTR transaction rows recognized");
+  if (!trades.length) throw new NoDisclosureTradesRecognizedError("senate");
   return trades;
 }
 
@@ -180,7 +193,7 @@ export function parseSenatePtrText(
       }),
     );
   }
-  if (!trades.length) throw new Error("No Senate PTR transaction rows recognized");
+  if (!trades.length) throw new NoDisclosureTradesRecognizedError("senate");
   return trades;
 }
 

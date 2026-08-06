@@ -25,11 +25,12 @@ import { logTradeDecision } from "../storage/decisionLogger.js";
 import { getPoliticianScore } from "../storage/politicianScoresStore.js";
 import { createPendingOrder } from "../storage/pendingOrdersStore.js";
 import {
-  addSignalToPosition,
+  addPurchaseToPosition,
   createOpenPosition,
   findOpenPosition,
   totalOpenExposure,
 } from "../storage/positionsStore.js";
+import { logger } from "../utils/logger.js";
 import type { DisclosureTrade } from "../types/disclosure.js";
 import type {
   MarketContext,
@@ -127,24 +128,6 @@ export async function processTradeSignal(
   }
 
   const existingBotPosition = findOpenPosition(trade.ticker!);
-  if (existingBotPosition) {
-    const market: MarketContext = {
-      accountEquity: 0,
-      totalExposure: totalOpenExposure(),
-      currentTickerExposure: existingBotPosition.notionalValue,
-      brokerMinimumOrderValue: config.brokerMinimumOrderValue,
-      tickerAlreadyHeld: true,
-    };
-    const evaluation = evaluateTradeRules(trade, market, politicianScore);
-    addSignalToPosition(
-      existingBotPosition,
-      trade.id,
-      trade.politicianName,
-      trade.transactionDate,
-    );
-    logTradeDecision(decisionLog(trade, evaluation, market));
-    return { decision: evaluation.decision, reason: evaluation.reason };
-  }
 
   if (!dependencies.isAlpacaConfigured()) {
     const evaluation: RuleEvaluation = {
@@ -211,7 +194,7 @@ export async function processTradeSignal(
         accountEquity: options.accountSnapshot.accountEquity,
         totalExposure: totalOpenExposure(),
         currentTickerExposure: 0,
-        brokerMinimumOrderValue: config.brokerMinimumOrderValue,
+        minOrderValueUsd: config.minOrderValueUsd,
         tickerAlreadyHeld: false,
       }),
     );
@@ -238,23 +221,40 @@ export async function processTradeSignal(
     return { decision: "SKIP", reason };
   }
   const brokerPosition = positions.find(
-    (position) => position.symbol === trade.ticker,
+    (position) => position.symbol.toUpperCase() === trade.ticker!.toUpperCase(),
+  );
+  const brokerPositionValue = brokerPosition
+    ? Math.abs(Number(brokerPosition.market_value))
+    : 0;
+  const botPositionValue = existingBotPosition
+    ? existingBotPosition.quantity * currentPrice!
+    : 0;
+  const currentTickerExposure = Math.max(
+    Number.isFinite(brokerPositionValue) ? brokerPositionValue : 0,
+    botPositionValue,
   );
   const market: MarketContext = {
     accountEquity,
     totalExposure: totalOpenExposure(),
-    currentTickerExposure: brokerPosition
-      ? Math.abs(Number(brokerPosition.market_value))
-      : 0,
+    currentTickerExposure,
     currentPrice,
     referencePrice,
     tradable: asset.tradable && asset.status === "active",
     fractionable: asset.fractionable,
-    brokerMinimumOrderValue: config.brokerMinimumOrderValue,
-    tickerAlreadyHeld: Boolean(brokerPosition),
+    minOrderValueUsd: config.minOrderValueUsd,
+    tickerAlreadyHeld: Boolean(brokerPosition || existingBotPosition),
   };
   const evaluation = evaluateTradeRules(trade, market, politicianScore);
   if (evaluation.decision !== "BUY") {
+    if (evaluation.reason.includes("MAX_POSITION_PERCENT_PER_TICKER")) {
+      logger.info("STRATEGY", evaluation.reason, {
+        ticker: trade.ticker,
+        currentPositionValue: currentTickerExposure,
+        portfolioValue: accountEquity,
+      });
+    } else if (evaluation.reason.includes("MIN_ORDER_VALUE_USD")) {
+      logger.info("STRATEGY", evaluation.reason, { ticker: trade.ticker });
+    }
     logTradeDecision(decisionLog(trade, evaluation, market));
     return { decision: evaluation.decision, reason: evaluation.reason };
   }
@@ -279,6 +279,20 @@ export async function processTradeSignal(
     ? evaluation.finalPositionSize / executionPrice
     : evaluation.quantity!;
   let execution;
+  if (existingBotPosition) {
+    logger.info("STRATEGY", "Additional purchase allowed for existing position", {
+      ticker: trade.ticker,
+      currentPositionValue: currentTickerExposure,
+      orderValue: evaluation.finalPositionSize,
+    });
+  }
+  if (evaluation.notes.some((note) => note.includes("MAX_POSITION_PERCENT_PER_TICKER"))) {
+    logger.info("STRATEGY", "Order reduced by per-ticker position limit", {
+      ticker: trade.ticker,
+      plannedOrderValue: evaluation.calculatedPositionSize,
+      finalOrderValue: evaluation.finalPositionSize,
+    });
+  }
   try {
     execution = await dependencies.executeBuyOrder({
       ticker: trade.ticker!,
@@ -301,7 +315,7 @@ export async function processTradeSignal(
   }
   const effectiveTradeDate =
     resolveTradeDate(trade)?.tradeDate || trade.filingDate;
-  createOpenPosition({
+  const positionInput = {
     ticker: trade.ticker!,
     entryPrice: executionPrice,
     quantity,
@@ -313,7 +327,20 @@ export async function processTradeSignal(
     filingDate: trade.filingDate,
     alpacaOrderId: execution.orderId,
     executionMode: execution.simulated ? "SIMULATED" : "PAPER",
-  });
+  } as const;
+  if (existingBotPosition) {
+    addPurchaseToPosition(existingBotPosition, {
+      tradeId: trade.id,
+      politicianName: trade.politicianName,
+      signalDate: effectiveTradeDate,
+      price: executionPrice,
+      quantity,
+      notionalValue: evaluation.finalPositionSize,
+      alpacaOrderId: execution.orderId,
+    });
+  } else {
+    createOpenPosition(positionInput);
+  }
   logTradeDecision(
     decisionLog(trade, evaluation, market, execution.orderId),
   );

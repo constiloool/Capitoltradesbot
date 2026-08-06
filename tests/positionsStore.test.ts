@@ -11,6 +11,7 @@ test("persists positions and marks a three-politician cluster", async () => {
     "../src/storage/db.js"
   );
   const {
+    addPurchaseToPosition,
     addSignalToPosition,
     createOpenPosition,
     findOpenPosition,
@@ -86,12 +87,14 @@ test("persists positions and marks a three-politician cluster", async () => {
     "Politician Two",
     "2026-06-17",
   );
-  position = addSignalToPosition(
-    position,
-    additionalTrades[1].id,
-    "Politician Three",
-    "2026-06-20",
-  );
+  position = addPurchaseToPosition(position, {
+    tradeId: additionalTrades[1].id,
+    politicianName: "Politician Three",
+    signalDate: "2026-06-20",
+    price: 120,
+    quantity: 5,
+    notionalValue: 600,
+  });
 
   const stored = findOpenPosition("AAPL");
   assert.equal(stored?.signalCount, 3);
@@ -101,6 +104,9 @@ test("persists positions and marks a three-politician cluster", async () => {
     "Politician Three",
   ]);
   assert.equal(stored?.clusterSignal, true);
+  assert.equal(stored?.quantity, 15);
+  assert.equal(stored?.notionalValue, 1_600);
+  assert.ok(Math.abs((stored?.entryPrice ?? 0) - 1_600 / 15) < 1e-10);
   closeDatabase();
   rmSync(directory, { recursive: true, force: true });
 });

@@ -17,7 +17,7 @@ export type MarketContext = {
   referencePrice?: number;
   tradable?: boolean;
   fractionable?: boolean;
-  brokerMinimumOrderValue: number;
+  minOrderValueUsd: number;
   tickerAlreadyHeld: boolean;
 };
 

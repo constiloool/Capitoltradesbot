@@ -391,9 +391,10 @@ und verweigert BUY-Kandidaten, solange kein verlässliches Equity vorliegt.
 ```dotenv
 MAX_TRADE_AGE_DAYS=31
 BASE_POSITION_PCT=0.01
-MAX_POSITION_PER_TICKER_PCT=0.03
+MAX_POSITION_PERCENT_PER_TICKER=5
 MAX_TOTAL_EXPOSURE_PCT=0.30
 MIN_SHARE_PRICE=5
+MIN_ORDER_VALUE_USD=25
 TAKE_PROFIT_PCT=0.30
 STOP_LOSS_PCT=0.12
 MAX_HOLDING_DAYS=45
@@ -404,3 +405,7 @@ ALLOW_LIVE_TRADING=false
 
 `ALLOW_LIVE_TRADING=false` verweigert nicht-Paper-Alpaca-URLs auch dann, wenn
 `SAFE_MODE=false` gesetzt wird.
+
+`MAX_POSITION_PERCENT_PER_TICKER` begrenzt den aktuellen Marktwert eines
+Tickers nach einem Kauf. Bestehende Positionen dürfen bis zu diesem Limit
+aufgestockt werden; Teilorders unter `MIN_ORDER_VALUE_USD` werden verworfen.

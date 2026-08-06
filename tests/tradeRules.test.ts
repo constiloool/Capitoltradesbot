@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { evaluateTradeRules } from "../src/rules/tradeRules.js";
 import { evaluatePositionExit } from "../src/monitor/positionMonitor.js";
+import { calculateAllowedOrderValue } from "../src/risk/positionSizing.js";
 import type { DisclosureTrade } from "../src/types/disclosure.js";
 import type { BotPosition, MarketContext } from "../src/types/trading.js";
 
@@ -37,7 +38,7 @@ function market(overrides: Partial<MarketContext> = {}): MarketContext {
     referencePrice: 98,
     tradable: true,
     fractionable: true,
-    brokerMinimumOrderValue: 1,
+    minOrderValueUsd: 25,
     tickerAlreadyHeld: false,
     ...overrides,
   };
@@ -127,14 +128,16 @@ test("fresh purchase is eligible to buy", () => {
   assert.equal(evaluateTradeRules(trade(), market(), 1, now).decision, "BUY");
 });
 
-test("held ticker becomes watchlist", () => {
+test("held ticker can be purchased again below its position limit", () => {
   const result = evaluateTradeRules(
     trade(),
-    market({ tickerAlreadyHeld: true }),
+    market({ tickerAlreadyHeld: true, currentTickerExposure: 3_000 }),
     1,
     now,
   );
-  assert.equal(result.decision, "WATCHLIST");
+  assert.equal(result.decision, "BUY");
+  assert.equal(result.finalPositionSize, 1_000);
+  assert.match(result.reason, /Additional BUY/);
 });
 
 test("politician score zero is skipped", () => {
@@ -209,7 +212,45 @@ test("position size is reduced by total exposure capacity", () => {
   );
   assert.equal(result.decision, "BUY");
   assert.equal(result.finalPositionSize, 1_000);
-  assert.ok(result.notes.includes("Position size reduced due to exposure limits"));
+  assert.ok(result.notes.includes("Position size reduced due to total exposure limit"));
+});
+
+test("position limit allows a new ticker without an existing position", () => {
+  assert.deepEqual(
+    calculateAllowedOrderValue(100_000, 0, 1_500, 5, 25),
+    {
+      finalOrderValue: 1_500,
+      status: "allowed",
+      reason: "Purchase allowed below per-ticker position limit",
+    },
+  );
+});
+
+test("position limit allows adding to an existing position below limit", () => {
+  const result = calculateAllowedOrderValue(100_000, 3_000, 1_500, 5, 25);
+  assert.equal(result.status, "allowed");
+  assert.equal(result.finalOrderValue, 1_500);
+  assert.match(result.reason, /Additional purchase allowed/);
+});
+
+test("position limit reduces an order to the remaining capacity", () => {
+  const result = calculateAllowedOrderValue(100_000, 3_000, 3_000, 5, 25);
+  assert.equal(result.status, "reduced");
+  assert.equal(result.finalOrderValue, 2_000);
+  assert.match(result.reason, /MAX_POSITION_PERCENT_PER_TICKER/);
+});
+
+test("position limit skips a position already at its cap", () => {
+  const result = calculateAllowedOrderValue(100_000, 5_000, 1_000, 5, 25);
+  assert.equal(result.status, "skipped_position_limit");
+  assert.equal(result.finalOrderValue, 0);
+});
+
+test("position limit skips when reduced order is below minimum", () => {
+  const result = calculateAllowedOrderValue(100_000, 4_990, 1_000, 5, 25);
+  assert.equal(result.status, "skipped_min_order");
+  assert.equal(result.finalOrderValue, 0);
+  assert.match(result.reason, /MIN_ORDER_VALUE_USD/);
 });
 
 test("missing price history is skipped conservatively", () => {
