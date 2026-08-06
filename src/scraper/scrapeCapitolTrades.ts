@@ -80,7 +80,9 @@ export async function scrapeCapitolTrades(): Promise<CapitolTrade[]> {
     }
     return trades;
   } catch (error) {
-    logger.error("SCRAPER", "Scrape failed", error);
+    logger.warn("SCRAPER", "Scrape unavailable; continuing without CapitolTrades fallback", {
+      reason: error instanceof Error ? error.message : String(error),
+    });
     return [];
   }
 }
