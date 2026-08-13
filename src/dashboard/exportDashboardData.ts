@@ -1,6 +1,10 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import {
+  type AlpacaAccount,
+  type AlpacaClock,
+  type AlpacaPortfolioHistory,
+  type AlpacaPosition,
   getMarketClock,
   getPaperAccount,
   getPortfolioHistory,
@@ -34,6 +38,14 @@ type PositionRow = {
   execution_mode: string;
   alpaca_order_id: string | null;
   created_at: string;
+};
+
+type BrokerSnapshot = {
+  account: AlpacaAccount;
+  positions: AlpacaPosition[];
+  history: AlpacaPortfolioHistory;
+  clock: AlpacaClock;
+  errors: string[];
 };
 
 function writeJson(directory: string, filename: string, value: unknown): void {
@@ -84,18 +96,59 @@ function displaySkipReason(decision: DecisionRow): string {
   return `Trade is ${ageDays} days old — ${daysOverLimit} day${daysOverLimit === 1 ? "" : "s"} over the ${config.maxTradeAgeDays}-day limit`;
 }
 
+function errorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
+}
+
+async function optionalBrokerCall<T>(
+  label: string,
+  request: () => Promise<T>,
+  fallback: T,
+  errors: string[],
+): Promise<T> {
+  try {
+    return await request();
+  } catch (error) {
+    const message = `${label}: ${errorMessage(error)}`;
+    errors.push(message);
+    logger.warn("DASHBOARD", "Broker data temporarily unavailable", {
+      source: label,
+      error: errorMessage(error),
+    });
+    return fallback;
+  }
+}
+
+async function fetchBrokerSnapshot(): Promise<BrokerSnapshot> {
+  const errors: string[] = [];
+  const [account, positions, history, clock] = await Promise.all([
+    optionalBrokerCall("account", getPaperAccount, {}, errors),
+    optionalBrokerCall("positions", getPositions, [], errors),
+    optionalBrokerCall("portfolioHistory", getPortfolioHistory, {}, errors),
+    optionalBrokerCall(
+      "marketClock",
+      getMarketClock,
+      {
+        timestamp: new Date().toISOString(),
+        is_open: false,
+        next_open: "",
+        next_close: "",
+      },
+      errors,
+    ),
+  ]);
+
+  return { account, positions, history, clock, errors };
+}
+
 export async function exportDashboardData(
   outputDirectory = process.env.DASHBOARD_DATA_DIR?.trim() || "./dashboard-data",
 ): Promise<void> {
   initializeDatabase();
   mkdirSync(outputDirectory, { recursive: true });
 
-  const [account, positions, history, clock] = await Promise.all([
-    getPaperAccount(),
-    getPositions(),
-    getPortfolioHistory(),
-    getMarketClock(),
-  ]);
+  const { account, positions, history, clock, errors } =
+    await fetchBrokerSnapshot();
 
   const db = getDatabase();
   const acceptedRows = db
@@ -206,13 +259,15 @@ export async function exportDashboardData(
   );
   writeJson(outputDirectory, "skipped-trades.json", skippedTrades);
   writeJson(outputDirectory, "bot-status.json", {
-    botStatus: account.status === "ACTIVE" ? "Running" : (account.status ?? "Unknown"),
+    botStatus:
+      account.status === "ACTIVE" ? "Running" : (account.status ?? "Unknown"),
     lastScan: generatedAt,
     dataSource: "Official disclosure filings",
     broker: "Alpaca Paper Trading",
     safeMode: config.safeMode,
     cron: "Active",
-    lastError: "None",
+    lastError: errors.length > 0 ? errors.join("; ") : "None",
+    brokerDataAvailable: errors.length === 0,
     marketOpen: clock.is_open,
     equity,
     portfolioValue,
@@ -237,6 +292,7 @@ export async function exportDashboardData(
     copiedTrades: copiedTrades.length,
     skippedTrades: skippedTrades.length,
     openPositions: positions.length,
+    brokerWarnings: errors.length,
   });
 }
 
