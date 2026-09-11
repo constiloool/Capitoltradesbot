@@ -1,0 +1,252 @@
+[
+  {
+    "id": "1653",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "WDAY",
+    "assetName": "Workday, Inc. - Class A Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because current price is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1652",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "WPM",
+    "assetName": "Wheaton Precious Metals Corp Common Shares",
+    "action": "purchase",
+    "reason": "Skipped because current price is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1651",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "WMT",
+    "assetName": "Walmart Inc. - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because current price is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1650",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "VRSK",
+    "assetName": "Verisk Analytics, Inc. - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1649",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "TYL",
+    "assetName": "Tyler Technologies, Inc. Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because current price is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1648",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "TTD",
+    "assetName": "The Trade Desk, Inc. - Class A Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because current price is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1647",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "TXRH",
+    "assetName": "Texas Roadhouse, Inc. - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1646",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "TSLA",
+    "assetName": "Tesla, Inc. - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1645",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "STRL",
+    "assetName": "Sterling Infrastructure, Inc. - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1644",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "SNOW",
+    "assetName": "Snowflake Inc. Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1643",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "SKHY",
+    "assetName": "SK hynix Inc. - American Depositary Shares",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1642",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "SHAK",
+    "assetName": "Shake Shack, Inc. Class A Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because current price is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1641",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "PWR",
+    "assetName": "Quanta Services, Inc. Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because current price is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1640",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "PHR",
+    "assetName": "Phreesia, Inc. Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1639",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "PHR",
+    "assetName": "Phreesia, Inc. Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1638",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "NXPI",
+    "assetName": "NXP Semiconductors N.V. - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1637",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "NVDA",
+    "assetName": "NVIDIA Corporation - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1636",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "NKE",
+    "assetName": "Nike, Inc. Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1635",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "New Jersey Health Care Facilities Financing Authority Revenue Bonds",
+    "assetName": "New Jersey Health Care Facilities Financing Authority Revenue Bonds",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1634",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "NEO",
+    "assetName": "NeoGenomics, Inc. - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1633",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "MOG.A",
+    "assetName": "Moog Inc. Class A Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1632",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "MSFT",
+    "assetName": "Microsoft Corporation - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because current price is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1631",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "META",
+    "assetName": "Meta Platforms, Inc. - Class A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1630",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "LAMR",
+    "assetName": "Lamar Advertising Company - Class AS (partial)08/19/202609/04/2026$15,001 - Common Stock (LAMR) [ST]$50,000 Lamar Advertising Company - Class A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1629",
+    "date": "2026-09-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "LAMR",
+    "assetName": "Lamar Advertising Company - Class A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  }
+]
