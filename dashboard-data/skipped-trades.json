@@ -1,0 +1,263 @@
+[
+  {
+    "id": "1683",
+    "date": "2026-09-15",
+    "politician": "August Lee Pfluger II",
+    "ticker": "LBRDK",
+    "assetName": "D: Shares surrendered thru merger DCLiberty Broadband Corporation - Class C Common Stock",
+    "action": "exchange",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1682",
+    "date": "2026-09-15",
+    "politician": "August Lee Pfluger II",
+    "ticker": "LBRDK",
+    "assetName": "D: Shares received thru merger Liberty Broadband Corporation - Class C Common Stock",
+    "action": "exchange",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1681",
+    "date": "2026-09-15",
+    "politician": "August Lee Pfluger II",
+    "ticker": "CHTR",
+    "assetName": "D: Shares received thru merger Charter Communications, Inc. - Class A Common Stock",
+    "action": "exchange",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1680",
+    "date": "2026-09-15",
+    "politician": "August Lee Pfluger II",
+    "ticker": "CHTR",
+    "assetName": "Charter Communications, Inc. - Class A Common Stock",
+    "owner": "DC",
+    "action": "exchange",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1679",
+    "date": "2026-09-15",
+    "politician": "Josh Gottheimer",
+    "ticker": "QSR",
+    "assetName": "D: Call options; Strike price $335; Expires 12/18/2026 JTRepublic Services, Inc. CommonP08/06/202609/14/2026$1,001 - $15,000 Stock (RSG) [ST] JTRestaurant Brands International Inc. Common Shares",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1678",
+    "date": "2026-09-15",
+    "politician": "Josh Gottheimer",
+    "ticker": "MSFT",
+    "assetName": "D: Call options; Strike price $340; Expires 12/18/2026 JTMicrosoft Corporation - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1677",
+    "date": "2026-09-15",
+    "politician": "Josh Gottheimer",
+    "ticker": "MSFT",
+    "assetName": "D: Call options; Strike price $330; Expires 10/16/2026 JTMicrosoft Corporation - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1676",
+    "date": "2026-09-15",
+    "politician": "Josh Gottheimer",
+    "ticker": "MSFT",
+    "assetName": "D: Call options; Strike price $340; Expires 10/16/2026 JTMicrosoft Corporation - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1675",
+    "date": "2026-09-15",
+    "politician": "Josh Gottheimer",
+    "ticker": "MSFT",
+    "assetName": "Microsoft Corporation - Common Stock",
+    "owner": "JT",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1674",
+    "date": "2026-09-15",
+    "politician": "Josh Gottheimer",
+    "ticker": "AMAT",
+    "assetName": "Applied Materials, Inc. - Common Stock",
+    "owner": "JT",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1673",
+    "date": "2026-09-15",
+    "politician": "Suzan K. DelBene",
+    "ticker": "New York NY City Transitional Fin 5.00% Due Nov 1, 2037",
+    "assetName": "New York NY City Transitional Fin 5.00% Due Nov 1, 2037",
+    "owner": "JT",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1672",
+    "date": "2026-09-14",
+    "politician": "John W. Rose",
+    "ticker": "2000140446American Funds AMCAP Fund Class A M/F [MF}",
+    "assetName": "2000140446American Funds AMCAP Fund Class A M/F [MF}",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1671",
+    "date": "2026-09-14",
+    "politician": "John W. Rose",
+    "ticker": "GOOGL",
+    "assetName": "2000140445Alphabet Inc. - Class A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1670",
+    "date": "2026-09-14",
+    "politician": "Thomas H. Kean Jr",
+    "ticker": "MSFT",
+    "assetName": "Microsoft Corporation - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1668",
+    "date": "2026-09-14",
+    "politician": "Thomas H. Kean Jr",
+    "ticker": "LIN",
+    "assetName": "Linde plc - Ordinary Shares",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1667",
+    "date": "2026-09-14",
+    "politician": "Thomas H. Kean Jr",
+    "ticker": "JNJ",
+    "assetName": "Johnson & Johnson Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1666",
+    "date": "2026-09-14",
+    "politician": "Thomas H. Kean Jr",
+    "ticker": "AMCR",
+    "assetName": "Amcor plc Ordinary Shares",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1665",
+    "date": "2026-09-14",
+    "politician": "Thomas H. Kean Jr",
+    "ticker": "GOOGL",
+    "assetName": "Alphabet Inc. - Class A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1664",
+    "date": "2026-09-14",
+    "politician": "Angus King",
+    "ticker": "EA",
+    "assetName": "Electronic Arts Inc",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1662",
+    "date": "2026-09-14",
+    "politician": "John Boozman",
+    "ticker": "OTIS",
+    "assetName": "Otis Worldwide Corp",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1661",
+    "date": "2026-09-14",
+    "politician": "John Boozman",
+    "ticker": "IJ",
+    "assetName": "iShares Core S&P Small-Cap ETF",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Market or account data unavailable: Alpaca asset check failed (HTTP 404)",
+    "status": "Skipped"
+  },
+  {
+    "id": "1660",
+    "date": "2026-09-14",
+    "politician": "John Boozman",
+    "ticker": "FSLR",
+    "assetName": "First Solar Inc",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1659",
+    "date": "2026-09-14",
+    "politician": "John Boozman",
+    "ticker": "TRADR 2X LONG SPY MNTHLY ETF",
+    "assetName": "TRADR 2X LONG SPY MNTHLY ETF",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1658",
+    "date": "2026-09-14",
+    "politician": "John Boozman",
+    "ticker": "AVANTIS US SML CAP VAL ETF",
+    "assetName": "AVANTIS US SML CAP VAL ETF",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1657",
+    "date": "2026-09-14",
+    "politician": "John Boozman",
+    "ticker": "WESTWOOD QUALITY SMALLCAP FUND",
+    "assetName": "WESTWOOD QUALITY SMALLCAP FUND",
+    "owner": "Joint",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  }
+]
