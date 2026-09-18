@@ -1,0 +1,264 @@
+[
+  {
+    "id": "1707",
+    "date": "2026-09-18",
+    "politician": "David J. Taylor",
+    "ticker": "PG",
+    "assetName": "Procter & Gamble Company",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1706",
+    "date": "2026-09-18",
+    "politician": "David J. Taylor",
+    "ticker": "IBP",
+    "assetName": "Installed Building Products, Inc. Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1705",
+    "date": "2026-09-18",
+    "politician": "Scott Scott Franklin",
+    "ticker": "PEP",
+    "assetName": "Pepsico, Inc.",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1704",
+    "date": "2026-09-18",
+    "politician": "Scott Scott Franklin",
+    "ticker": "PEP",
+    "assetName": "Pepsico, Inc.",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1703",
+    "date": "2026-09-18",
+    "politician": "Scott Scott Franklin",
+    "ticker": "NVO",
+    "assetName": "Novo Nordisk A/S Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1702",
+    "date": "2026-09-18",
+    "politician": "Scott Scott Franklin",
+    "ticker": "MCD",
+    "assetName": "D: Lord Abbett Short Duration High Yield bond fund (LSYIX) SPMcDonald's Corporation Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1701",
+    "date": "2026-09-18",
+    "politician": "Scott Scott Franklin",
+    "ticker": "Lord Abbett Short Duration High Yield I (LSYIX) bond fund",
+    "assetName": "Lord Abbett Short Duration High Yield I (LSYIX) bond fund",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1700",
+    "date": "2026-09-18",
+    "politician": "Scott Scott Franklin",
+    "ticker": "JPM",
+    "assetName": "JP Morgan Chase & Co. Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1699",
+    "date": "2026-09-18",
+    "politician": "Scott Scott Franklin",
+    "ticker": "JPM",
+    "assetName": "JP Morgan Chase & Co. Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1698",
+    "date": "2026-09-18",
+    "politician": "Scott Scott Franklin",
+    "ticker": "AAPL",
+    "assetName": "Apple Inc. - Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1697",
+    "date": "2026-09-18",
+    "politician": "Scott Scott Franklin",
+    "ticker": "GOOG",
+    "assetName": "Alphabet Inc. - Class C Capital Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1696",
+    "date": "2026-09-18",
+    "politician": "Scott Scott Franklin",
+    "ticker": "GOOG",
+    "assetName": "Alphabet Inc. - Class C Capital Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1695",
+    "date": "2026-09-18",
+    "politician": "Scott Scott Franklin",
+    "ticker": "ACN",
+    "assetName": "Accenture plc Class A Ordinary Shares",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1694",
+    "date": "2026-09-18",
+    "politician": "Scott Scott Franklin",
+    "ticker": "ACN",
+    "assetName": "Accenture plc Class A Ordinary Shares",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1693",
+    "date": "2026-09-17",
+    "politician": "Alan Armstrong",
+    "ticker": "EA",
+    "assetName": "Electronic Arts Inc",
+    "owner": "Joint",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1692",
+    "date": "2026-09-17",
+    "politician": "Alan Armstrong",
+    "ticker": "AVB",
+    "assetName": "AvalonBay Communities Inc",
+    "owner": "Joint",
+    "action": "exchange",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1691",
+    "date": "2026-09-17",
+    "politician": "Alan Armstrong",
+    "ticker": "WMB",
+    "assetName": "The Williams Cos Inc",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1689",
+    "date": "2026-09-16",
+    "politician": "Byron Donalds",
+    "ticker": "PH",
+    "assetName": "Parker-Hannifin Corporation Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1688",
+    "date": "2026-09-16",
+    "politician": "Byron Donalds",
+    "ticker": "PH",
+    "assetName": "Parker-Hannifin Corporation Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1687",
+    "date": "2026-09-16",
+    "politician": "Byron Donalds",
+    "ticker": "NFLX",
+    "assetName": "Netflix, Inc. - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1686",
+    "date": "2026-09-16",
+    "politician": "Byron Donalds",
+    "ticker": "NFLX",
+    "assetName": "Netflix, Inc. - Common Stock",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1685",
+    "date": "2026-09-16",
+    "politician": "Byron Donalds",
+    "ticker": "HWM",
+    "assetName": "Howmet Aerospace Inc. Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1684",
+    "date": "2026-09-16",
+    "politician": "Byron Donalds",
+    "ticker": "HWM",
+    "assetName": "Howmet Aerospace Inc. Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1683",
+    "date": "2026-09-15",
+    "politician": "August Lee Pfluger II",
+    "ticker": "LBRDK",
+    "assetName": "D: Shares surrendered thru merger DCLiberty Broadband Corporation - Class C Common Stock",
+    "action": "exchange",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1682",
+    "date": "2026-09-15",
+    "politician": "August Lee Pfluger II",
+    "ticker": "LBRDK",
+    "assetName": "D: Shares received thru merger Liberty Broadband Corporation - Class C Common Stock",
+    "action": "exchange",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  }
+]
