@@ -1,0 +1,270 @@
+[
+  {
+    "id": "1735",
+    "date": "2026-09-23",
+    "politician": "Pete Sessions",
+    "ticker": "AAPL",
+    "assetName": "Apple Inc. - Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1734",
+    "date": "2026-09-23",
+    "politician": "Sheri Biggs",
+    "ticker": "D: Professionally managed account. Structured product based on XLE. SPBank of Nova Scotia",
+    "assetName": "D: Professionally managed account. Structured product based on XLE. SPBank of Nova Scotia",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1733",
+    "date": "2026-09-23",
+    "politician": "Sheri Biggs",
+    "ticker": "L: US D: Dividend reinvestment in a professionally managed account – Business Development Company. SPBank of Nova Scotia",
+    "assetName": "L: US D: Dividend reinvestment in a professionally managed account – Business Development Company. SPBank of Nova Scotia",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1732",
+    "date": "2026-09-23",
+    "politician": "Sheri Biggs",
+    "ticker": "D: Professionally managed account. SPApollo Debt Solutions BDC Class S",
+    "assetName": "D: Professionally managed account. SPApollo Debt Solutions BDC Class S",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1731",
+    "date": "2026-09-23",
+    "politician": "Sheri Biggs",
+    "ticker": "ALPHAKEYS BLACKSTONE LIFE SCIENCES VI LP",
+    "assetName": "ALPHAKEYS BLACKSTONE LIFE SCIENCES VI LP",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1730",
+    "date": "2026-09-23",
+    "politician": "Richard W. Allen",
+    "ticker": "TSM",
+    "assetName": "Taiwan Semiconductor Manufacturing Company Ltd.",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1729",
+    "date": "2026-09-23",
+    "politician": "Richard W. Allen",
+    "ticker": "ROL",
+    "assetName": "Rollins, Inc. Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1728",
+    "date": "2026-09-23",
+    "politician": "Richard W. Allen",
+    "ticker": "AVGO",
+    "assetName": "Broadcom Inc. - Common Stock",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1727",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "West VY Mission CMN EDUC",
+    "assetName": "West VY Mission CMN EDUC",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1726",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "UNIV CA PUB EDUC",
+    "assetName": "UNIV CA PUB EDUC",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1725",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "U.S. Treasury Bill",
+    "assetName": "U.S. Treasury Bill",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1724",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "U.S. Treasury Bill",
+    "assetName": "U.S. Treasury Bill",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1723",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "U.S. Treasury Bill",
+    "assetName": "U.S. Treasury Bill",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1722",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "U.S. Treasury Bill",
+    "assetName": "U.S. Treasury Bill",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1721",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "L: US D: Pooled Investment Fund SPU.S. Treasury Bill",
+    "assetName": "L: US D: Pooled Investment Fund SPU.S. Treasury Bill",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1720",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "L: New York, NY, US D: Online Health SPSmash Capital Fund II LP",
+    "assetName": "L: New York, NY, US D: Online Health SPSmash Capital Fund II LP",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1719",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "Ro",
+    "assetName": "Ro",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1718",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "Petaluma CA WASTE SWR UTIL",
+    "assetName": "Petaluma CA WASTE SWR UTIL",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1717",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "Palmdale CA Sch",
+    "assetName": "Palmdale CA Sch",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1716",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "L: US D: Private Equity General Partnership SPNew York, NY City COMB TX",
+    "assetName": "L: US D: Private Equity General Partnership SPNew York, NY City COMB TX",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1715",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "Kent Street O&M Holdings LLC",
+    "assetName": "Kent Street O&M Holdings LLC",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1714",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "Irvine Ranch CA WRSR UTIL",
+    "assetName": "Irvine Ranch CA WRSR UTIL",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1713",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "Enterprise CA",
+    "assetName": "Enterprise CA",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1712",
+    "date": "2026-09-22",
+    "politician": "Scott H. Peters",
+    "ticker": "Energy Northwest WA PWR UTIL",
+    "assetName": "Energy Northwest WA PWR UTIL",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1709",
+    "date": "2026-09-21",
+    "politician": "Pete Sessions",
+    "ticker": "GOOGL",
+    "assetName": "Alphabet Inc. - Class A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  }
+]
