@@ -1,0 +1,268 @@
+[
+  {
+    "id": "1851",
+    "date": "2026-10-02",
+    "politician": "Sheldon Whitehouse",
+    "ticker": "JP Morgan Chase & Co. Common Stock",
+    "assetName": "JP Morgan Chase & Co. Common Stock",
+    "owner": "Self",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1850",
+    "date": "2026-10-02",
+    "politician": "Sheldon Whitehouse",
+    "ticker": "V",
+    "assetName": "Visa Inc.",
+    "owner": "Self",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1849",
+    "date": "2026-10-02",
+    "politician": "Sheldon Whitehouse",
+    "ticker": "V",
+    "assetName": "Visa Inc.",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1848",
+    "date": "2026-10-02",
+    "politician": "Sheldon Whitehouse",
+    "ticker": "Analog Devices, Inc. - Common Stock",
+    "assetName": "Analog Devices, Inc. - Common Stock",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1847",
+    "date": "2026-10-02",
+    "politician": "Sheldon Whitehouse",
+    "ticker": "JP Morgan Chase & Co. Common Stock",
+    "assetName": "JP Morgan Chase & Co. Common Stock",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1846",
+    "date": "2026-10-02",
+    "politician": "David J. Taylor",
+    "ticker": "MPC",
+    "assetName": "Marathon Petroleum Corporation Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1845",
+    "date": "2026-10-02",
+    "politician": "David J. Taylor",
+    "ticker": "HD",
+    "assetName": "Home Depot, Inc.",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1844",
+    "date": "2026-10-02",
+    "politician": "David J. Taylor",
+    "ticker": "AMGN",
+    "assetName": "Amgen Inc. - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1843",
+    "date": "2026-10-02",
+    "politician": "Cleo Fields",
+    "ticker": "NFLX",
+    "assetName": "Netflix, Inc. - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1842",
+    "date": "2026-10-02",
+    "politician": "Cleo Fields",
+    "ticker": "MSFT",
+    "assetName": "Microsoft Corporation - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1841",
+    "date": "2026-10-02",
+    "politician": "Cleo Fields",
+    "ticker": "AAPL",
+    "assetName": "Apple Inc. - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1840",
+    "date": "2026-10-02",
+    "politician": "Cleo Fields",
+    "ticker": "GOOG",
+    "assetName": "Alphabet Inc. - Class C Capital Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1839",
+    "date": "2026-10-02",
+    "politician": "Donald Sternoff Beyer Jr",
+    "ticker": "D: 65,000 units JTOhio St Gen Oblig 5.00% 11/01/34",
+    "assetName": "D: 65,000 units JTOhio St Gen Oblig 5.00% 11/01/34",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1838",
+    "date": "2026-10-02",
+    "politician": "Donald Sternoff Beyer Jr",
+    "ticker": "D: 35,000 units JTIndiana ST 5.00% 02/01/32",
+    "assetName": "D: 35,000 units JTIndiana ST 5.00% 02/01/32",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1837",
+    "date": "2026-10-02",
+    "politician": "Donald Sternoff Beyer Jr",
+    "ticker": "Curators Univ Mo 5.00% 11/01/34",
+    "assetName": "Curators Univ Mo 5.00% 11/01/34",
+    "owner": "JT",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1836",
+    "date": "2026-10-02",
+    "politician": "Sheldon Whitehouse",
+    "ticker": "JPMJP",
+    "assetName": "JPMorgan Chase & Co",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1835",
+    "date": "2026-10-02",
+    "politician": "Sheldon Whitehouse",
+    "ticker": "ADI",
+    "assetName": "Analog Devices Inc",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1834",
+    "date": "2026-10-02",
+    "politician": "Sheldon Whitehouse",
+    "ticker": "V",
+    "assetName": "Visa Inc",
+    "owner": "Self",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1833",
+    "date": "2026-10-02",
+    "politician": "Sheldon Whitehouse",
+    "ticker": "JPMJP",
+    "assetName": "JPMorgan Chase & Co",
+    "owner": "Self",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1832",
+    "date": "2026-10-02",
+    "politician": "Sheldon Whitehouse",
+    "ticker": "V",
+    "assetName": "Visa Inc",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1831",
+    "date": "2026-10-01",
+    "politician": "Suzan K. DelBene",
+    "ticker": "San Joaquin VY Calif Clean Energy Auth 5.50% Due Jan 1, 2056",
+    "assetName": "San Joaquin VY Calif Clean Energy Auth 5.50% Due Jan 1, 2056",
+    "owner": "JT",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1830",
+    "date": "2026-10-01",
+    "politician": "Suzan K. DelBene",
+    "ticker": "San Joaquin VY Calif Clean Energy Auth 5.50 % Due Jan 1, 2056",
+    "assetName": "San Joaquin VY Calif Clean Energy Auth 5.50 % Due Jan 1, 2056",
+    "owner": "JT",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1829",
+    "date": "2026-10-01",
+    "politician": "Suzan K. DelBene",
+    "ticker": "Central VY Energy Auth Calif Commodity 5.00% Due Aug 1, 2034",
+    "assetName": "Central VY Energy Auth Calif Commodity 5.00% Due Aug 1, 2034",
+    "owner": "JT",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1828",
+    "date": "2026-10-01",
+    "politician": "Suzan K. DelBene",
+    "ticker": "California CMNTY Choice Fing Auth 5.00% Due Oct 1, 2056",
+    "assetName": "California CMNTY Choice Fing Auth 5.00% Due Oct 1, 2056",
+    "owner": "JT",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1827",
+    "date": "2026-10-01",
+    "politician": "Suzan K. DelBene",
+    "ticker": "Boulder Larimer & Weld CNTYS Colo ST 05.00000% 12/15/2027 Vrain VY SCH Dist Gen Oblig",
+    "assetName": "Boulder Larimer & Weld CNTYS Colo ST 05.00000% 12/15/2027 Vrain VY SCH Dist Gen Oblig",
+    "owner": "JT",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  }
+]
