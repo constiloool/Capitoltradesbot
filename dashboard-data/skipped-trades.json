@@ -1,0 +1,252 @@
+[
+  {
+    "id": "1902",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "UNH",
+    "assetName": "UnitedHealth Group Incorporated Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1901",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "URI",
+    "assetName": "United Rentals, Inc. Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1900",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "SPCX",
+    "assetName": "Space Exploration Technologies Corp. - Class A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1899",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "SNOW",
+    "assetName": "Snowflake Inc. Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1898",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "SNOW",
+    "assetName": "Snowflake Inc. Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1897",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "SNOW",
+    "assetName": "Snowflake Inc. Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1896",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "CRM",
+    "assetName": "Salesforce, Inc. Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1895",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "RH",
+    "assetName": "RH Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1894",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "PTON",
+    "assetName": "Peloton Interactive, Inc. - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1893",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "OKTA",
+    "assetName": "Okta, Inc. - Class A Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "1892",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "OKTA",
+    "assetName": "Okta, Inc. - Class A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1891",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "MRNA",
+    "assetName": "Moderna, Inc. - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1890",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "MSFT",
+    "assetName": "Microsoft Corporation - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1889",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "META",
+    "assetName": "Meta Platforms, Inc. - Class A Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "1888",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "META",
+    "assetName": "Meta Platforms, Inc. - Class A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1887",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "MRK",
+    "assetName": "Merck & Company, Inc. Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1886",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "MRVL",
+    "assetName": "Marvell Technology, Inc. - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1885",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "IBM",
+    "assetName": "International Business Machines Corporation Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1884",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "HON",
+    "assetName": "Honeywell International Inc.",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1883",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "HONA",
+    "assetName": "Honeywell Aerospace Inc. - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1882",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "GS",
+    "assetName": "Goldman Sachs Group, Inc.",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1881",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "GE",
+    "assetName": "GE Aerospace Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1880",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "FDX",
+    "assetName": "FedEx Corporation Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1879",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "DDOG",
+    "assetName": "Datadog, Inc. - Class A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1878",
+    "date": "2026-10-08",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "GLW",
+    "assetName": "Corning Incorporated Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  }
+]
