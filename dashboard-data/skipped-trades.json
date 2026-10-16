@@ -1,0 +1,272 @@
+[
+  {
+    "id": "3101",
+    "date": "2026-10-16",
+    "politician": "David J. Taylor",
+    "ticker": "RPM",
+    "assetName": "RPM International Inc. Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3100",
+    "date": "2026-10-16",
+    "politician": "David J. Taylor",
+    "ticker": "PG",
+    "assetName": "Procter & Gamble Company",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3099",
+    "date": "2026-10-16",
+    "politician": "David J. Taylor",
+    "ticker": "FITB",
+    "assetName": "Fifth Third Bancorp - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3098",
+    "date": "2026-10-16",
+    "politician": "David J. Taylor",
+    "ticker": "T",
+    "assetName": "AT&T Inc.",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3097",
+    "date": "2026-10-16",
+    "politician": "Scott H. Peters",
+    "ticker": "U.S. Treasury Bill",
+    "assetName": "U.S. Treasury Bill",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3096",
+    "date": "2026-10-16",
+    "politician": "Scott H. Peters",
+    "ticker": "Charlotte-Meckle HLTH",
+    "assetName": "Charlotte-Meckle HLTH",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "3095",
+    "date": "2026-10-16",
+    "politician": "Scott H. Peters",
+    "ticker": "CA ST GO UTX",
+    "assetName": "CA ST GO UTX",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3094",
+    "date": "2026-10-16",
+    "politician": "Scott H. Peters",
+    "ticker": "CA ST GO UTX",
+    "assetName": "CA ST GO UTX",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3093",
+    "date": "2026-10-15",
+    "politician": "Richard Dean Dr McCormick",
+    "ticker": "BRK.B",
+    "assetName": "Berkshire Hathaway Inc. New Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3092",
+    "date": "2026-10-15",
+    "politician": "Mike Kelly",
+    "ticker": "California Cmnty Choice Fing A Sustainabl 5% due 9/1/36",
+    "assetName": "California Cmnty Choice Fing A Sustainabl 5% due 9/1/36",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "3091",
+    "date": "2026-10-15",
+    "politician": "Mike Kelly",
+    "ticker": "Black Belt Energy Gas Dist AL 1 Rev Call 5% due 10/1/32",
+    "assetName": "Black Belt Energy Gas Dist AL 1 Rev Call 5% due 10/1/32",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "3090",
+    "date": "2026-10-15",
+    "politician": "Suzan K. DelBene",
+    "ticker": "Washington ST 5% Go Utx Due 08/01/30",
+    "assetName": "Washington ST 5% Go Utx Due 08/01/30",
+    "owner": "JT",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3089",
+    "date": "2026-10-15",
+    "politician": "Suzan K. DelBene",
+    "ticker": "TX Trans Commn TPK 5% Tran Due 08/15/42",
+    "assetName": "TX Trans Commn TPK 5% Tran Due 08/15/42",
+    "owner": "JT",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "3088",
+    "date": "2026-10-15",
+    "politician": "Suzan K. DelBene",
+    "ticker": "Triborough Bridge & 4% SPL Tax Due 11/15/31",
+    "assetName": "Triborough Bridge & 4% SPL Tax Due 11/15/31",
+    "owner": "JT",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3087",
+    "date": "2026-10-15",
+    "politician": "Suzan K. DelBene",
+    "ticker": "Black Belt Energy Gas Dist Ala Gas 05.00% 10/01/2032 Proj Rev BDS Ser. 2026 M-1",
+    "assetName": "Black Belt Energy Gas Dist Ala Gas 05.00% 10/01/2032 Proj Rev BDS Ser. 2026 M-1",
+    "owner": "JT",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "3086",
+    "date": "2026-10-15",
+    "politician": "Richard W. Allen",
+    "ticker": "COST",
+    "assetName": "Costco Wholesale Corporation - Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3085",
+    "date": "2026-10-15",
+    "politician": "Richard W. Allen",
+    "ticker": "AZO",
+    "assetName": "AutoZone, Inc. Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3084",
+    "date": "2026-10-14",
+    "politician": "Shelley M",
+    "ticker": "C",
+    "assetName": "Citigroup New Inc",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3083",
+    "date": "2026-10-14",
+    "politician": "Sheldon",
+    "ticker": "MU",
+    "assetName": "Micron Technology, Inc. - Common Stock",
+    "owner": "Self",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3082",
+    "date": "2026-10-14",
+    "politician": "Sheldon",
+    "ticker": "COHR",
+    "assetName": "Coherent Corp. Common Stock",
+    "owner": "Self",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3081",
+    "date": "2026-10-14",
+    "politician": "Sheldon",
+    "ticker": "NVDA",
+    "assetName": "NVIDIA Corporation - Common Stock",
+    "owner": "Self",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3080",
+    "date": "2026-10-14",
+    "politician": "Sheldon",
+    "ticker": "CCI",
+    "assetName": "Crown Castle Inc. Common Stock",
+    "owner": "Self",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3079",
+    "date": "2026-10-14",
+    "politician": "Sheldon",
+    "ticker": "AAPL",
+    "assetName": "Apple Inc. - Common Stock",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3078",
+    "date": "2026-10-14",
+    "politician": "Sheldon",
+    "ticker": "AAPL",
+    "assetName": "Apple Inc. - Common Stock",
+    "owner": "Self",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3077",
+    "date": "2026-10-14",
+    "politician": "John",
+    "ticker": "EVERSOURCE ENERGY SER A NOTE Rate/Coupon: 6.1% Matures: 2056-08-15",
+    "assetName": "EVERSOURCE ENERGY SER A NOTE Rate/Coupon: 6.1% Matures: 2056-08-15",
+    "owner": "Child",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  }
+]
