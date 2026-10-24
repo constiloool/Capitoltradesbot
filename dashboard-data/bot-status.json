@@ -1,0 +1,550 @@
+{
+  "botStatus": "Running",
+  "lastScan": "2026-10-24T00:00:40.573Z",
+  "dataSource": "Official disclosure filings",
+  "broker": "Alpaca Paper Trading",
+  "safeMode": false,
+  "cron": "Active",
+  "lastError": "None",
+  "brokerDataAvailable": true,
+  "marketOpen": false,
+  "equity": 98847.19,
+  "portfolioValue": 98847.19,
+  "buyingPower": 357659.73,
+  "cash": 70814.68,
+  "openPositions": 59,
+  "copiedTrades": 60,
+  "positions": [
+    {
+      "ticker": "AAPL",
+      "quantity": 1.618081646,
+      "marketValue": 562.461361,
+      "currentPrice": 347.61,
+      "averageEntryPrice": 309.286,
+      "unrealizedProfitLoss": 62.011361,
+      "unrealizedProfitLossPct": 0.12391
+    },
+    {
+      "ticker": "ABT",
+      "quantity": 0.018839073,
+      "marketValue": 1.949844,
+      "currentPrice": 103.5,
+      "averageEntryPrice": 93.354498,
+      "unrealizedProfitLoss": 0.191132,
+      "unrealizedProfitLossPct": 0.10868
+    },
+    {
+      "ticker": "ACN",
+      "quantity": 0.001688246,
+      "marketValue": 0.42012,
+      "currentPrice": 248.85,
+      "averageEntryPrice": 134.447166,
+      "unrealizedProfitLoss": 0.19314,
+      "unrealizedProfitLossPct": 0.85091
+    },
+    {
+      "ticker": "ADP",
+      "quantity": 0.001365261,
+      "marketValue": 0.415258,
+      "currentPrice": 304.16,
+      "averageEntryPrice": 239.62,
+      "unrealizedProfitLoss": 0.088114,
+      "unrealizedProfitLossPct": 0.26934
+    },
+    {
+      "ticker": "AGX",
+      "quantity": 1.355689317,
+      "marketValue": 448.773835,
+      "currentPrice": 331.03,
+      "averageEntryPrice": 738.296,
+      "unrealizedProfitLoss": -552.126165,
+      "unrealizedProfitLossPct": -0.55163
+    },
+    {
+      "ticker": "APH",
+      "quantity": 1.140011419,
+      "marketValue": 84.212302,
+      "currentPrice": 73.8697,
+      "averageEntryPrice": 157.63,
+      "unrealizedProfitLoss": -95.487698,
+      "unrealizedProfitLossPct": -0.53137
+    },
+    {
+      "ticker": "BOOT",
+      "quantity": 3.162619666,
+      "marketValue": 364.270533,
+      "currentPrice": 115.18,
+      "averageEntryPrice": 158.239072,
+      "unrealizedProfitLoss": -136.179468,
+      "unrealizedProfitLossPct": -0.27211
+    },
+    {
+      "ticker": "BRK.B",
+      "quantity": 2.022437042,
+      "marketValue": 1097.172095,
+      "currentPrice": 542.5,
+      "averageEntryPrice": 496.920289,
+      "unrealizedProfitLoss": 92.182096,
+      "unrealizedProfitLossPct": 0.09172
+    },
+    {
+      "ticker": "BSX",
+      "quantity": 0.012301849,
+      "marketValue": 0.563302,
+      "currentPrice": 45.79,
+      "averageEntryPrice": 44.8,
+      "unrealizedProfitLoss": 0.012179,
+      "unrealizedProfitLossPct": 0.0221
+    },
+    {
+      "ticker": "BWXT",
+      "quantity": 5.778783511,
+      "marketValue": 735.003475,
+      "currentPrice": 127.19,
+      "averageEntryPrice": 173.45,
+      "unrealizedProfitLoss": -267.326525,
+      "unrealizedProfitLossPct": -0.26671
+    },
+    {
+      "ticker": "CDRE",
+      "quantity": 16.402818747,
+      "marketValue": 491.920534,
+      "currentPrice": 29.99,
+      "averageEntryPrice": 30.51,
+      "unrealizedProfitLoss": -8.529466,
+      "unrealizedProfitLossPct": -0.01704
+    },
+    {
+      "ticker": "CECO",
+      "quantity": 5.890259663,
+      "marketValue": 290.978827,
+      "currentPrice": 49.4,
+      "averageEntryPrice": 84.962299,
+      "unrealizedProfitLoss": -209.471176,
+      "unrealizedProfitLossPct": -0.41857
+    },
+    {
+      "ticker": "CHRW",
+      "quantity": 1.749655775,
+      "marketValue": 246.998906,
+      "currentPrice": 141.17,
+      "averageEntryPrice": 151.064,
+      "unrealizedProfitLoss": -17.311094,
+      "unrealizedProfitLossPct": -0.0655
+    },
+    {
+      "ticker": "CMCSA",
+      "quantity": 0.079160964,
+      "marketValue": 1.80487,
+      "currentPrice": 22.8,
+      "averageEntryPrice": 23.591314,
+      "unrealizedProfitLoss": -0.062641,
+      "unrealizedProfitLossPct": -0.03354
+    },
+    {
+      "ticker": "COHR",
+      "quantity": 2.972492631,
+      "marketValue": 618.248742,
+      "currentPrice": 207.99,
+      "averageEntryPrice": 335.91,
+      "unrealizedProfitLoss": -380.241258,
+      "unrealizedProfitLossPct": -0.38082
+    },
+    {
+      "ticker": "CVX",
+      "quantity": 2.967428062,
+      "marketValue": 692.508687,
+      "currentPrice": 233.37,
+      "averageEntryPrice": 168.55,
+      "unrealizedProfitLoss": 192.348687,
+      "unrealizedProfitLossPct": 0.38457
+    },
+    {
+      "ticker": "CYTK",
+      "quantity": 5.801440687,
+      "marketValue": 355.222213,
+      "currentPrice": 61.23,
+      "averageEntryPrice": 86.263055,
+      "unrealizedProfitLoss": -145.227784,
+      "unrealizedProfitLossPct": -0.29019
+    },
+    {
+      "ticker": "DSGX",
+      "quantity": 6.926120641,
+      "marketValue": 651.05534,
+      "currentPrice": 94,
+      "averageEntryPrice": 72.255455,
+      "unrealizedProfitLoss": 150.605342,
+      "unrealizedProfitLossPct": 0.30094
+    },
+    {
+      "ticker": "ENTG",
+      "quantity": 0.01533964,
+      "marketValue": 2.063488,
+      "currentPrice": 134.52,
+      "averageEntryPrice": 132.37,
+      "unrealizedProfitLoss": 0.03298,
+      "unrealizedProfitLossPct": 0.01624
+    },
+    {
+      "ticker": "ES",
+      "quantity": 6.72784725,
+      "marketValue": 453.860575,
+      "currentPrice": 67.46,
+      "averageEntryPrice": 74.37,
+      "unrealizedProfitLoss": -46.489425,
+      "unrealizedProfitLossPct": -0.09291
+    },
+    {
+      "ticker": "FIS",
+      "quantity": 0.020948995,
+      "marketValue": 0.786216,
+      "currentPrice": 37.53,
+      "averageEntryPrice": 40.819576,
+      "unrealizedProfitLoss": -0.068913,
+      "unrealizedProfitLossPct": -0.08059
+    },
+    {
+      "ticker": "FMAO",
+      "quantity": 12.350944604,
+      "marketValue": 451.303516,
+      "currentPrice": 36.54,
+      "averageEntryPrice": 31.23,
+      "unrealizedProfitLoss": 65.583516,
+      "unrealizedProfitLossPct": 0.17003
+    },
+    {
+      "ticker": "FSV",
+      "quantity": 0.031945372,
+      "marketValue": 4.589592,
+      "currentPrice": 143.67,
+      "averageEntryPrice": 144.38,
+      "unrealizedProfitLoss": -0.022681,
+      "unrealizedProfitLossPct": -0.00492
+    },
+    {
+      "ticker": "GIS",
+      "quantity": 0.032921682,
+      "marketValue": 1.132177,
+      "currentPrice": 34.39,
+      "averageEntryPrice": 36.84,
+      "unrealizedProfitLoss": -0.080658,
+      "unrealizedProfitLossPct": -0.0665
+    },
+    {
+      "ticker": "GOOG",
+      "quantity": 0.000044232,
+      "marketValue": 0.01407,
+      "currentPrice": 318.1,
+      "averageEntryPrice": 349.1,
+      "unrealizedProfitLoss": -0.001371,
+      "unrealizedProfitLossPct": -0.08879
+    },
+    {
+      "ticker": "GOOGL",
+      "quantity": 2.089797803,
+      "marketValue": 671.138355,
+      "currentPrice": 321.1499,
+      "averageEntryPrice": 347.425956,
+      "unrealizedProfitLoss": -54.911645,
+      "unrealizedProfitLossPct": -0.07563
+    },
+    {
+      "ticker": "GS",
+      "quantity": 1.780314657,
+      "marketValue": 1564.567225,
+      "currentPrice": 878.815,
+      "averageEntryPrice": 1034.114948,
+      "unrealizedProfitLoss": -276.482774,
+      "unrealizedProfitLossPct": -0.15018
+    },
+    {
+      "ticker": "HD",
+      "quantity": 1.451270879,
+      "marketValue": 463.81166,
+      "currentPrice": 319.59,
+      "averageEntryPrice": 345.194,
+      "unrealizedProfitLoss": -37.15834,
+      "unrealizedProfitLossPct": -0.07417
+    },
+    {
+      "ticker": "HLT",
+      "quantity": 1.478165185,
+      "marketValue": 516.810894,
+      "currentPrice": 349.63,
+      "averageEntryPrice": 324.436,
+      "unrealizedProfitLoss": 37.240894,
+      "unrealizedProfitLossPct": 0.07765
+    },
+    {
+      "ticker": "HQY",
+      "quantity": 5.240314136,
+      "marketValue": 544.835461,
+      "currentPrice": 103.97,
+      "averageEntryPrice": 95.5,
+      "unrealizedProfitLoss": 44.385461,
+      "unrealizedProfitLossPct": 0.08869
+    },
+    {
+      "ticker": "HUBB",
+      "quantity": 1.050145379,
+      "marketValue": 470.570144,
+      "currentPrice": 448.1,
+      "averageEntryPrice": 474.62,
+      "unrealizedProfitLoss": -27.849856,
+      "unrealizedProfitLossPct": -0.05588
+    },
+    {
+      "ticker": "IBP",
+      "quantity": 4.248781309,
+      "marketValue": 846.017334,
+      "currentPrice": 199.12,
+      "averageEntryPrice": 236.298347,
+      "unrealizedProfitLoss": -157.962666,
+      "unrealizedProfitLossPct": -0.15734
+    },
+    {
+      "ticker": "ICE",
+      "quantity": 3.70863336,
+      "marketValue": 603.542993,
+      "currentPrice": 162.74,
+      "averageEntryPrice": 134.71,
+      "unrealizedProfitLoss": 103.952993,
+      "unrealizedProfitLossPct": 0.20808
+    },
+    {
+      "ticker": "INTC",
+      "quantity": 34.332213901,
+      "marketValue": 2974.415983,
+      "currentPrice": 86.6363,
+      "averageEntryPrice": 87.835874,
+      "unrealizedProfitLoss": -41.184031,
+      "unrealizedProfitLossPct": -0.01366
+    },
+    {
+      "ticker": "KVUE",
+      "quantity": 0.149128117,
+      "marketValue": 2.918437,
+      "currentPrice": 19.57,
+      "averageEntryPrice": 19.525462,
+      "unrealizedProfitLoss": 0.006642,
+      "unrealizedProfitLossPct": 0.00228
+    },
+    {
+      "ticker": "LHX",
+      "quantity": 0.000567781,
+      "marketValue": 0.143832,
+      "currentPrice": 253.3225,
+      "averageEntryPrice": 289.72,
+      "unrealizedProfitLoss": -0.020666,
+      "unrealizedProfitLossPct": -0.12563
+    },
+    {
+      "ticker": "LLY",
+      "quantity": 1.041407243,
+      "marketValue": 1331.959864,
+      "currentPrice": 1279,
+      "averageEntryPrice": 1201.384,
+      "unrealizedProfitLoss": 80.829865,
+      "unrealizedProfitLossPct": 0.06461
+    },
+    {
+      "ticker": "LPLA",
+      "quantity": 1.677650986,
+      "marketValue": 529.483428,
+      "currentPrice": 315.61,
+      "averageEntryPrice": 298.304,
+      "unrealizedProfitLoss": 29.033428,
+      "unrealizedProfitLossPct": 0.05801
+    },
+    {
+      "ticker": "MCHP",
+      "quantity": 5.717483156,
+      "marketValue": 423.093754,
+      "currentPrice": 74,
+      "averageEntryPrice": 87.529773,
+      "unrealizedProfitLoss": -77.356249,
+      "unrealizedProfitLossPct": -0.15457
+    },
+    {
+      "ticker": "MSFT",
+      "quantity": 0.000279279,
+      "marketValue": 0.146599,
+      "currentPrice": 524.9179,
+      "averageEntryPrice": 372.508,
+      "unrealizedProfitLoss": 0.042565,
+      "unrealizedProfitLossPct": 0.40915
+    },
+    {
+      "ticker": "MSTR",
+      "quantity": 10.350568769,
+      "marketValue": 1516.7237,
+      "currentPrice": 146.5353,
+      "averageEntryPrice": 96.7,
+      "unrealizedProfitLoss": 515.8237,
+      "unrealizedProfitLossPct": 0.51536
+    },
+    {
+      "ticker": "MTN",
+      "quantity": 7.118776671,
+      "marketValue": 1043.399097,
+      "currentPrice": 146.57,
+      "averageEntryPrice": 140.6,
+      "unrealizedProfitLoss": 42.499097,
+      "unrealizedProfitLossPct": 0.04246
+    },
+    {
+      "ticker": "MTZ",
+      "quantity": 0.001223161,
+      "marketValue": 0.209222,
+      "currentPrice": 171.05,
+      "averageEntryPrice": 230.214,
+      "unrealizedProfitLoss": -0.072367,
+      "unrealizedProfitLossPct": -0.257
+    },
+    {
+      "ticker": "MU",
+      "quantity": 0.000009375,
+      "marketValue": 0.008249,
+      "currentPrice": 879.9,
+      "averageEntryPrice": 1020.274,
+      "unrealizedProfitLoss": -0.001316,
+      "unrealizedProfitLossPct": -0.13758
+    },
+    {
+      "ticker": "NI",
+      "quantity": 0.010026292,
+      "marketValue": 0.433938,
+      "currentPrice": 43.28,
+      "averageEntryPrice": 46.72,
+      "unrealizedProfitLoss": -0.03449,
+      "unrealizedProfitLossPct": -0.07363
+    },
+    {
+      "ticker": "PG",
+      "quantity": 3.498992985,
+      "marketValue": 562.987971,
+      "currentPrice": 160.9,
+      "averageEntryPrice": 143.99,
+      "unrealizedProfitLoss": 59.167971,
+      "unrealizedProfitLossPct": 0.11744
+    },
+    {
+      "ticker": "PPG",
+      "quantity": 4.114743326,
+      "marketValue": 455.131759,
+      "currentPrice": 110.61,
+      "averageEntryPrice": 121.75,
+      "unrealizedProfitLoss": -45.838241,
+      "unrealizedProfitLossPct": -0.0915
+    },
+    {
+      "ticker": "SPCX",
+      "quantity": 3.04059466,
+      "marketValue": 448.724271,
+      "currentPrice": 147.5778,
+      "averageEntryPrice": 164.589515,
+      "unrealizedProfitLoss": -51.725729,
+      "unrealizedProfitLossPct": -0.10336
+    },
+    {
+      "ticker": "TCBI",
+      "quantity": 4.762108668,
+      "marketValue": 485.687463,
+      "currentPrice": 101.99,
+      "averageEntryPrice": 105.09,
+      "unrealizedProfitLoss": -14.762537,
+      "unrealizedProfitLossPct": -0.0295
+    },
+    {
+      "ticker": "TEL",
+      "quantity": 2.488191716,
+      "marketValue": 517.668287,
+      "currentPrice": 208.05,
+      "averageEntryPrice": 201.13,
+      "unrealizedProfitLoss": 17.218287,
+      "unrealizedProfitLossPct": 0.03441
+    },
+    {
+      "ticker": "TSM",
+      "quantity": 0.000086355,
+      "marketValue": 0.036052,
+      "currentPrice": 417.4899,
+      "averageEntryPrice": 405.5,
+      "unrealizedProfitLoss": 0.001035,
+      "unrealizedProfitLossPct": 0.02956
+    },
+    {
+      "ticker": "TXRH",
+      "quantity": 2.632977324,
+      "marketValue": 436.179023,
+      "currentPrice": 165.66,
+      "averageEntryPrice": 190.07,
+      "unrealizedProfitLoss": -64.270977,
+      "unrealizedProfitLossPct": -0.12843
+    },
+    {
+      "ticker": "UBER",
+      "quantity": 20.430264233,
+      "marketValue": 1368.623401,
+      "currentPrice": 66.99,
+      "averageEntryPrice": 73.42,
+      "unrealizedProfitLoss": -131.366599,
+      "unrealizedProfitLossPct": -0.08758
+    },
+    {
+      "ticker": "VLTO",
+      "quantity": 5.464867227,
+      "marketValue": 570.149598,
+      "currentPrice": 104.33,
+      "averageEntryPrice": 91.575875,
+      "unrealizedProfitLoss": 69.6996,
+      "unrealizedProfitLossPct": 0.13927
+    },
+    {
+      "ticker": "VOYG",
+      "quantity": 29.606771606,
+      "marketValue": 742.8339,
+      "currentPrice": 25.09,
+      "averageEntryPrice": 33.67,
+      "unrealizedProfitLoss": -254.0261,
+      "unrealizedProfitLossPct": -0.25483
+    },
+    {
+      "ticker": "VRSK",
+      "quantity": 2.694938072,
+      "marketValue": 527.88447,
+      "currentPrice": 195.88,
+      "averageEntryPrice": 185.7,
+      "unrealizedProfitLoss": 27.43447,
+      "unrealizedProfitLossPct": 0.05482
+    },
+    {
+      "ticker": "WFC",
+      "quantity": 9.363550723,
+      "marketValue": 772.118393,
+      "currentPrice": 82.46,
+      "averageEntryPrice": 84.025817,
+      "unrealizedProfitLoss": -14.661607,
+      "unrealizedProfitLossPct": -0.01863
+    },
+    {
+      "ticker": "WMB",
+      "quantity": 1.119149646,
+      "marketValue": 80.548334,
+      "currentPrice": 71.9728,
+      "averageEntryPrice": 71.876,
+      "unrealizedProfitLoss": 0.108334,
+      "unrealizedProfitLossPct": 0.00135
+    },
+    {
+      "ticker": "ZTS",
+      "quantity": 0.024423753,
+      "marketValue": 1.979057,
+      "currentPrice": 81.03,
+      "averageEntryPrice": 73.380264,
+      "unrealizedProfitLoss": 0.186836,
+      "unrealizedProfitLossPct": 0.10425
+    }
+  ]
+}

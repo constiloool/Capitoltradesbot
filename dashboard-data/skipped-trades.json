@@ -1,0 +1,273 @@
+[
+  {
+    "id": "3154",
+    "date": "2026-10-23",
+    "politician": "Darrell E. Issa",
+    "ticker": "D: Purchase of US Treasury Bond with $10 million face value US Treasury Note 3.375% due 09/15/28 CUSIP 91282CNY3",
+    "assetName": "D: Purchase of US Treasury Bond with $10 million face value US Treasury Note 3.375% due 09/15/28 CUSIP 91282CNY3",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3153",
+    "date": "2026-10-23",
+    "politician": "Darrell E. Issa",
+    "ticker": "US Treasury Note 3.375% due 09/15/28 CUSIP 91282CNY3",
+    "assetName": "US Treasury Note 3.375% due 09/15/28 CUSIP 91282CNY3",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "3152",
+    "date": "2026-10-23",
+    "politician": "Cleo Fields",
+    "ticker": "TSM",
+    "assetName": "Taiwan Semiconductor Manufacturing Company Ltd.",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3151",
+    "date": "2026-10-23",
+    "politician": "Cleo Fields",
+    "ticker": "NVDA",
+    "assetName": "NVIDIA Corporation - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3150",
+    "date": "2026-10-23",
+    "politician": "Laurel Lee",
+    "ticker": "BAC",
+    "assetName": "Bank of America Corp",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3149",
+    "date": "2026-10-23",
+    "politician": "Laurel Lee",
+    "ticker": "NOK",
+    "assetName": "Nokia Corp",
+    "owner": "Spouse",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3148",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "MU",
+    "assetName": "Micron Technology, Inc. - Common Stock",
+    "owner": "Joint",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3147",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "CMB",
+    "assetName": "iShares CMBS ETF",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3146",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "TL",
+    "assetName": "iShares 10-20 Year Treasury Bond ETF",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3145",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "IE",
+    "assetName": "iShares 7-10 Year Treasury Bond ETF",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3144",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "MB",
+    "assetName": "iShares MBS ETF",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3143",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "XFIV",
+    "assetName": "BondBloxx Bloomberg Five Year Target Duration US Treasury ETF",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3142",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "JMBS",
+    "assetName": "Janus Henderson Mortgage-Backed Securities ETF",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3141",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "GIGB",
+    "assetName": "Goldman Sachs Access Investment Grade Corporate Bond ETF",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3140",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "XTWO",
+    "assetName": "BondBloxx Bloomberg Two Year Target Duration US Treasury ETF",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3139",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "O",
+    "assetName": "Realty Income Corporation Common Stock",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3138",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "CSCO",
+    "assetName": "Cisco Systems, Inc. - Common Stock",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3137",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "EF",
+    "assetName": "iShares MSCI EAFE ETF",
+    "owner": "Joint",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3136",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "SPYM",
+    "assetName": "Tradr 2X Long SPY Monthly ETF",
+    "owner": "Joint",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3135",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "VEA",
+    "assetName": "Vanguard Developed Markets Index Fund - ETF Shares",
+    "owner": "Joint",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3134",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "TL",
+    "assetName": "iShares 10-20 Year Treasury Bond ETF",
+    "owner": "Joint",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3133",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "MU",
+    "assetName": "Micron Technology, Inc. - Common Stock",
+    "owner": "Joint",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3132",
+    "date": "2026-10-23",
+    "politician": "John Boozman",
+    "ticker": "APTV",
+    "assetName": "Aptiv PLC Ordinary Shares",
+    "owner": "Joint",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3131",
+    "date": "2026-10-23",
+    "politician": "Alan Armstrong",
+    "ticker": "WMB",
+    "assetName": "Williams Companies, Inc. (The) Common Stock",
+    "owner": "Joint",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3130",
+    "date": "2026-10-22",
+    "politician": "John",
+    "ticker": "CMBS",
+    "assetName": "iShares CMBS ETF",
+    "owner": "Joint",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  }
+]
