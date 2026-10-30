@@ -1,0 +1,266 @@
+[
+  {
+    "id": "3202",
+    "date": "2026-10-30",
+    "politician": "David J. Taylor",
+    "ticker": "V",
+    "assetName": "Visa Inc.",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3201",
+    "date": "2026-10-30",
+    "politician": "David J. Taylor",
+    "ticker": "RPM",
+    "assetName": "RPM International Inc. Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3200",
+    "date": "2026-10-30",
+    "politician": "David J. Taylor",
+    "ticker": "PLD",
+    "assetName": "Prologis, Inc. Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3199",
+    "date": "2026-10-30",
+    "politician": "David J. Taylor",
+    "ticker": "MPC",
+    "assetName": "Marathon Petroleum Corporation Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3198",
+    "date": "2026-10-30",
+    "politician": "David J. Taylor",
+    "ticker": "LRCX",
+    "assetName": "Lam Research Corporation - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3197",
+    "date": "2026-10-30",
+    "politician": "David J. Taylor",
+    "ticker": "T",
+    "assetName": "AT&T Inc.",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3196",
+    "date": "2026-10-29",
+    "politician": "Dave McCormick",
+    "ticker": "GS",
+    "assetName": "The Goldman Sachs Group Inc",
+    "owner": "Spouse",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3195",
+    "date": "2026-10-29",
+    "politician": "Dave McCormick",
+    "ticker": "GS",
+    "assetName": "The Goldman Sachs Group Inc",
+    "owner": "Spouse",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3194",
+    "date": "2026-10-29",
+    "politician": "Dave McCormick",
+    "ticker": "GS",
+    "assetName": "The Goldman Sachs Group Inc",
+    "owner": "Spouse",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3193",
+    "date": "2026-10-29",
+    "politician": "Kevin Hern",
+    "ticker": "TXN",
+    "assetName": "Texas Instruments Incorporated - Common Stock",
+    "owner": "JT",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3192",
+    "date": "2026-10-29",
+    "politician": "Kevin Hern",
+    "ticker": "STX",
+    "assetName": "Seagate Technology Holdings PLC - Ordinary Shares",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3191",
+    "date": "2026-10-29",
+    "politician": "Kevin Hern",
+    "ticker": "ASML",
+    "assetName": "ASML Holding N.V. - New York Registry Shares",
+    "owner": "JT",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3190",
+    "date": "2026-10-28",
+    "politician": "Pete Sessions",
+    "ticker": "DIS",
+    "assetName": "Walt Disney Company",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3189",
+    "date": "2026-10-28",
+    "politician": "Pete Sessions",
+    "ticker": "WMT",
+    "assetName": "Walmart Inc. - Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3188",
+    "date": "2026-10-28",
+    "politician": "Pete Sessions",
+    "ticker": "V",
+    "assetName": "Visa Inc.",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3187",
+    "date": "2026-10-28",
+    "politician": "Pete Sessions",
+    "ticker": "VZ",
+    "assetName": "Verizon Communications Inc. Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3186",
+    "date": "2026-10-28",
+    "politician": "Pete Sessions",
+    "ticker": "TJX",
+    "assetName": "TJX Companies, Inc.",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3185",
+    "date": "2026-10-28",
+    "politician": "Pete Sessions",
+    "ticker": "TSLA",
+    "assetName": "Tesla, Inc. - Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3184",
+    "date": "2026-10-28",
+    "politician": "Pete Sessions",
+    "ticker": "SBUX",
+    "assetName": "Starbucks Corporation - Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3183",
+    "date": "2026-10-28",
+    "politician": "Pete Sessions",
+    "ticker": "SOLS",
+    "assetName": "Resideo Technologies, Inc. Common Stock (REZI) [ST] S10/21/202610/21/2026$344.99 Solstice Advanced Materials Inc. - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3182",
+    "date": "2026-10-28",
+    "politician": "Pete Sessions",
+    "ticker": "PG",
+    "assetName": "Procter & Gamble Company",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3181",
+    "date": "2026-10-28",
+    "politician": "Pete Sessions",
+    "ticker": "PEP",
+    "assetName": "Pepsico, Inc.",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3180",
+    "date": "2026-10-28",
+    "politician": "Pete Sessions",
+    "ticker": "NVDA",
+    "assetName": "NVIDIA Corporation - Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3179",
+    "date": "2026-10-28",
+    "politician": "Pete Sessions",
+    "ticker": "MSFT",
+    "assetName": "Microsoft Corporation - Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3178",
+    "date": "2026-10-28",
+    "politician": "Pete Sessions",
+    "ticker": "MCD",
+    "assetName": "McDonald's Corporation Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  }
+]
