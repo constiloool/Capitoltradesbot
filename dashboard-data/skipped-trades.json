@@ -1,0 +1,268 @@
+[
+  {
+    "id": "3232",
+    "date": "2026-11-06",
+    "politician": "Josh Gottheimer",
+    "ticker": "TLK",
+    "assetName": "PT Telekomunikasi Indonesia, Tbk",
+    "owner": "JT",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3231",
+    "date": "2026-11-06",
+    "politician": "Josh Gottheimer",
+    "ticker": "BHE",
+    "assetName": "Benchmark Electronics, Inc. Common Stock",
+    "owner": "JT",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3230",
+    "date": "2026-11-06",
+    "politician": "Josh Gottheimer",
+    "ticker": "AMAT",
+    "assetName": "Applied Materials, Inc. - Common Stock",
+    "owner": "JT",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3229",
+    "date": "2026-11-06",
+    "politician": "Shelley Moore Capito",
+    "ticker": "ZTS",
+    "assetName": "Zoetis Inc",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3228",
+    "date": "2026-11-06",
+    "politician": "Shelley Moore Capito",
+    "ticker": "MSFT",
+    "assetName": "Microsoft Corp",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3227",
+    "date": "2026-11-06",
+    "politician": "Shelley Moore Capito",
+    "ticker": "META",
+    "assetName": "Meta Platforms Inc",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3226",
+    "date": "2026-11-06",
+    "politician": "Shelley Moore Capito",
+    "ticker": "AAPL",
+    "assetName": "Apple Inc",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3225",
+    "date": "2026-11-05",
+    "politician": "Mike Kelly",
+    "ticker": "North Carolina Hsg Fin Agy Hom S",
+    "assetName": "North Carolina Hsg Fin Agy Hom S",
+    "owner": "Spouse",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3224",
+    "date": "2026-11-05",
+    "politician": "Mike Kelly",
+    "ticker": "Fairfax Cnty VA Ser A Go",
+    "assetName": "Fairfax Cnty VA Ser A Go",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3223",
+    "date": "2026-11-05",
+    "politician": "Mike Kelly",
+    "ticker": "North Carolina Hsg Fin Agy Hom S",
+    "assetName": "North Carolina Hsg Fin Agy Hom S",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3222",
+    "date": "2026-11-05",
+    "politician": "Mike Kelly",
+    "ticker": "Fairfax Cnty VA Ser A Go",
+    "assetName": "Fairfax Cnty VA Ser A Go",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3221",
+    "date": "2026-11-05",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "PG",
+    "assetName": "Procter & Gamble Company",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3220",
+    "date": "2026-11-05",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "NVDA",
+    "assetName": "NVIDIA Corporation - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3219",
+    "date": "2026-11-05",
+    "politician": "Maria Elvira Salazar",
+    "ticker": "CSCO",
+    "assetName": "Cisco Systems, Inc. - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3218",
+    "date": "2026-11-05",
+    "politician": "Daniel Meuser",
+    "ticker": "NVDA",
+    "assetName": "NVIDIA Corporation - Common Stock",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3217",
+    "date": "2026-11-04",
+    "politician": "Robert E. Latta",
+    "ticker": "FMAO",
+    "assetName": "Farmers & Merchants Bancorp, Inc.",
+    "owner": "SP",
+    "action": "purchase",
+    "reason": "Skipped because max total exposure would be exceeded",
+    "status": "Skipped"
+  },
+  {
+    "id": "3216",
+    "date": "2026-11-03",
+    "politician": "Sheldon Whitehouse",
+    "ticker": "MSFT",
+    "assetName": "Microsoft Corp",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3215",
+    "date": "2026-11-03",
+    "politician": "Sheldon Whitehouse",
+    "ticker": "AMGN",
+    "assetName": "Amgen Inc",
+    "owner": "Spouse",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3214",
+    "date": "2026-11-03",
+    "politician": "Ann Wagner",
+    "ticker": "American Expr Natl Bank CD",
+    "assetName": "American Expr Natl Bank CD",
+    "owner": "JT",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3213",
+    "date": "2026-11-02",
+    "politician": "Thomas H. Kean Jr",
+    "ticker": "TXN",
+    "assetName": "Texas Instruments Incorporated - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3212",
+    "date": "2026-11-02",
+    "politician": "Thomas H. Kean Jr",
+    "ticker": "SYK",
+    "assetName": "Stryker Corporation Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3211",
+    "date": "2026-11-02",
+    "politician": "Thomas H. Kean Jr",
+    "ticker": "MDLZ",
+    "assetName": "Mondelez International, Inc. - Class A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3210",
+    "date": "2026-11-02",
+    "politician": "Thomas H. Kean Jr",
+    "ticker": "JNJ",
+    "assetName": "Johnson & Johnson Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "3209",
+    "date": "2026-11-02",
+    "politician": "Thomas H. Kean Jr",
+    "ticker": "ESAB",
+    "assetName": "ESAB Corporation Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "3208",
+    "date": "2026-11-02",
+    "politician": "Thomas H. Kean Jr",
+    "ticker": "ABT",
+    "assetName": "Abbott Laboratories Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  }
+]
