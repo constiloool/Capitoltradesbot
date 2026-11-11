@@ -65,6 +65,9 @@ export async function monitorOpenPositions(
         clientOrderId: `ctb-exit-${position.id.slice(0, 24)}`,
         forceSimulation: position.executionMode === "SIMULATED",
       });
+      if (!execution.simulated && execution.confirmedFill !== true) {
+        throw new Error("Alpaca sell order was not confirmed filled");
+      }
       closePosition(position.id, reason, execution.orderId);
       logTradeDecision({
         tradeId: position.sourceTradeId,

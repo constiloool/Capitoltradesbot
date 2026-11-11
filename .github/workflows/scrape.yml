@@ -9,12 +9,11 @@ on:
         default: false
         type: boolean
   schedule:
-    # Morning disclosure fetch around the German cash-market open (UTC).
-    - cron: "7 7 * * 1-5"
-    # Regular checks before, during and shortly after the US session.
-    # Keep this below a scraper-like cadence because Senate eFD is sensitive
-    # to frequent data-center requests.
-    - cron: "7,37 13-21 * * 1-5"
+    # GitHub Actions cron is UTC. The first step below filters these times in
+    # Europe/Berlin so daylight-saving changes still produce exactly 09:07,
+    # then every 15 minutes from 15:07 through 23:52 on weekdays.
+    - cron: "7 7,8 * * 1-5"
+    - cron: "7,22,37,52 13-22 * * 1-5"
 
 permissions:
   contents: write
@@ -56,40 +55,70 @@ jobs:
       ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
       ALPACA_BASE_URL: ${{ secrets.ALPACA_BASE_URL || 'https://paper-api.alpaca.markets' }}
       PAPER_ORDER_QTY: ${{ secrets.PAPER_ORDER_QTY || '1' }}
+      STATE_ENCRYPTION_KEY: ${{ secrets.STATE_ENCRYPTION_KEY }}
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "24"
           cache: npm
 
-      - name: Restore SQLite state
-        id: sqlite-restore
-        uses: actions/cache/restore@v4
-        with:
-          path: data/capitoltrades.sqlite
-          key: capitoltrades-sqlite-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: |
-            capitoltrades-sqlite-
+      - name: Check Berlin schedule window
+        id: berlin-schedule
+        if: ${{ github.event_name == 'schedule' }}
+        run: |
+          berlin_time="$(TZ=Europe/Berlin date +%H:%M)"
+          if [[ "$berlin_time" == "09:07" ]] || [[ "$berlin_time" =~ ^(15|16|17|18|19|20|21|22|23):(07|22|37|52)$ ]]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "Running scheduled scan at $berlin_time Europe/Berlin"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping UTC trigger outside the Berlin schedule: $berlin_time"
+          fi
+
+      - name: Restore persistent SQLite state
+        if: ${{ github.event_name != 'schedule' || steps.berlin-schedule.outputs.run == 'true' }}
+        run: |
+          git fetch origin bot-state || true
+          if git cat-file -e origin/bot-state:data/capitoltrades.sqlite.enc 2>/dev/null; then
+            if [[ -z "$STATE_ENCRYPTION_KEY" ]]; then
+              echo "STATE_ENCRYPTION_KEY is required to restore persistent bot state" >&2
+              exit 1
+            fi
+            state_dir="$(mktemp -d)"
+            mkdir -p data
+            git show origin/bot-state:data/capitoltrades.sqlite.enc > "$state_dir/capitoltrades.sqlite.enc"
+            openssl enc -d -aes-256-cbc -pbkdf2 -salt \
+              -in "$state_dir/capitoltrades.sqlite.enc" \
+              -out data/capitoltrades.sqlite \
+              -pass env:STATE_ENCRYPTION_KEY
+            echo "Restored persistent SQLite state from bot-state"
+          else
+            echo "No persistent SQLite state yet; initializing a new database"
+          fi
 
       - name: Install dependencies
+        if: ${{ github.event_name != 'schedule' || steps.berlin-schedule.outputs.run == 'true' }}
         run: npm ci
 
       - name: Install browser fallback runtime
+        if: ${{ github.event_name != 'schedule' || steps.berlin-schedule.outputs.run == 'true' }}
         run: npx playwright install chromium --with-deps
 
       - name: Build
+        if: ${{ github.event_name != 'schedule' || steps.berlin-schedule.outputs.run == 'true' }}
         run: npm run build
 
       - name: Initialize database
+        if: ${{ github.event_name != 'schedule' || steps.berlin-schedule.outputs.run == 'true' }}
         run: npm run db:init
 
       - name: Requeue selected Pelosi trades
-        if: ${{ inputs.reprocess_pelosi_2026_05_29 == true }}
+        if: ${{ (github.event_name != 'schedule' || steps.berlin-schedule.outputs.run == 'true') && inputs.reprocess_pelosi_2026_05_29 == true }}
         run: |
           sqlite3 "$DATABASE_PATH" "
             UPDATE trades
@@ -100,25 +129,54 @@ jobs:
           "
 
       - name: De-synchronize scheduled source requests
-        if: ${{ github.event_name == 'schedule' }}
+        if: ${{ github.event_name == 'schedule' && steps.berlin-schedule.outputs.run == 'true' }}
         run: sleep $((RANDOM % 90))
 
       - name: Ingest official disclosures
+        if: ${{ github.event_name != 'schedule' || steps.berlin-schedule.outputs.run == 'true' }}
         run: npm run ingest
 
       - name: Export read-only dashboard data
+        if: ${{ github.event_name != 'schedule' || steps.berlin-schedule.outputs.run == 'true' }}
         run: npm run dashboard:export
 
-      - name: Save SQLite state
-        if: always()
-        uses: actions/cache/save@v4
-        with:
-          path: data/capitoltrades.sqlite
-          key: capitoltrades-sqlite-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Publish persistent SQLite state
+        if: ${{ always() && (github.event_name != 'schedule' || steps.berlin-schedule.outputs.run == 'true') && hashFiles('data/capitoltrades.sqlite') != '' }}
+        run: |
+          state_dir="$(mktemp -d)"
+          cp data/capitoltrades.sqlite "$state_dir/capitoltrades.sqlite"
+          if [[ -z "$STATE_ENCRYPTION_KEY" ]]; then
+            echo "STATE_ENCRYPTION_KEY is required to persist bot state" >&2
+            exit 1
+          fi
+          if git cat-file -e origin/bot-state:data/capitoltrades.sqlite.enc 2>/dev/null; then
+            git show origin/bot-state:data/capitoltrades.sqlite.enc > "$state_dir/previous.sqlite.enc"
+            openssl enc -d -aes-256-cbc -pbkdf2 -salt \
+              -in "$state_dir/previous.sqlite.enc" \
+              -out "$state_dir/previous.sqlite" \
+              -pass env:STATE_ENCRYPTION_KEY
+            if cmp -s "$state_dir/capitoltrades.sqlite" "$state_dir/previous.sqlite"; then
+              echo "Persistent SQLite state is unchanged"
+              exit 0
+            fi
+          fi
+          openssl enc -aes-256-cbc -pbkdf2 -salt \
+            -in "$state_dir/capitoltrades.sqlite" \
+            -out "$state_dir/capitoltrades.sqlite.enc" \
+            -pass env:STATE_ENCRYPTION_KEY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan bot-state-publish
+          git rm -rf .
+          mkdir -p data
+          cp "$state_dir/capitoltrades.sqlite.enc" data/capitoltrades.sqlite.enc
+          git add data/capitoltrades.sqlite.enc
+          git commit -m "Persist bot state"
+          git push --force origin HEAD:bot-state
 
       - name: Upload database artifact
-        if: always()
-        uses: actions/upload-artifact@v4
+        if: ${{ always() && (github.event_name != 'schedule' || steps.berlin-schedule.outputs.run == 'true') }}
+        uses: actions/upload-artifact@v6
         with:
           name: capitoltrades-db-${{ github.run_number }}
           path: data/capitoltrades.sqlite
@@ -126,7 +184,7 @@ jobs:
           retention-days: 30
 
       - name: Publish dashboard data branch
-        if: success()
+        if: ${{ success() && (github.event_name != 'schedule' || steps.berlin-schedule.outputs.run == 'true') }}
         run: |
           export_dir="$(mktemp -d)"
           cp dashboard-data/*.json "$export_dir/"

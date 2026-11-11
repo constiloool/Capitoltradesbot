@@ -10,6 +10,28 @@ export type AlpacaOrder = {
   client_order_id: string;
 };
 
+export type AlpacaOrderStatus =
+  | "new"
+  | "accepted"
+  | "pending_new"
+  | "partially_filled"
+  | "filled"
+  | "canceled"
+  | "expired"
+  | "rejected"
+  | "suspended"
+  | "stopped"
+  | "calculated"
+  | "replaced"
+  | string;
+
+export type AlpacaOrderResponse = {
+  id?: string;
+  status?: AlpacaOrderStatus;
+  filled_avg_price?: string;
+  filled_qty?: string;
+};
+
 export type AlpacaAccount = {
   status?: string;
   account_blocked?: boolean;
@@ -178,7 +200,7 @@ export async function getReferencePrice(
 
 export async function submitPaperOrder(
   order: AlpacaOrder,
-): Promise<{ id?: string; filled_avg_price?: string; filled_qty?: string }> {
+): Promise<AlpacaOrderResponse> {
   const response = await fetch(paperApiUrl("/v2/orders"), {
     method: "POST",
     headers: {
@@ -190,9 +212,15 @@ export async function submitPaperOrder(
   if (!response.ok) {
     throw new Error(`Alpaca rejected order (HTTP ${response.status}): ${await response.text()}`);
   }
-  return response.json() as Promise<{
-    id?: string;
-    filled_avg_price?: string;
-    filled_qty?: string;
-  }>;
+  return response.json() as Promise<AlpacaOrderResponse>;
+}
+
+export async function getPaperOrder(orderId: string): Promise<AlpacaOrderResponse> {
+  const response = await fetch(paperApiUrl(`/v2/orders/${orderId}`), {
+    headers: authHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Alpaca order status check failed (HTTP ${response.status})`);
+  }
+  return response.json() as Promise<AlpacaOrderResponse>;
 }

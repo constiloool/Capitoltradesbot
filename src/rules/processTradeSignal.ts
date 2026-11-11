@@ -313,13 +313,25 @@ export async function processTradeSignal(
     logTradeDecision(decisionLog(trade, failed, market));
     return { decision: "SKIP", reason: failed.reason };
   }
+  if (!execution.simulated && execution.confirmedFill !== true) {
+    const failed = {
+      ...evaluation,
+      decision: "SKIP" as const,
+      reason: "Alpaca buy order was not confirmed filled",
+    };
+    logTradeDecision(decisionLog(trade, failed, market, execution.orderId));
+    return { decision: "SKIP", reason: failed.reason, alpacaOrderId: execution.orderId };
+  }
   const effectiveTradeDate =
     resolveTradeDate(trade)?.tradeDate || trade.filingDate;
+  const filledQuantity = execution.filledQuantity ?? quantity;
+  const filledEntryPrice = execution.filledAveragePrice ?? executionPrice;
+  const filledNotionalValue = filledQuantity * filledEntryPrice;
   const positionInput = {
     ticker: trade.ticker!,
-    entryPrice: executionPrice,
-    quantity,
-    notionalValue: evaluation.finalPositionSize,
+    entryPrice: filledEntryPrice,
+    quantity: filledQuantity,
+    notionalValue: filledNotionalValue,
     politicianName: trade.politicianName,
     sourceTradeId: trade.id,
     disclosureId: trade.filingId,
@@ -333,9 +345,9 @@ export async function processTradeSignal(
       tradeId: trade.id,
       politicianName: trade.politicianName,
       signalDate: effectiveTradeDate,
-      price: executionPrice,
-      quantity,
-      notionalValue: evaluation.finalPositionSize,
+      price: filledEntryPrice,
+      quantity: filledQuantity,
+      notionalValue: filledNotionalValue,
       alpacaOrderId: execution.orderId,
     });
   } else {

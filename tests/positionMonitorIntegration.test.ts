@@ -117,3 +117,27 @@ test("position monitor persists take-profit, stop-loss and time exits", async ()
   closeDatabase();
   rmSync(directory, { recursive: true, force: true });
 });
+
+test("position monitor keeps a paper position open when Alpaca does not confirm the sell fill", async () => {
+  const directory = mkdtempSync(path.join(tmpdir(), "position-monitor-unfilled-"));
+  process.env.DATABASE_PATH = path.join(directory, "monitor.sqlite");
+  process.env.SAFE_MODE = "false";
+  const { initializeDatabase, closeDatabase, getDatabase } = await import("../src/storage/db.js");
+  const { insertPendingFiling } = await import("../src/storage/filingRepository.js");
+  const { insertDisclosureTrades } = await import("../src/storage/disclosureTradeRepository.js");
+  const { createOpenPosition } = await import("../src/storage/positionsStore.js");
+  const { monitorOpenPositions } = await import("../src/monitor/positionMonitor.js");
+  initializeDatabase();
+  const filing = { id: "house:unfilled-sell", source: "house" as const, sourceFilingId: "unfilled-sell", politicianName: "Monitor", chamber: "House" as const, filingType: "Periodic Transaction Report", filingDate: "2026-11-10", documentUrl: "https://example.test/sell.pdf", documentKind: "pdf" as const };
+  insertPendingFiling(filing);
+  const trade = insertDisclosureTrades([{ filingId: filing.id, source: filing.source, sourceFilingId: filing.sourceFilingId, politicianName: filing.politicianName, chamber: filing.chamber, transactionDate: filing.filingDate, filingDate: filing.filingDate, ticker: "UNFILL", assetName: "Unfilled", transactionType: "purchase", amountRange: "$15,001 - $50,000", sourceUrl: filing.documentUrl }]).inserted[0];
+  createOpenPosition({ ticker: "UNFILL", entryPrice: 100, quantity: 10, notionalValue: 1_000, politicianName: trade.politicianName, sourceTradeId: trade.id, disclosureId: trade.filingId, transactionDate: trade.transactionDate, filingDate: trade.filingDate, executionMode: "PAPER" });
+  await monitorOpenPositions(true, {
+    getCurrentPrice: async () => 130,
+    executeSellOrder: async () => ({ orderId: "still-pending", simulated: false, confirmedFill: false }),
+  });
+  const position = getDatabase().prepare("SELECT status FROM bot_positions WHERE ticker = 'UNFILL'").get() as { status: string };
+  assert.equal(position.status, "OPEN");
+  closeDatabase();
+  rmSync(directory, { recursive: true, force: true });
+});
