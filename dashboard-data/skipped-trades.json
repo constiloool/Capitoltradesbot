@@ -1,0 +1,254 @@
+[
+  {
+    "id": "748",
+    "date": "2026-11-13",
+    "politician": "David J. Taylor",
+    "ticker": "V",
+    "assetName": "Visa Inc.",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "747",
+    "date": "2026-11-13",
+    "politician": "David J. Taylor",
+    "ticker": "PG",
+    "assetName": "Procter & Gamble Company",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "746",
+    "date": "2026-11-13",
+    "politician": "David J. Taylor",
+    "ticker": "LRCX",
+    "assetName": "Lam Research Corporation - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because price increased more than 10% since trade date",
+    "status": "Skipped"
+  },
+  {
+    "id": "745",
+    "date": "2026-11-13",
+    "politician": "David J. Taylor",
+    "ticker": "KR",
+    "assetName": "Kroger Company",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "743",
+    "date": "2026-11-13",
+    "politician": "David J. Taylor",
+    "ticker": "HD",
+    "assetName": "Home Depot, Inc.",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "742",
+    "date": "2026-11-13",
+    "politician": "David J. Taylor",
+    "ticker": "LLY",
+    "assetName": "Eli Lilly and Company Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "740",
+    "date": "2026-11-13",
+    "politician": "David J. Taylor",
+    "ticker": "AVGO",
+    "assetName": "Broadcom Inc. - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because price increased more than 10% since trade date",
+    "status": "Skipped"
+  },
+  {
+    "id": "738",
+    "date": "2026-11-13",
+    "politician": "David J. Taylor",
+    "ticker": "AMGN",
+    "assetName": "Amgen Inc. - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "736",
+    "date": "2026-11-12",
+    "politician": "Lloyd Doggett",
+    "ticker": "KO",
+    "assetName": "Coca-Cola Company",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "735",
+    "date": "2026-11-12",
+    "politician": "Richard W. Allen",
+    "ticker": "US Treasury Note 4% DUE 7/31/29 (91282CLC3)",
+    "assetName": "US Treasury Note 4% DUE 7/31/29 (91282CLC3)",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "734",
+    "date": "2026-11-12",
+    "politician": "Richard W. Allen",
+    "ticker": "US Treasury Note 3.5% DUE 1/31/30 (91282CGJ4)",
+    "assetName": "US Treasury Note 3.5% DUE 1/31/30 (91282CGJ4)",
+    "action": "purchase",
+    "reason": "Skipped because trade is older than 31 days",
+    "status": "Skipped"
+  },
+  {
+    "id": "733",
+    "date": "2026-11-12",
+    "politician": "Richard W. Allen",
+    "ticker": "SHW",
+    "assetName": "Sherwin-Williams Company",
+    "owner": "SP",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "728",
+    "date": "2026-11-12",
+    "politician": "Gilbert Cisneros",
+    "ticker": "MBGL",
+    "assetName": "Mobility Global Inc. Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because price increased more than 10% since trade date",
+    "status": "Skipped"
+  },
+  {
+    "id": "715",
+    "date": "2026-11-11",
+    "politician": "Julie Johnson",
+    "ticker": "WBD",
+    "assetName": "Warner Bros. Discovery, Inc. - Series A Common Stock",
+    "owner": "JT",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "714",
+    "date": "2026-11-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "Wisconsin State Health & Educational Facilities Authority Rev. Bonds",
+    "assetName": "Wisconsin State Health & Educational Facilities Authority Rev. Bonds",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "712",
+    "date": "2026-11-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "WBD",
+    "assetName": "Warner Bros. Discovery, Inc. - Series A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "711",
+    "date": "2026-11-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "UBER",
+    "assetName": "D: Ticker 8035 JP Uber Technologies, Inc. Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "710",
+    "date": "2026-11-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "TOELF",
+    "assetName": "D: Ticker 8035 JP Tokyo Electron Ltd Ordinary Shares",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "709",
+    "date": "2026-11-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "TOELF",
+    "assetName": "Tokyo Electron Ltd Ordinary Shares",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "708",
+    "date": "2026-11-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "TKO",
+    "assetName": "TKO Group Holdings, Inc. Class A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "707",
+    "date": "2026-11-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "TTD",
+    "assetName": "The Trade Desk, Inc. - Class A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "706",
+    "date": "2026-11-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "COO",
+    "assetName": "The Cooper Companies, Inc.",
+    "action": "purchase",
+    "reason": "Skipped because price increased more than 10% since trade date",
+    "status": "Skipped"
+  },
+  {
+    "id": "705",
+    "date": "2026-11-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "CPB",
+    "assetName": "The Campbell's Company - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "704",
+    "date": "2026-11-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "TXRH",
+    "assetName": "Texas Roadhouse, Inc. - Common Stock",
+    "action": "purchase",
+    "reason": "Skipped because price increased more than 10% since trade date",
+    "status": "Skipped"
+  },
+  {
+    "id": "703",
+    "date": "2026-11-11",
+    "politician": "Gilbert Cisneros",
+    "ticker": "STRC",
+    "assetName": "F S: Amended Strategy Inc - Variable Rate Series A Perpetual Stretch Preferred Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  }
+]
