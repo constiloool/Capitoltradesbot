@@ -1,0 +1,263 @@
+[
+  {
+    "id": "1041",
+    "date": "2026-11-27",
+    "politician": "Rand Paul",
+    "ticker": "NVIDIA Corporation - Common Stock",
+    "assetName": "NVIDIA Corporation - Common Stock",
+    "owner": "Self",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1040",
+    "date": "2026-11-27",
+    "politician": "Rand Paul",
+    "ticker": "NVIDIA Corporation - Common Stock",
+    "assetName": "NVIDIA Corporation - Common Stock",
+    "owner": "Self",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1039",
+    "date": "2026-11-27",
+    "politician": "Rand Paul",
+    "ticker": "NVIDIA Corporation - Common Stock",
+    "assetName": "NVIDIA Corporation - Common Stock",
+    "owner": "Self",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1035",
+    "date": "2026-11-26",
+    "politician": "Rand",
+    "ticker": "NVDA",
+    "assetName": "NVIDIA Corporation - Common Stock",
+    "owner": "Self",
+    "action": "purchase",
+    "reason": "Skipped because historical price is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1033",
+    "date": "2026-11-26",
+    "politician": "Robert For Onder",
+    "ticker": "DIS",
+    "assetName": "Walt Disney Company",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1032",
+    "date": "2026-11-26",
+    "politician": "Robert For Onder",
+    "ticker": "VZ",
+    "assetName": "Verizon Communications Inc. Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1031",
+    "date": "2026-11-26",
+    "politician": "Robert For Onder",
+    "ticker": "US Bancorp Del DEPOSITARY SH S G (USB$N)",
+    "assetName": "US Bancorp Del DEPOSITARY SH S G (USB$N)",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1030",
+    "date": "2026-11-26",
+    "politician": "Robert For Onder",
+    "ticker": "PG",
+    "assetName": "Procter & Gamble Company",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1029",
+    "date": "2026-11-26",
+    "politician": "Robert For Onder",
+    "ticker": "PEP",
+    "assetName": "PepsiCo, Inc. - Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1028",
+    "date": "2026-11-26",
+    "politician": "Robert For Onder",
+    "ticker": "MDLZ",
+    "assetName": "Mondelez International, Inc. - Class A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1027",
+    "date": "2026-11-26",
+    "politician": "Robert For Onder",
+    "ticker": "MDT",
+    "assetName": "Medtronic plc. Ordinary Shares",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1026",
+    "date": "2026-11-26",
+    "politician": "Robert For Onder",
+    "ticker": "HPQ",
+    "assetName": "HP Inc. Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1025",
+    "date": "2026-11-26",
+    "politician": "Robert For Onder",
+    "ticker": "GEHCV",
+    "assetName": "GE HealthCare Technologies Inc.",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1024",
+    "date": "2026-11-26",
+    "politician": "Robert For Onder",
+    "ticker": "DUK",
+    "assetName": "Duke Energy Corporation",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1023",
+    "date": "2026-11-26",
+    "politician": "Robert For Onder",
+    "ticker": "CMCSA",
+    "assetName": "Comcast Corporation - Class A Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1022",
+    "date": "2026-11-26",
+    "politician": "Robert For Onder",
+    "ticker": "AMP",
+    "assetName": "Ameriprise Financial, Inc. Common Stock",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1021",
+    "date": "2026-11-26",
+    "politician": "Kevin Hern",
+    "ticker": "STX",
+    "assetName": "D: Royal Bank of Canada Note Seagate Technology Holdings PLC - Ordinary Shares",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1020",
+    "date": "2026-11-26",
+    "politician": "Kevin Hern",
+    "ticker": "ROYAL BK CDA MTN ZERO CPN 0.00000% 01/10/2031",
+    "assetName": "ROYAL BK CDA MTN ZERO CPN 0.00000% 01/10/2031",
+    "owner": "JT",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1019",
+    "date": "2026-11-26",
+    "politician": "Kevin Hern",
+    "ticker": "ROK",
+    "assetName": "Rockwell Automation, Inc. Common Stock",
+    "owner": "JT",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1018",
+    "date": "2026-11-26",
+    "politician": "Kevin Hern",
+    "ticker": "ROK",
+    "assetName": "Rockwell Automation, Inc. Common Stock",
+    "owner": "JT",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1017",
+    "date": "2026-11-26",
+    "politician": "Kevin Hern",
+    "ticker": "PSX",
+    "assetName": "Phillips 66 Common Stock",
+    "owner": "JT",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1016",
+    "date": "2026-11-26",
+    "politician": "Kevin Hern",
+    "ticker": "MARSHALL CNTY OKLA EDL FACS AUTH EDL 05.00000% 09/01/2031",
+    "assetName": "MARSHALL CNTY OKLA EDL FACS AUTH EDL 05.00000% 09/01/2031",
+    "owner": "JT",
+    "action": "purchase",
+    "reason": "Skipped because ticker is missing",
+    "status": "Skipped"
+  },
+  {
+    "id": "1015",
+    "date": "2026-11-26",
+    "politician": "Kevin Hern",
+    "ticker": "INTC",
+    "assetName": "Intel Corporation - Common Stock",
+    "owner": "JT",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1014",
+    "date": "2026-11-26",
+    "politician": "Kevin Hern",
+    "ticker": "ETN",
+    "assetName": "Eaton Corporation, PLC Ordinary Shares",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  },
+  {
+    "id": "1013",
+    "date": "2026-11-26",
+    "politician": "Kevin Hern",
+    "ticker": "CMI",
+    "assetName": "Cummins Inc. Common Stock",
+    "owner": "JT",
+    "action": "sale",
+    "reason": "Transaction action is not BUY/PURCHASE",
+    "status": "Skipped"
+  }
+]
